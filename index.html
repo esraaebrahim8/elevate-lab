@@ -1,0 +1,1769 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06071A">
+<title>ELEVATE LAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@500;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06071A; --bg2:#0A0B24; --ink:#EAF4FF; --ink2:#9FB0D9; --ink3:#66789F;
+  --vio:#7B3FE4; --vio-l:#A77BFF; --vio-d:#4A1F96;
+  --cy:#45C6F5; --cy-l:#9CE2FB; --cy-d:#1A8CC4;
+  --deal:#2BC457; --hes:#F0803E; --tough:#F0434F; --comp:#46B6D6;
+  --ok:#49D68A; --warn:#F5C451; --err:#FF6B74;
+  --panel:rgba(14,16,48,.82);
+  --ease:cubic-bezier(.22,.85,.25,1);
+  --fd:'Orbitron',sans-serif; --fb:'Tajawal','Cairo',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--fb);overflow-x:hidden}
+html{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+body{min-height:100vh;background:
+  radial-gradient(ellipse 90% 55% at 50% 0%,rgba(123,63,228,.3),transparent 62%),
+  radial-gradient(ellipse 70% 45% at 50% 100%,rgba(69,198,245,.14),transparent 60%),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0 1px,transparent 1px 3px),var(--bg)}
+html[lang=en]{direction:ltr}
+h1,h2,h3{margin:0;line-height:1.25}
+button{font-family:inherit}
+.en{font-family:var(--fd);letter-spacing:.08em}
+
+/* ===== chrome ===== */
+.bar{position:sticky;top:0;z-index:70;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:9px 16px;
+  background:linear-gradient(180deg,rgba(10,11,36,.97),rgba(6,7,26,.88));
+  border-bottom:1px solid rgba(123,63,228,.5);backdrop-filter:blur(10px)}
+.mark{font-family:var(--fd);font-weight:900;font-size:15px;letter-spacing:.16em;color:#fff}
+.mark i{color:var(--cy);font-style:normal}
+.sp{flex:1}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;font-size:12.5px;font-weight:700;
+  border:1px solid rgba(123,63,228,.6);background:rgba(123,63,228,.16);color:var(--cy-l)}
+.tag.cy{border-color:rgba(69,198,245,.6);background:rgba(69,198,245,.14)}
+.tag.ok{border-color:rgba(73,214,138,.55);background:rgba(73,214,138,.14);color:#A5F2C8}
+.tag.warn{border-color:rgba(245,196,81,.55);background:rgba(245,196,81,.13);color:#FFE3A4}
+
+.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:12px;
+  border:1px solid rgba(123,63,228,.65);background:rgba(18,20,58,.75);color:var(--ink);font-weight:700;font-size:15.5px;
+  cursor:pointer;transition:transform .15s var(--ease),box-shadow .25s,border-color .2s}
+.b:hover:not(:disabled){transform:translateY(-2px);border-color:var(--cy);box-shadow:0 0 26px -6px rgba(69,198,245,.8)}
+.b:disabled{opacity:.35;cursor:not-allowed}
+.b:focus-visible,.door:focus-visible,.sheetBtn:focus-visible,.sk:focus-visible,.tabs button:focus-visible,
+.seg button:focus-visible,.opt:focus-within,input.in:focus-visible,textarea.ta:focus-visible,details.qa summary:focus-visible
+  {outline:3px solid var(--cy);outline-offset:3px;border-radius:12px}
+.b.p{border-color:var(--cy);color:#04121C;background:linear-gradient(180deg,#A8E9FD,#45C6F5 52%,#1690C7);
+  box-shadow:0 0 30px -8px rgba(69,198,245,.95)}
+.b.p:hover:not(:disabled){background:linear-gradient(180deg,#C8F2FF,#5FD3F9 52%,#1C9FD8)}
+.b.v{border-color:var(--vio-l);color:#fff;background:linear-gradient(180deg,#9B64FF,#6A2FD4)}
+.b.s{min-height:38px;padding:0 13px;font-size:13.5px;border-radius:10px}
+.b.g{background:transparent;border-color:rgba(159,176,217,.32);color:var(--ink2)}
+@keyframes cta{0%,100%{box-shadow:0 0 30px -8px rgba(69,198,245,.95)}50%{box-shadow:0 0 0 8px rgba(69,198,245,.14),0 0 40px -4px rgba(69,198,245,1)}}
+.b.p.go{animation:cta 2s ease-in-out infinite}
+
+.wrap{max-width:1680px;margin:0 auto;padding:16px 16px 80px}
+.card{position:relative;border-radius:14px;padding:16px;background:linear-gradient(170deg,rgba(20,23,64,.78),rgba(9,10,32,.9));
+  border:1px solid rgba(123,63,228,.42);box-shadow:inset 0 0 0 1px rgba(69,198,245,.06),0 26px 54px -34px #000}
+.card::before,.card::after{content:"";position:absolute;width:15px;height:15px;border:2px solid var(--cy);opacity:.7}
+.card::before{inset-inline-start:-1px;top:-1px;border-inline-end:0;border-bottom:0}
+.card::after{inset-inline-end:-1px;bottom:-1px;border-inline-start:0;border-top:0}
+.k{font-family:var(--fd);font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--vio-l)}
+.mu{color:var(--ink2);font-size:15px;line-height:1.8}
+.ti{font-size:12.5px;color:var(--ink3);line-height:1.6}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* ===== home ===== */
+.hero{text-align:center;padding:34px 10px 6px}
+.logo{font-family:var(--fd);font-weight:900;font-size:clamp(36px,9vw,78px);letter-spacing:.16em;line-height:1;color:#fff;
+  text-shadow:0 0 40px rgba(69,198,245,.7),0 0 90px rgba(123,63,228,.5)}
+.logo span{display:block;font-size:.4em;letter-spacing:.5em;color:var(--cy);margin-top:10px}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.door{display:flex;flex-direction:column;gap:7px;text-align:start;padding:20px;min-height:140px;cursor:pointer;border-radius:16px;
+  color:var(--ink);border:1px solid rgba(123,63,228,.45);background:linear-gradient(165deg,rgba(21,24,68,.85),rgba(8,9,30,.92));
+  transition:transform .18s var(--ease),border-color .2s,box-shadow .3s}
+.door:hover{transform:translateY(-4px);border-color:var(--cy);box-shadow:0 0 48px -16px rgba(69,198,245,.9)}
+.door.m{grid-column:1/-1;min-height:160px;border-color:var(--cy);
+  background:linear-gradient(118deg,rgba(69,198,245,.2),rgba(123,63,228,.26) 55%,rgba(8,9,30,.95));
+  box-shadow:0 0 60px -22px rgba(69,198,245,.9)}
+.door h3{font-size:22px}
+@media(max-width:760px){.doors{grid-template-columns:1fr}}
+
+/* ===== board ===== */
+.bwrap{border-radius:16px;padding:8px;overflow:auto;position:relative;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 4px),
+    radial-gradient(ellipse at 50% 50%,rgba(123,63,228,.22),transparent 62%),linear-gradient(160deg,#0A0B26,#06071A);
+  border:1px solid rgba(123,63,228,.5);box-shadow:inset 0 0 0 4px #06071A,inset 0 0 0 5px rgba(69,198,245,.16),0 30px 60px -40px #000}
+.bwrap svg{display:block;width:100%;height:auto;max-width:980px;margin:0 auto}
+.st-frame{transition:stroke .3s,opacity .3s}
+.st.used{opacity:.4}
+.st.hit .st-frame{stroke-width:3.4;filter:drop-shadow(0 0 10px rgba(69,198,245,1))}
+@keyframes halo{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.9;transform:scale(1.12)}}
+.haloRing{transform-box:fill-box;transform-origin:center;animation:halo 1.6s ease-in-out infinite}
+.st.land .st-frame{stroke-width:4}
+.st.land .ico{transform-box:fill-box;transform-origin:center;transform:scale(1.18)}
+@keyframes ripple{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(2.4)}}
+.rip{transform-box:fill-box;transform-origin:center;animation:ripple .9s ease-out both}
+@keyframes hop{0%{transform:translateY(-20px) scale(.88)}58%{transform:translateY(0) scale(1.1,.9)}100%{transform:translateY(0) scale(1)}}
+.pw.hop{animation:hop .46s var(--ease)}
+@keyframes bre{0%,100%{opacity:.3}50%{opacity:.95}}
+.breathe{animation:bre 2.8s ease-in-out infinite}
+@keyframes deckGlow{0%,100%{opacity:.25}50%{opacity:1}}
+.deck.hot .deck-edge{animation:deckGlow .7s ease-in-out 3;stroke-width:3}
+.lamp{transition:fill .5s,stroke .5s,filter .5s}
+
+/* full-screen signal module — Antares computes the team's step */
+.fs{position:fixed;inset:0;z-index:92;display:grid;place-items:center;padding:20px;overflow:auto;
+  background:radial-gradient(circle at 50% 50%,rgba(12,15,52,.84),rgba(3,4,14,.96));backdrop-filter:blur(5px);
+  animation:fsIn .3s ease-out both}
+.fs.out{animation:fsOut .38s ease-in both}
+@keyframes fsIn{from{opacity:0}to{opacity:1}}
+@keyframes fsOut{to{opacity:0;transform:scale(1.06)}}
+.fs .cap{position:absolute;top:11%;width:100%;text-align:center;font-family:var(--fd);letter-spacing:.26em;
+  font-size:12px;color:var(--cy-l);opacity:.85}
+.sigWrap{position:relative;width:320px;height:320px;display:grid;place-items:center;max-width:100%}
+.fs .stack{display:flex;flex-direction:column;align-items:center;max-height:100%}
+@media(max-width:420px){.sigWrap{width:272px;height:272px}}
+@media(max-height:520px){.sigWrap{width:236px;height:236px}.fs .cap{top:4px}.sigOut{margin-top:14px;font-size:17px}
+  .sigCore{width:74px;height:74px}.sigCore .q i{width:16px;height:16px}}
+.sigRing{position:absolute;inset:26px;border-radius:50%;border:1px solid rgba(69,198,245,.28);
+  animation:spin 9s linear infinite}
+.sigRing.b{inset:6px;border-style:dashed;border-color:rgba(167,123,255,.3);animation-direction:reverse;animation-duration:14s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sigCore{position:relative;width:96px;height:96px;display:grid;place-items:center;border-radius:14px;
+  background:rgba(69,198,245,.08);border:2px solid rgba(156,226,251,.65);
+  box-shadow:0 0 50px -8px rgba(69,198,245,.6)}
+.sigCore .q{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sigCore .q i{width:21px;height:21px;border-radius:4px;background:#9CE2FB;opacity:.9;
+  animation:qpulse 1.1s ease-in-out infinite}
+.sigCore .q i:nth-child(2){animation-delay:.14s}
+.sigCore .q i:nth-child(3){animation-delay:.28s}
+.sigCore .q i:nth-child(4){animation-delay:.42s}
+@keyframes qpulse{0%,100%{opacity:.35}50%{opacity:1}}
+.sigCore.locked{border-color:#fff;box-shadow:0 0 70px -4px var(--lock,#45C6F5)}
+.cell{position:absolute;width:74px;height:74px;display:grid;place-items:center;border-radius:14px;
+  font-family:var(--fd);font-size:30px;font-weight:900;color:#A8BCE2;
+  background:rgba(10,13,44,.9);border:1.6px solid rgba(123,63,228,.5);
+  transition:transform .18s var(--ease),color .18s,border-color .18s,box-shadow .25s,background .18s}
+@media(max-width:420px){.cell{width:62px;height:62px;font-size:25px}}
+.cell.hot{color:#06121C;background:linear-gradient(145deg,#DFF7FF,#8FDFFB 60%,#45C6F5);
+  border-color:#CFF1FF;transform:scale(1.14);box-shadow:0 0 34px -4px rgba(69,198,245,.95)}
+.cell.lock{color:#06121C;transform:scale(1.26);border-color:#fff;
+  background:linear-gradient(145deg,#FFFFFF,var(--lock,#45C6F5));
+  box-shadow:0 0 60px -2px var(--lock,#45C6F5)}
+.sigOut{margin-top:30px;text-align:center;font-family:var(--fd);font-size:20px;letter-spacing:.2em;color:#fff;
+  animation:rIn .55s var(--ease) both}
+@keyframes rIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sigAct{margin-top:18px;text-align:center}
+.sigOut small{display:block;font-family:var(--fb);font-size:13px;letter-spacing:0;color:var(--ink2);margin-top:7px}
+
+/* full-screen card reveal */
+.fs .reveal{width:min(360px,76vw);aspect-ratio:3/4.1;perspective:1600px}
+.fs .reveal .flip{max-width:none;animation:cardIn .6s var(--ease) both}
+@keyframes cardIn{0%{transform:translateY(90px) scale(.55) rotate(-8deg);opacity:0}
+  100%{transform:none;opacity:1}}
+.sparkle{position:absolute;width:8px;height:8px;border-radius:50%;background:#9CE2FB;pointer-events:none;
+  animation:spk .9s ease-out forwards}
+@keyframes spk{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* dice flying over the board */
+.diceOver{position:absolute;z-index:8;pointer-events:none;inset-inline-start:50%;top:46%;transform:translate(50%,-50%)}
+html[lang=en] .diceOver{transform:translate(-50%,-50%)}
+.dieBox{width:96px;height:96px;border-radius:20px;display:grid;place-items:center;font-family:var(--fd);font-weight:900;
+  font-size:46px;color:#06121C;background:linear-gradient(145deg,#E8FAFF,#8FDFFB 55%,#45C6F5);
+  box-shadow:0 20px 40px -14px #000,inset 0 3px 0 rgba(255,255,255,.85),0 0 60px -6px rgba(69,198,245,.9)}
+@keyframes tumble{0%{transform:rotate(0) scale(.5);opacity:0}
+  12%{opacity:1}
+  25%{transform:rotate(140deg) scale(1.22)}
+  50%{transform:rotate(300deg) scale(.92)}
+  75%{transform:rotate(430deg) scale(1.14)}
+  100%{transform:rotate(540deg) scale(1)}}
+.dieBox.roll{animation:tumble 1.15s var(--ease)}
+@keyframes dieOut{to{transform:scale(.3) translateY(-60px);opacity:0}}
+.dieBox.out{animation:dieOut .5s var(--ease) forwards}
+
+/* ===== split ===== */
+.split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:14px}
+.pane{border-radius:14px;overflow:hidden;border:1px solid rgba(123,63,228,.45);
+  background:linear-gradient(176deg,rgba(17,19,56,.86),rgba(7,8,26,.92))}
+.pane.gm{border-color:rgba(167,123,255,.5);box-shadow:0 0 0 1px rgba(167,123,255,.08)}
+.pane.tm.live{border-color:var(--cy);box-shadow:0 0 50px -24px rgba(69,198,245,1)}
+.ph{display:flex;align-items:center;gap:9px;padding:11px 15px;font-weight:800;font-size:14.5px;
+  border-bottom:1px solid rgba(123,63,228,.4)}
+.pane.gm .ph{background:linear-gradient(180deg,rgba(123,63,228,.26),transparent);color:#D7C3FF}
+.pane.tm .ph{background:linear-gradient(180deg,rgba(69,198,245,.2),transparent);color:var(--cy-l)}
+.pb{padding:15px;display:flex;flex-direction:column;gap:13px}
+.tabs{display:none;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.tabs button{min-height:48px;border-radius:11px;border:1px solid rgba(123,63,228,.5);background:rgba(18,20,58,.7);
+  color:var(--ink2);font-weight:800;cursor:pointer}
+.tabs button[aria-pressed=true]{background:linear-gradient(180deg,#A8E9FD,#45C6F5);color:#04121C;border-color:var(--cy)}
+@media(max-width:1000px){.split{grid-template-columns:1fr}.tabs{display:grid}.pane.off{display:none}}
+
+/* ===== playing card ===== */
+.stage{perspective:1400px;display:flex;justify-content:center}
+.flip{position:relative;width:100%;max-width:400px;aspect-ratio:3/4.1;transform-style:preserve-3d;
+  transition:transform .95s var(--ease)}
+.flip.on{transform:rotateY(180deg)}
+html[dir=rtl] .flip.on{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;overflow:hidden;
+  box-shadow:0 34px 60px -30px #000,0 0 0 1px rgba(156,226,251,.35)}
+.face.back{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  background:radial-gradient(ellipse at 50% 30%,#232A7E,#0D1036 70%)}
+.face.front{transform:rotateY(180deg);display:flex;flex-direction:column;gap:12px;padding:24px 22px;
+  background:linear-gradient(168deg,#1D2378,#0B0E33 72%)}
+html[dir=rtl] .face.front{transform:rotateY(-180deg)}
+.cut{position:absolute;inset:11px;border:1.5px solid rgba(156,226,251,.55);border-radius:12px;pointer-events:none;
+  clip-path:polygon(0 18px,18px 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 18px),calc(100% - 18px) 100%,
+    58% 100%,54% calc(100% - 13px),46% calc(100% - 13px),42% 100%,18px 100%,0 calc(100% - 18px))}
+.ctop{font-family:var(--fd);font-size:11px;letter-spacing:.3em;color:#8FA8DC}
+.cname{font-family:var(--fd);font-size:14px;font-weight:700;letter-spacing:.16em;text-align:center;line-height:1.6;color:#DCE9FF}
+.ctxt{font-size:20px;line-height:2;font-weight:600;flex:1;display:flex;align-items:center;text-align:center;
+  justify-content:center;color:#F1F7FF;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.cen{font-size:12.5px;line-height:1.6;color:#8FA8DC;border-top:1px dashed rgba(143,168,220,.35);padding-top:10px;direction:ltr;text-align:left}
+.cbadge{align-self:center;padding:4px 14px;border-radius:999px;font-family:var(--fd);font-size:10.5px;letter-spacing:.18em;font-weight:700}
+@keyframes zoomIn{0%{transform:scale(.3) translateY(80px);opacity:0}100%{transform:scale(1);opacity:1}}
+.zin{animation:zoomIn .55s var(--ease) both}
+@keyframes dock{0%{transform:scale(1.35);opacity:.001}100%{transform:scale(1);opacity:1}}
+.dock{animation:dock .5s var(--ease) both}
+
+/* ===== trainer dashboard ===== */
+.dash{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tbox{padding:11px 12px;border-radius:12px;border:1px solid rgba(123,63,228,.42);
+  background:linear-gradient(170deg,rgba(21,24,68,.78),rgba(8,9,30,.88));border-inline-start:4px solid var(--tc)}
+.tbox.now{border-color:var(--cy);box-shadow:0 0 30px -14px rgba(69,198,245,1)}
+.tname{font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:7px}
+.gauge{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px;position:relative}
+.gauge>i{display:block;height:100%;border-radius:99px;transition:width 1s var(--ease);
+  background:linear-gradient(90deg,#1A8CC4,#45C6F5 60%,#9CE2FB)}
+.gauge.lo>i{background:linear-gradient(90deg,#A32B33,#FF6B74)}
+.gauge.hi>i{background:linear-gradient(90deg,#249159,#49D68A 60%,#A5F2C8)}
+.grow{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:12.5px;color:var(--ink2)}
+.grow b{font-family:var(--fd);font-size:17px;color:var(--cy-l)}
+@keyframes fly{0%{opacity:0;transform:translateY(12px)}22%{opacity:1}100%{opacity:0;transform:translateY(-30px)}}
+.dlt{position:absolute;inset-inline-end:2px;top:-24px;font-family:var(--fd);font-weight:900;font-size:16px;animation:fly 1.8s var(--ease) both}
+.dlt.up{color:#8CF0B4}.dlt.dn{color:#FFA0A6}
+
+.crit{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:10px 0;
+  border-bottom:1px solid rgba(123,63,228,.22)}
+.crit:last-of-type{border-bottom:0}
+.cn{font-size:14.5px;font-weight:700}
+.cd{font-size:12px;color:var(--ink3);line-height:1.5}
+.seg{display:inline-flex;gap:4px}
+.seg button{width:40px;height:40px;border-radius:10px;border:1px solid rgba(123,63,228,.55);background:rgba(8,9,30,.85);
+  color:var(--ink2);font-weight:800;font-family:var(--fd);font-size:14px;cursor:pointer;transition:transform .12s}
+.seg button:hover{transform:translateY(-2px)}
+.seg button[aria-pressed=true]{background:linear-gradient(180deg,#A8E9FD,#45C6F5);color:#04121C;border-color:var(--cy);
+  box-shadow:0 0 20px -5px rgba(69,198,245,1)}
+.tot{display:flex;align-items:baseline;gap:9px;font-family:var(--fd);font-size:34px;font-weight:900;color:var(--cy-l)}
+.tot small{font-size:13px;color:var(--ink3);font-family:var(--fb)}
+
+/* ===== options ===== */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:12px 13px;border-radius:12px;cursor:pointer;
+  border:1px solid rgba(123,63,228,.42);background:rgba(18,20,58,.5);transition:border-color .2s,background .2s,transform .15s}
+.opt:hover{border-color:var(--vio-l);transform:translateX(-3px)}
+html[lang=en] .opt:hover{transform:translateX(3px)}
+.opt input{margin-top:4px;accent-color:var(--cy);width:18px;height:18px;flex:none}
+.on{font-weight:700;font-size:15.5px}
+.ef{font-size:12.5px;color:var(--ink3);margin-top:3px;display:block}
+.opt.sel{border-color:var(--cy);background:linear-gradient(90deg,rgba(69,198,245,.18),rgba(69,198,245,.03));
+  box-shadow:0 0 26px -12px rgba(69,198,245,1)}
+.pl{color:var(--ok);font-weight:800}.mi{color:var(--err);font-weight:800}
+
+/* ===== player board ===== */
+.skills{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+@media(max-width:620px){.skills{grid-template-columns:repeat(4,1fr)}}
+.sk{text-align:center;padding:8px 2px;border-radius:11px;border:1px solid rgba(123,63,228,.35);background:rgba(8,9,30,.5)}
+.sk.bot{border-color:rgba(167,123,255,.4);background:rgba(167,123,255,.06)}
+.sk.bot.full{border-color:#A77BFF;background:rgba(167,123,255,.14);box-shadow:0 0 24px -12px #A77BFF}
+.sk.full{border-color:var(--cy);background:rgba(69,198,245,.11);box-shadow:0 0 24px -12px rgba(69,198,245,1)}
+.sk .lb{font-family:var(--fd);font-size:9.5px;letter-spacing:.06em;color:var(--ink3);margin-top:4px}
+.sk.full .lb{color:var(--cy-l)}
+@keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+.pt.new{transform-box:fill-box;transform-origin:center;animation:pop .45s var(--ease) both}
+
+/* ===== overlay ===== */
+.ov{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:20px;
+  background:radial-gradient(circle at 50% 45%,rgba(16,18,62,.94),rgba(3,4,14,.97));backdrop-filter:blur(4px)}
+.ovin{text-align:center;max-width:580px;width:100%;max-height:88vh;overflow:auto;animation:zoomIn .45s var(--ease) both}
+.ovk{font-family:var(--fd);letter-spacing:.24em;font-size:11px;color:var(--vio-l)}
+.ovt{font-family:var(--fd);font-size:clamp(26px,6vw,46px);font-weight:900;margin:12px 0;color:#fff;
+  text-shadow:0 0 36px rgba(69,198,245,.8)}
+.ov p{color:var(--ink2);line-height:1.8}
+@keyframes flash{0%{opacity:.8}100%{opacity:0}}
+.flash{position:fixed;inset:0;z-index:99;pointer-events:none;background:#fff;animation:flash .5s ease-out forwards}
+
+/* ===== customer mix + skill tracks ===== */
+.mix{display:flex;height:11px;border-radius:99px;overflow:hidden;margin-top:9px;background:rgba(255,255,255,.07)}
+.mix>span{display:block;transition:width .9s var(--ease)}
+.mixleg{display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--ink2)}
+.mixleg b{font-family:var(--fd);color:var(--ink)}
+.tracks{display:flex;flex-direction:column;gap:7px}
+.trk{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center;font-size:13px}
+.trk .tl{color:var(--ink2)}
+.trk .tbar{display:flex;gap:3px}
+.trk .tbar i{width:16px;height:7px;border-radius:2px;background:rgba(255,255,255,.1)}
+.trk .tbar i.on{background:linear-gradient(90deg,#6A2FD4,#A77BFF)}
+.trk b{font-family:var(--fd);font-size:13px;color:var(--vio-l);min-width:16px;text-align:center}
+
+/* ===== the handbook, folded — styled after the printed Player Manual ===== */
+.sheet{border:1px solid rgba(69,198,245,.4);border-radius:12px;overflow:hidden;background:rgba(8,10,34,.6)}
+.sheetBtn{width:100%;min-height:48px;display:flex;align-items:center;gap:9px;padding:0 14px;cursor:pointer;
+  background:linear-gradient(90deg,rgba(69,198,245,.16),transparent);border:0;color:var(--ink);font-size:15px}
+.sheetBtn:hover{background:linear-gradient(90deg,rgba(69,198,245,.26),transparent)}
+.sIco{font-family:var(--fd);color:var(--cy)}
+@keyframes unfold{from{opacity:0;transform:translateY(-14px) rotateX(-24deg)}to{opacity:1;transform:none}}
+.sheetBody{transform-origin:top;animation:unfold .5s var(--ease) both;max-height:440px;overflow:auto;
+  position:relative;padding:0;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 1px,transparent 1px 3px),
+    radial-gradient(ellipse 80% 50% at 18% 0%,rgba(123,63,228,.3),transparent 62%),
+    linear-gradient(165deg,#120F33,#0A0A24 70%)}
+.hbHead{display:flex;align-items:center;gap:14px;padding:16px 18px 12px;border-bottom:1px solid rgba(123,63,228,.4);
+  position:sticky;top:0;z-index:2;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(18,15,51,.97),rgba(18,15,51,.8))}
+.hbLogo{font-family:var(--fd);font-weight:900;font-size:17px;letter-spacing:.17em;line-height:1.15;color:#fff;
+  text-shadow:0 0 26px rgba(69,198,245,.6)}
+.hbLogo i{display:block;font-style:normal;font-size:.62em;letter-spacing:.42em;color:var(--cy);margin-top:3px}
+.hbRule{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(69,198,245,.6),transparent)}
+.hbBody{padding:4px 20px 22px}
+.hsec{padding:15px 0;border-bottom:1px solid rgba(123,63,228,.22)}
+.hsec:last-child{border-bottom:0}
+.hsec h4{display:flex;align-items:center;gap:9px;font-size:16.5px;font-weight:900;color:#fff;margin-bottom:9px}
+.hsec h4::before{content:"▣";display:grid;place-items:center;width:22px;height:22px;flex:none;font-size:13px;
+  color:#06071A;background:linear-gradient(180deg,#CFEFFB,#8FC4DE);border-radius:3px}
+.hsec h5{font-size:13.5px;font-weight:700;color:var(--cy);margin:11px 0 5px}
+.hsec ul{margin:0;padding:0;list-style:none}
+.hsec li{position:relative;padding-inline-start:20px;font-size:13.5px;line-height:1.95;color:#C5D6F2}
+.hsec li::before{content:"◉";position:absolute;inset-inline-start:0;top:0;color:var(--cy);font-size:11px;line-height:2.3}
+.hsec li b{color:#fff}
+.hsec p{margin:5px 0;font-size:13px;line-height:1.85;color:#9FB0D9}
+.hbNote{margin-top:14px;padding:11px 13px;border-radius:9px;font-size:13px;line-height:1.8;
+  border:1px solid rgba(167,123,255,.4);background:rgba(123,63,228,.12);color:#D6C4FF}
+.hbBrackets{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.hbBrackets span{font-family:var(--fd);font-size:11.5px;padding:4px 10px;border-radius:7px;
+  border:1px solid rgba(69,198,245,.4);background:rgba(69,198,245,.08);color:var(--cy-l)}
+
+/* ===== bits ===== */
+.steps{display:flex;gap:5px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.steps li{font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:999px;color:var(--ink3);
+  border:1px solid rgba(123,63,228,.35);background:rgba(8,9,30,.6)}
+.steps li.now{color:#04121C;background:linear-gradient(180deg,#A8E9FD,#45C6F5);border-color:var(--cy)}
+.steps li.done{color:#A5F2C8;border-color:rgba(73,214,138,.5)}
+.nt{padding:11px 13px;border-radius:11px;font-size:14px;line-height:1.7;border:1px solid rgba(123,63,228,.35);
+  background:rgba(8,9,30,.55);color:var(--ink2)}
+.nt.w{border-color:rgba(245,196,81,.45);background:rgba(245,196,81,.08);color:#FFE3A4}
+.nt.o{border-color:rgba(73,214,138,.45);background:rgba(73,214,138,.08);color:#A5F2C8}
+.nt b{color:var(--ink)}
+.coach{display:flex;gap:11px;align-items:flex-start;padding:13px 14px;border-radius:12px;
+  border:1px solid rgba(69,198,245,.5);background:linear-gradient(90deg,rgba(69,198,245,.16),transparent)}
+.coach i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--fd);font-style:normal;
+  font-weight:900;font-size:13px;color:#04121C;background:linear-gradient(180deg,#9CE2FB,#45C6F5)}
+.coach span{font-size:15px;line-height:1.7}
+textarea.ta{width:100%;min-height:96px;border-radius:12px;padding:12px;font:inherit;font-size:15.5px;resize:vertical;
+  background:rgba(5,6,22,.85);color:var(--ink);border:1px solid rgba(123,63,228,.55)}
+textarea.ta:focus{outline:none;border-color:var(--cy);box-shadow:0 0 0 3px rgba(69,198,245,.22)}
+input.in{min-height:44px;border-radius:11px;padding:0 13px;font:inherit;font-size:15.5px;width:100%;
+  background:rgba(5,6,22,.85);color:var(--ink);border:1px solid rgba(123,63,228,.55)}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th,table.t td{padding:9px 10px;border-bottom:1px solid rgba(123,63,228,.25);text-align:start}
+table.t th{color:var(--ink3);font-size:12px;letter-spacing:.05em}
+table.t tr.me td{background:rgba(69,198,245,.08)}
+details.qa{margin-top:18px;border:1px solid rgba(123,63,228,.3);border-radius:12px;padding:12px 14px;background:rgba(8,9,30,.5)}
+details.qa summary{cursor:pointer;font-weight:700;color:var(--ink2);min-height:32px;display:flex;align-items:center}
+/* ===== touch and small screens ===== */
+@media(pointer:coarse){
+  .seg button{width:46px;height:46px;font-size:15px}
+  .b.s{min-height:44px}
+  .sheetBtn{min-height:54px}
+  .sk{padding:10px 2px}
+  .opt{padding:14px 13px}
+}
+@media(max-width:700px){
+  .wrap{padding:12px 12px 72px}
+  .bwrap{padding:6px}
+  .bwrap svg{min-width:620px}          /* the board stays readable; the frame scrolls */
+  .scrollHint{display:flex}
+  .skills{grid-template-columns:repeat(4,1fr)}
+  .dash{grid-template-columns:1fr}
+  .crit{grid-template-columns:1fr;gap:4px}
+  .seg{justify-content:space-between;width:100%}
+  .seg button{flex:1;max-width:60px}
+  .tot{font-size:28px}
+  .ctxt{font-size:17px;line-height:1.9}
+  .ovin{padding:20px!important}
+  .ovt{font-size:26px}
+}
+.scrollHint{display:none;align-items:center;gap:7px;justify-content:center;margin-top:8px;font-size:12px;color:var(--ink3)}
+.sr-live{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="ovz"></div>
+<script>
+const CARDS={
+"deal": [
+{
+"ar": "أنا داخل أشتري عربية للعيلة، لكن كل واحد في البيت عاجبه موديل مختلف ازاي الاقي حاجه مناسبة للكل",
+"en": "A family needs one car, but every family member wants a different model."
+},
+{
+"ar": "أنا كنت بدور على شقة صغيرة، لكن بعد ما شوفت المشروع بقيت بفكر في شقة أكبر. المشكلة إن ده هيغير الميزانية و الخطة اللي كنت حاططها",
+"en": "Was looking for a small apartment; after seeing the project wants a bigger one, which changes the budget."
+},
+{
+"ar": "إحنا محتاجين الجهاز الجديد لكن عندنا أكتر من قسم بيطالب بميزانية السنة دي، ولازم أقنع الإدارة إن الجهاز ده أولى من باقي الطلبات",
+"en": "The new equipment is needed, but other departments also want this year's budget."
+},
+{
+"ar": "انا مش ضد التأمين لكن طول عمري بصرف فلوسي في حاجات بشوف نتيجتها فورا، هنا بدفع مقابل حاجه يمكن ما احتاجهاش خالص",
+"en": "Not against insurance, but always spends on things with an immediate result."
+},
+{
+"ar": "الفريق عندي بيشتكي من بطء النظام الحالي لكن اي تغيير هيحتاج تدريب و يمكن الإنتاجيه تقل اول شهر",
+"en": "The team complains the current system is slow, but change needs training and may hurt month-one productivity."
+},
+{
+"ar": "انا داخل اشتري دبلة خطوبة لكن بصراحة الناس حواليا مركزة علي حجم الألماسة وانا يهمني اكتر الجودة والقطعه تعيش سنين",
+"en": "Buying an engagement ring; everyone focuses on diamond size, but the customer cares about quality and lasting value."
+},
+{
+"ar": "أنا جيت أشتري موبايل، لكن كل ما أشوف موديل جديد ألاقي فيه ميزة مختلفة. رشحلي انسب موديل لاستخداماتي.",
+"en": "Wants a new phone, but every model has a different standout feature."
+},
+{
+"ar": "لوغيرت شركة الاتصالات هيوفرولي فلوس لكن اي مشكلة في نقل الخطوط هتعطل شغل الشركة كلها",
+"en": "Switching carriers would save money, but any porting issue would disrupt the whole company."
+},
+{
+"ar": "الفندق عجبني لكن الضيوف جايين من دول مختلفة وكل واحد عنده توقعات مختلفة خايف المكان ميعجبش الكل",
+"en": "Likes the hotel, but guests come from many countries with different expectations."
+},
+{
+"ar": "انا بفكر اشتري دهب لكن مش عارف اعتبره استثمار ولا مجرد زينة كل حد بيديني نصيحة مختلفة ومش عارف اختار القطعه اللي تحققلي افضل قيمة علي المدي الطويل",
+"en": "Thinking about buying gold, unsure if it is an investment or just jewellery."
+},
+{
+"ar": "الاطباء متحمسين للجهاز لكن فريق الصيانة عنده تخوف من تكاليف التشغيل بعد الشراء",
+"en": "Doctors are excited about the new device, but maintenance worries about running costs."
+},
+{
+"ar": "انا مقتنع بالتدريب لكن الموظفين اصلا بيشتكوا ان عندهم وقت قليل خايف اضيف عليهم ضغط بدل ما اساعدهم",
+"en": "Believes in the training, but staff already say they have too little time."
+},
+{
+"ar": "انا بجهز البيت كله ولو صرفت ميزانية كبيرة علي غرفة المعيشة هضطر اقلل في باقي البيت",
+"en": "Furnishing the whole house: a big living-room budget means cutting back elsewhere."
+},
+{
+"ar": "شركة الشحن الحالية أسعارها زادت، لكن علاقتنا معاهم ممتازة من سنين التغيير ممكن يوفر فلوس، لكن ممكن يكلفني ثقة بنيتها",
+"en": "The shipping company raised prices, but the relationship has been excellent for years."
+},
+{
+"ar": "أنا محتاج بدلة لمناسبة مهمة، لكن عندي ميزانية محددة. كل ما ألاقي خامة أحسن، السعر يزيد.",
+"en": "Needs a suit for an important occasion on a fixed budget, but better fabric raises the price."
+}
+],
+"hesitant": [
+{
+"ar": "أنا كل مرة أقول خلاص هشتري العربية دي... و بعدين أرجع أفكر يمكن أكون مستعجل. لسه حاسس إني مش مطمن آخد القرار",
+"en": "Keeps deciding to finally buy the car, then backs off."
+},
+{
+"ar": "أنا زرت المشروع مرتين، وكل مرة أقتنع أكتر لكن لما أرجع البيت بحس إن يمكن الأفضل أستنى شوية.",
+"en": "Has visited the project twice and gets more convinced, but at home thinks maybe it is better to wait."
+},
+{
+"ar": "الخاتم عاجبني جدًا، لكن كل ما أتخيل إني هشتريه دلوقتي بحس يمكن ألاقي اختيار أحسن بعد أسبوع أو اتنين. مش قادره اخد الخطوة",
+"en": "Loves the ring, but keeps imagining a better option might turn up in a week or two."
+},
+{
+"ar": "الجهاز هيضيف للعيادة، لكن الفريق متعود على الأجهزة الحالية. ممكن أشتريه وألاقي محدش استخدمه بالشكل المطلوب",
+"en": "The device would help the clinic, but the team is used to the current equipment."
+},
+{
+"ar": "انا مقتنع بأهمية التأمين، لكن طول عمري معتمد على نفسي و ضد فكرة إني ألتزم بقسط شهري",
+"en": "Believes insurance matters, but has always relied on themselves and resists a monthly payment."
+},
+{
+"ar": "السيستم واضح إنه هيحل مشاكل عندنا، لكني مش قادر آخد خطوة التفعيل. حاسس إني محتاج أتأكد مرة أخيرة...",
+"en": "Knows the system would solve their problems, but can't take the activation step."
+},
+{
+"ar": "المدرسة عجبتني جدًا، لكن بنتي مرتبطة بصحابها في المدرسة الحالية. خايفه أنقلها وتحتاج وقت طويل تتأقلم",
+"en": "Loves the school, but the daughter is attached to her friends at the current one."
+},
+{
+"ar": "الفندق مناسب للمؤتمر، لكن مش حاسس انه اوفر حاجه",
+"en": "The hotel suits the conference, but doesn't feel it's the best value."
+},
+{
+"ar": "أنا مقتنع إن الماكينة هتزود الإنتاج، لكن لو السوق هدي بعد ما أشتريها، هتبقى تكلفة كبيرة على الشركة",
+"en": "Believes the machine will boost production, but worries demand may drop afterwards."
+},
+{
+"ar": "الموبايل عاجبني، لكن كل شوية أسمع إن موديل جديد هينزل قريب. مش عارف أشتري دلوقتي ولا أستنى",
+"en": "Likes the phone, but keeps hearing a new model is coming soon."
+},
+{
+"ar": "الباقة هتوفر علينا، لكن تغيير مزود الخدمة ممكن يسبب تعطيل للشغل كام يوم، وده اللي مخليني متردد",
+"en": "The package would save money, but switching providers might disrupt work for a few days."
+},
+{
+"ar": "أنا عارف إن تغيير شركة الشحن ممكن يفيدنا، لكن متعود على الوضع الحالي.",
+"en": "Knows switching shipping companies could help, but is used to how things work now."
+},
+{
+"ar": "الأثاث مناسب جدًا، لكن لسه بخلص تشطيب البيت. خايف أشتري دلوقتي وبعدها أكتشف إن المقاسات أو الألوان مش مناسبة",
+"en": "The furniture fits, but the home's finishing isn't done; worried sizes or colours won't match."
+},
+{
+"ar": "أنا مقتنع بالطاقة الشمسية بس مش عارف التوفير المتوقع هيعوض فكرة الاستثمار ولا لا",
+"en": "Believes in solar energy, but isn't sure the savings justify the investment."
+},
+{
+"ar": "البرنامج التدريبي شكله قوي، لكن الإدارة هتسألني عن العائد المتوقع. أنا مقتنع، بس خايف مقدرش أثبت قيمة الاستثمار بعد التنفيذ",
+"en": "The training programme looks strong, but management will ask about the expected return."
+}
+],
+"tough": [
+{
+"ar": "بصراحة أنا دخلت 4 معارض قبلكم، و كل مندوب بيقول إن عربيته هي الأفضل. وفر كلام التسويق لو عندك حاجة مختلفة قولها، غير كده متضيعش وقتي",
+"en": "Has already visited 4 showrooms; every salesperson claims theirs is best."
+},
+{
+"ar": "أنا سمعت وعود كتير من شركات عقارات قبل كده، و كلهم كانوا بيتكلموا عن التسليم في معاده. في الآخر استنيت سنة زيادة. متقوليش وعود قولي إيه الضمان",
+"en": "Has heard many on-time delivery promises before and ended up waiting a year extra."
+},
+{
+"ar": "كل محلات الدهب بتقول إن شغلها أعلى جودة. أنا مش بثق في أي كلام بيتقال داخل المعرض. وريني دليل يخليني أصدقك",
+"en": "Every gold shop claims the highest quality; wants proof, not showroom talk."
+},
+{
+"ar": "لو جاي تعرض عليا كتالوج ومواصفات، يبقى وفر وقتك. أنا اشتريت أجهزة قبل كده واتقال عليها نفس الكلام، ولما حصلت مشكلة محدش رد علينا",
+"en": "Bought devices before with the same pitch and got no support when problems came."
+},
+{
+"ar": "أنا عندي قناعة إن شركات التأمين كلها ممتازة وقت البيع ولما تيجي تطالب بحقك تبدأ المشاكل. إيه اللي يخليني أصدق إنكم مختلفين",
+"en": "Insurance companies are great at the sale; the problems start at claim time."
+},
+{
+"ar": "كل شركة Software بتوعد إنها هتزود الإنتاجية 30% أو 40%. محدش بيقول لما المشروع يفشل. أنا مش هقتنع بشعارات",
+"en": "Every software company promises 30-40% more productivity; no one talks about failed projects."
+},
+{
+"ar": "كل المدارس بتتكلم عن القيم و الأنشطة والتطوير. في الآخر كله بيجري ورا الدرجات. متقوليش كلام بروشورات",
+"en": "Every school talks about values and activities; in the end it is all about grades."
+},
+{
+"ar": "قبل كده حجزنا مؤتمر في فندق خمس نجوم، والخدمة كانت سيئة جدًا. التصنيف بالنسبالي بقى ملوش أي قيمة",
+"en": "Booked a five-star hotel for a conference once and the service was terrible."
+},
+{
+"ar": "أنا غيرت مورد السنة اللي فاتت بسبب وعود كتير، وبعد التوريد اكتشفت إن الدعم الفني ضعيف جدًا. مش مستعد أكرر نفس الغلطة",
+"en": "Switched suppliers last year over big promises, then found technical support very weak."
+},
+{
+"ar": "انا بسمع منك دلوقتي، لكن لو حسيت إنك بتحاول تبيعلي أي حاجة و خلاص هقوم أمشي فورا",
+"en": "Willing to listen, but will walk away immediately if it feels like a hard sell."
+},
+{
+"ar": "كل شركات الاتصالات بتقول عندها أفضل تغطية. أول ما أوقع العقد تبدأ المشاكل. بالنسبة لي كلهم نسخة من بعض",
+"en": "Every telecom provider claims the best coverage; problems start right after signing."
+},
+{
+"ar": "أنا عندي شحنة واحدة اتأخرت السنة اللي فاتت وكلفتني عقد كامل. من يومها مبقتش بثق بسهولة في أي شركة شحن",
+"en": "One delayed shipment last year cost an entire contract."
+},
+{
+"ar": "أنا دفعت مبلغ كبير قبل كده في أثاث، وبعد سنة بدأ يبوظ. من ساعتها أي حد يقولي «جودة عالية» بالنسبة لي مجرد كلام",
+"en": "Paid a lot for furniture before and it fell apart within a year."
+},
+{
+"ar": "انا مش مقتنع إن الأرقام اللي بتقولوها عن التوفير بتحصل على أرض الواقع. كل الشركات بتحسب أفضل سيناريو، لكن الحقيقة مختلفة",
+"en": "Doesn't believe the presented savings numbers are realistic."
+},
+{
+"ar": "أنا مهتم أشتري سبائك، لكن أي غلطة في الوزن أو المصنعية هتفرق معايا. متقوليش 'اطمن'... وريني ليه المفروض أثق فيكم",
+"en": "Interested in gold bars; any error in weight or craftsmanship matters a lot."
+}
+],
+"competence": [
+{
+"ar": "بصراحة أنا معنديش وقت. قدامك دقيقتين بس. لو قدرت تخليني أفهم ليه العربية دي تستحق اهتمامي هكمل معاك، غير كده هكمل جولتي",
+"en": "Honestly has no time: you have two minutes."
+},
+{
+"ar": "أنا عندي بين كل مريض و التاني خمس دقايق. قول اللي عندك بسرعة، ولو هتدخل في تفاصيل تقنية كتير يبقى نخليها مرة تانية",
+"en": "Has five minutes between patients: get to the point, skip heavy technical detail."
+},
+{
+"ar": "أنا شوفت المشروع على الإنترنت. مش محتاج حد يعيدلي نفس الكلام. قولي حاجة جديدة أنا مش عارفها",
+"en": "Already researched the project online and doesn't want to hear the same thing again."
+},
+{
+"ar": "أنا داخل أشتري هدية. مش فاهم في أنواع الدهب ولا الأحجار. لو هتكلمني بمصطلحات معقدة مش هفهم حاجة",
+"en": "Buying a gift, doesn't know gold or gemstone types; will be lost with complicated terms."
+},
+{
+"ar": "أنا مش مهتم أعرف السيستم بيشتغل إزاي. أنا عايز أعرف هيحل إيه في شغلي",
+"en": "Doesn't care how the system works technically; wants to know what problem it solves."
+},
+{
+"ar": "أنا سمعت كلام كتير عن التأمين. كل شركة بتقول إنها الأفضل. إيه اللي يخليني أصدقك أنت؟",
+"en": "Has heard a lot about insurance already; what makes you credible?"
+},
+{
+"ar": "بصراحة أنا تايه. كل الأجهزة بقت شبه بعض. لو هتلخصلي في دقيقة واحدة، أختار ده ليه؟",
+"en": "Feels lost, every device looks the same: summarise in one minute why this one."
+},
+{
+"ar": "أنا عندي خمس حاجات أهم من شكل الفندق: التنظيم، سرعة الاستجابة، الأكل، المواقف، وسهولة الدخول. ابدأ باللي يهمني",
+"en": "Has five priorities that matter more than looks: organisation, response speed, food, parking, access."
+},
+{
+"ar": "قبل ما تكمل... العائد هيظهر بعد قد إيه؟ ولو الماكينة عطلت؟ ولو الطلب قل؟ جاوب على دول الأول",
+"en": "Before continuing: how long until the return shows? What if it breaks? What if demand drops?"
+},
+{
+"ar": "أنا مش بدور على المدرسة الأغلى. أنا بدور على المكان اللي ابني هيكون سعيد فيه.",
+"en": "Isn't looking for the most expensive school, but where their child will be happy."
+},
+{
+"ar": "لو هتشرحلي الباقة بالأرقام بس همل. وريني مثال حقيقي هيحصل مع شركتي",
+"en": "Numbers alone will lose their interest; show a real example for their company."
+},
+{
+"ar": "أنا مش باشتري الكنبة بس علشان شكلها. أنا عندي أطفال. عايز أعرف هتعيش قد إيه وهتستحمل الاستخدام",
+"en": "Doesn't buy a sofa just because it looks good; has kids and wants to know how long it lasts."
+},
+{
+"ar": "انا كل يوم بيتعرض عليا شركات شحن جديدة. لو هتقول نفس الكلام اللي بسمعه كل أسبوع، يبقى نوفر وقتنا.",
+"en": "Gets pitched a new shipping company every day."
+},
+{
+"ar": "إحنا جربنا تدريب قبل كده. الموظفين استمتعوا... لكن الأداء متغيرش. إيه المختلف المرة دي",
+"en": "Tried training before: staff enjoyed it, but performance didn't change."
+},
+{
+"ar": "أنا مش محتاج عرض مبيعات. وريني بالأرقام هيوفرلي كام في السنة. ولو الأرقام مقنعة، ساعتها نكمل",
+"en": "Doesn't need a sales pitch: show the real annual savings numbers."
+}
+]
+};
+/* ELEVATE LAB — board, data, audio */
+
+const T = {
+  tagline:{ar:"محاكاة حيّة لمهارات البيع على لوحة واحدة. أربعة فرق، قرار واحد في كل جولة، وتقييم مباشر أمام الجميع.",
+           en:"A live sales-skills simulation on one board. Four teams, one decision per turn, scored live in front of the room."},
+  dEnter:{ar:"ادخل إلى اللوحة",en:"ENTER THE BOARD"},
+  dPlay:{ar:"ابدأ اللعب",en:"Play"},
+  dPlayT:{ar:"شاشة واحدة تجمع لوحة المدرّب وشاشة الفريق. أنت تقود فريق أطلس، وبقية الفرق تلعب أمامك.",
+          en:"One screen with the trainer's console and the team screen. You lead Atlas; the other teams play alongside you."},
+  dFacil:{ar:"لوحة المدرّب",en:"Trainer console"},
+  dFacilT:{ar:"إدارة الجولات، التقييم على العوامل الخمسة، ومتابعة رضا العملاء لكل فريق.",
+           en:"Round control, five-factor scoring, and a live satisfaction read for every team."},
+  dRules:{ar:"القواعد في خمس دقائق",en:"Rules in five minutes"},
+  dRulesT:{ar:"اللوحتان، العوامل الخمسة، القرارات، والنقاط.",en:"Two boards, five factors, decisions and scoring."},
+  back:{ar:"رجوع",en:"Back"},
+  setup:{ar:"تجهيز الجلسة",en:"Session setup"},
+  setupT:{ar:"أربعة فرق تلعب في الوقت نفسه. يبدأ كل فريق بمهارة مكتملة ومهارة نصف مكتملة من تدريب سابق.",
+          en:"Four teams play at once. Each starts with one completed skill and one half-completed skill from earlier training."},
+  names:{ar:"أسماء الفرق",en:"Team names"},
+  options:{ar:"الخيارات",en:"Options"},
+  rounds:{ar:"عدد التحديات لكل فريق",en:"Challenges per team"},
+  roundsT:{ar:"اللعبة الكاملة من عشرة إلى ثلاثة عشر تحديًا لكل فريق.",en:"A full game runs 10–13 challenges per team."},
+  begin:{ar:"ابدأ الجلسة",en:"Begin the session"},
+  round:{ar:"الجولة",en:"Round"},
+  trainer:{ar:"لوحة المدرّب",en:"Trainer console"},
+  teamScreen:{ar:"شاشة الفريق",en:"Team screen"},
+  roll:{ar:"شغّل وحدة الإشارة",en:"Run the signal module"},
+  rolling:{ar:"جارٍ المسح…",en:"Scanning…"},
+  startScan:{ar:"ابدأ المسح",en:"Start the scan"},
+  tapCore:{ar:"اضغط النواة حين يكون الفريق جاهزًا",en:"Tap the core when the team is ready"},
+  cont:{ar:"تابع",en:"Continue"},
+  readCard:{ar:"اقرأوا الموقف بصوت مسموع، ثم تابعوا",en:"Read the situation aloud, then continue"},
+  otherTurn:{ar:"دور فريق آخر — يلعب على اللوحة",en:"Another team's turn, playing on the board"},
+  draw:{ar:"اسحب البطاقة",en:"Draw the card"},
+  pickMain:{ar:"اختاروا قرارًا رئيسيًا واحدًا",en:"Choose one main decision"},
+  supportOpen:{ar:"قرارات الدعم المتاحة",en:"Supporting decisions unlocked"},
+  lockDec:{ar:"ثبّتوا القرار",en:"Lock the decision"},
+  answerT:{ar:"الفريق يعرض معالجته أمام القاعة. اكتبوا سطرًا أو سطرين للسجل.",
+           en:"The team presents its approach to the room. Write a line or two for the record."},
+  send:{ar:"سلّموا الإجابة",en:"Submit the answer"},
+  waitingScore:{ar:"بانتظار تقييم المدرّب",en:"Waiting for the trainer's score"},
+  scoreHead:{ar:"قيّم الفريق على العوامل الخمسة",en:"Score the team on the five factors"},
+  saveScore:{ar:"احفظ التقييم",en:"Save the score"},
+  results:{ar:"نتيجة الجلسة",en:"Session results"},
+  debrief:{ar:"التغذية الراجعة",en:"Debrief"},
+  exportLog:{ar:"صدّر سجل الجلسة",en:"Export the session record"},
+  again:{ar:"ابدأ من جديد",en:"Start again"},
+  sat:{ar:"العملاء المروّجون",en:"Promoters"},
+  natural:{ar:"عملاء عاديون",en:"Regular"},
+  mixT:{ar:"توزيع العملاء",en:"Customer mix"},
+  skillDev:{ar:"تطوّر مهارات الفريق",en:"Team skill development"},
+  manual:{ar:"دليل الفريق",en:"Team handbook"},
+  manualOpen:{ar:"افتح الدليل",en:"Open the handbook"},
+  manualClose:{ar:"اطوِ الدليل",en:"Fold it back"},
+  sharedBoard:{ar:"اللوحة معروضة للجميع",en:"The board is shown to everyone"},
+  angry:{ar:"العملاء الغاضبون",en:"Angry customers"},
+  tokens:{ar:"قطع مهارة",en:"skill tokens"},
+  robot:{ar:"أنتاريس",en:"Antares"},
+  teamSkill:{ar:"مهارة الفريق",en:"Team skill"},
+  howManyBot:{ar:"كم قطعة تُعلّمونها لأنتاريس؟",en:"How many tokens go to Antares?"},
+  botCap:{ar:"لا يمكن لمهارة أنتاريس أن تتجاوز مهارة الفريق.",en:"Antares' skill can never pass the team's."},
+  botFull:{ar:"أنتاريس بلغ حدّ هذه المهارة",en:"Antares is already at the cap for this skill"},
+  teaching:{ar:"تعليم أنتاريس",en:"Teaching Antares"},
+  busyStation:{ar:"المحطة مشغولة",en:"Station taken"},
+  busyStationT:{ar:"فريق آخر استخدم هذه المحطة. اختاروا المحطة التي قبلها أو التي بعدها.",en:"Another team used this station. Take the one before it or the one after it."},
+  before:{ar:"المحطة السابقة",en:"The one before"},
+  after:{ar:"المحطة التالية",en:"The one after"},
+  mix:{ar:"توزيع العملاء في البداية: ٢٠٪ مروّجون، ٥٠٪ عاديون، ٣٠٪ غاضبون.",en:"Starting mix: 20% promoters, 50% regular, 30% angry."},
+  skillsDone:{ar:"مهارات مكتملة",en:"Skills completed"},
+  outOf25:{ar:"من ٢٥",en:"of 25"},
+  station:{ar:"المحطة",en:"Station"},
+  decision:{ar:"القرار",en:"Decision"},
+  team:{ar:"الفريق",en:"Team"},
+  deck:{ar:"المجموعة",en:"Deck"},
+  rank:{ar:"الترتيب",en:"Rank"},
+  you:{ar:"أنت",en:"you"},
+  nodeTitle:{ar:"محطة أنتاريس",en:"Antares node"},
+  nodeBody:{ar:"محطة دعم. يحصل الفريق على قطعة مهارة إضافية ويمرّ.",en:"A support station: the team takes one extra skill token and moves on."},
+  playingNow:{ar:"الدور الآن على",en:"Now playing"},
+  teamWriting:{ar:"الفريق يكتب الآن. ترى أنه انتهى، ولا ترى نصّ إجابته.",en:"The team is writing. You see that they finished, not what they wrote."},
+  simTurn:{ar:"دور فريق آخر",en:"Another team's turn"},
+  watch:{ar:"تابع اللوحة",en:"Watch the board"},
+  skip:{ar:"تخطَّ",en:"Skip"},
+  crisis:{ar:"أزمة ثقة",en:"Trust crisis"},
+  crisisT:{ar:"تجاوزت نسبة العملاء الغاضبين خمسًا وخمسين بالمئة. يمكن للمدرّب أن يلعب بطاقة الاسترداد، وإذا أجاب الفريق إجابة سليمة شغّل وحدة الإشارة الرباعية واستعاد نقاطًا.",
+           en:"The angry-customer share passed 55%. The trainer may play the Recovery card; a sound answer lets the team run the four-cell signal and recover points."},
+  recovery:{ar:"العب بطاقة الاسترداد",en:"Play the Recovery card"},
+  skillDone:{ar:"اكتملت مهارة",en:"Skill complete"},
+  skillDoneT:{ar:"سيتعلّمها أنتاريس في الدور التالي. هو دائمًا خطوة خلف البشر.",en:"Antares learns it next turn: always one step behind the humans."},
+  whichSkill:{ar:"على أي مهارة توزّعون القطع؟",en:"Which skill do the tokens go to?"},
+  whichSkillT:{ar:"توضع كل القطع على مهارة واحدة. ست قطع تكمل المهارة.",en:"All tokens go on one skill. Six tokens complete it."},
+  place:{ar:"وزّعوا القطع",en:"Place the tokens"},
+  sound:{ar:"الصوت",en:"Sound"},
+  factors5:{ar:"العوامل الخمسة",en:"The five factors"},
+  mainBoard:{ar:"اللوحة الرئيسية",en:"Main board"},
+  playerBoard:{ar:"لوحة الفريق",en:"Player board"},
+  antares:{ar:"أنتاريس",en:"Antares"},
+  win:{ar:"فوز",en:"Win"},
+  lose:{ar:"خسارة",en:"Lose"},
+  notes:{ar:"ملاحظات التنفيذ",en:"Implementation notes"}
+};
+let LANG = "ar";
+const t = k => (T[k] ? T[k][LANG] : k);
+const L = (ar,en) => LANG === "ar" ? ar : en;
+
+const SKILLS = [
+  {id:"CCM", ar:"العقلية المتمحورة حول العميل", en:"Customer-Centric Mindset"},
+  {id:"EQ",  ar:"الذكاء العاطفي", en:"Emotional Intelligence"},
+  {id:"A&R", ar:"المرونة والتكيّف", en:"Adaptability & Resilience"},
+  {id:"AL&E",ar:"الإنصات الفعّال والتعاطف", en:"Active Listening & Empathy"},
+  {id:"EC",  ar:"التواصل الفعّال", en:"Effective Communication"},
+  {id:"PS&C",ar:"حل المشكلات والتعاون", en:"Problem-Solving & Collaboration"},
+  {id:"HDS", ar:"إدارة المواقف الصعبة", en:"Handling Difficult Situations"}
+];
+const TOKENS_PER_SKILL = 6;
+
+const FACTORS = [
+  {id:"NI", ar:"اكتشاف الاحتياجات", en:"Needs Identification",
+   dar:"هل حدّد الفريق الاحتياج الحقيقي للعميل وفهم دوافعه وأولوياته؟",
+   den:"Did the team uncover the real need and what matters to the customer?"},
+  {id:"ESD",ar:"فاعلية الحوار البيعي", en:"Effective Sales Dialogue",
+   dar:"هل استخدم الفريق أسئلة فعّالة وقاد حوارًا هادفًا نحو الحل الأنسب؟",
+   den:"Did the team ask strong questions and lead toward the right solution?"},
+  {id:"OM", ar:"إدارة الاعتراضات", en:"Objection Management",
+   dar:"هل حوّل الفريق الاعتراض إلى ما يدعم قرار العميل بدل أن يجادله؟",
+   den:"Did the team turn the objection into support for the decision?"},
+  {id:"AV", ar:"القيمة المضافة", en:"Added Value",
+   dar:"هل قدّم الفريق قيمة إضافية عبر البيع المتقاطع أو البيع الأعلى؟",
+   den:"Did the team add real value through cross-selling or up-selling?"},
+  {id:"CE", ar:"كفاءة الإغلاق", en:"Closing Efficiency",
+   dar:"هل انتقل الفريق بالعميل إلى خطوة واضحة دون ضغط؟",
+   den:"Did the team move to a clear next step without pressure?"}
+];
+
+const DEC_SALES = [
+  {id:"reframe",ar:"إعادة تأطير الموقف",en:"Reframe the Situation",
+   har:"تغيير نظرة العميل إلى وضعه الحالي وإبراز منفعة جديدة",hen:"Shift the customer's view toward a new benefit",eff:{OM:1,NI:-1}},
+  {id:"explore",ar:"استكشاف الاحتياجات",en:"Explore Needs",
+   har:"فهم أهداف العميل ومخاوفه وأولوياته الحقيقية",hen:"Dig into real goals, concerns and priorities",eff:{NI:1}},
+  {id:"value",ar:"إضافة قيمة",en:"Add Value",
+   har:"تقديم حل متكامل يمنح العميل أكثر مما طلب",hen:"Offer an integrated solution beyond the request",eff:{AV:1}},
+  {id:"compare",ar:"مقارنة الخيارات",en:"Compare Options",
+   har:"إبراز الفروق المهمة بين البدائل المتاحة",hen:"Lay out the differences between alternatives",eff:{ESD:1,CE:-1}},
+  {id:"commit",ar:"التحرّك نحو الالتزام",en:"Move Toward Commitment",
+   har:"التأكّد من أن الظروف تدعم خطوة أوضح ثم الإغلاق",hen:"Check conditions support a clearer step, then close",eff:{CE:1}}
+];
+const SUPPORT = [
+  {ar:"توضيح احتياج العميل",en:"Clarify customer needs"},
+  {ar:"تبادل الرؤى داخل الفريق",en:"Share ideas"},
+  {ar:"التخطيط للدور التالي",en:"Plan the next turn"},
+  {ar:"تفعيل ميزة الفريق",en:"Use team advantage"},
+  {ar:"استخدام أداة دعم",en:"Use a support tool"},
+  {ar:"تأجيل الرد",en:"Defer the response"}
+];
+const TYPES = {
+  deal:      {ar:"تحدّي الصفقة", en:"DEAL CHALLENGE", color:"#2BC457"},
+  hesitant:  {ar:"العميل المتردّد", en:"HESITANT CUSTOMER", color:"#F0803E"},
+  tough:     {ar:"العميل الصعب", en:"TOUGH CUSTOMER", color:"#F0434F"},
+  competence:{ar:"بطاقة الكفاءة", en:"COMPETENCE CARD", color:"#46B6D6"},
+  node:      {ar:"محطة أنتاريس", en:"ANTARES NODE", color:"#A77BFF"},
+  start:     {ar:"البداية", en:"START", color:"#9CE2FB"}
+};
+
+/* Scoring model, taken verbatim from the trainer's scoring tool (index.html). */
+const BRACKETS = [
+  {min:21,csp:10,ar:"ممتاز",en:"Excellent"},
+  {min:17,csp:5, ar:"قوي",en:"Strong"},
+  {min:13,csp:2, ar:"مقبول",en:"Adequate"},
+  {min:9, csp:-2,ar:"ضعيف",en:"Weak"},
+  {min:5, csp:-5,ar:"سيّئ",en:"Poor"},
+  {min:0, csp:-10,ar:"سيّئ جدًا",en:"Very Poor"}
+];
+const bracketFor = n => BRACKETS.find(b => n >= b.min);
+const tokensFor  = n => n >= 17 ? 6 : n >= 13 ? 5 : 3;
+const MIX0 = {promoter:20, natural:50, angry:30};
+const WIN_P = 80, LOSE_P = 10, CRISIS_ANGRY = 55;
+const SKILL_UNLOCK_EVERY = 5;
+const r1 = v => Math.round(v*10)/10;
+/* CSP points move customers between the three buckets; the total stays 100 */
+function applyShift(tm, pts){
+  let p=tm.promoter, n=tm.natural, a=tm.angry, s=pts;
+  if(s>0){
+    const fa=Math.min(a,s); a-=fa; s-=fa;
+    const fn=Math.min(n,s); n-=fn; s-=fn;
+    p+=fa+fn;
+  } else if(s<0){
+    let need=-s;
+    const fp=Math.min(p,need); p-=fp; need-=fp;
+    const fn=Math.min(n,need); n-=fn; need-=fn;
+    a+=fp+fn;
+  }
+  tm.promoter=r1(p); tm.natural=r1(n); tm.angry=r1(a);
+}
+const outcome = tm => tm.promoter>=WIN_P ? "win" : tm.promoter<LOSE_P ? "lose" : tm.angry>=CRISIS_ANGRY ? "crisis" : null;
+
+/* ================= board geometry ================= */
+const VB = 1120, C = 560;
+function ring(perSide, R, size){
+  const out = [], step = (2*R)/(perSide-1), p = (x,y) => out.push({x,y,size});
+  for(let i=0;i<perSide;i++) p(C-R+i*step, C-R);
+  for(let i=1;i<perSide;i++) p(C+R, C-R+i*step);
+  for(let i=1;i<perSide;i++) p(C+R-i*step, C+R);
+  for(let i=1;i<perSide-1;i++) p(C-R, C+R-i*step);
+  return out;
+}
+function buildBoard(){
+  const cells = [...ring(11,430,68), ...ring(9,330,64), ...ring(5,230,62)];   // 40+32+16 = 88
+  cells[0].type = "start";
+  const nodeSet = new Set();
+  for(let k=0;k<27;k++) nodeSet.add(1 + Math.round(k * 86/26));
+  const cyc = ["deal","hesitant","tough","competence"];
+  let c = 0;
+  for(let i=1;i<cells.length;i++){
+    if(nodeSet.has(i)) cells[i].type = "node";
+    else cells[i].type = cyc[c++ % 4];
+  }
+  return cells;
+}
+const BOARD = buildBoard();
+const LAST = BOARD.length - 1;
+
+/* deck slots in the middle of the board, as on the printed board */
+const DECK_SLOTS = {
+  competence:{x:474,y:560}, deal:{x:646,y:560},
+  tough:{x:474,y:680}, hesitant:{x:646,y:680}
+};
+const CORE = {x:560,y:420};
+/* one Antares cluster per team, on the four outer edges */
+const CLUSTERS = [
+  {axis:"h", x:560, y:1062},   // bottom side
+  {axis:"h", x:560, y:58},     // top side
+  {axis:"v", x:1062,y:560},    // right side
+  {axis:"v", x:58,  y:560}     // left side
+];
+
+/* ================= audio ================= */
+const A = (() => {
+  let ctx = null, on = true;
+  const g = () => (ctx = ctx || new (window.AudioContext||window.webkitAudioContext)());
+  function tone(f,d,ty="sine",v=.18,sl=0,dl=0){
+    if(!on) return;
+    try{ const a=g(), t0=a.currentTime+dl, o=a.createOscillator(), gn=a.createGain();
+      o.type=ty; o.frequency.setValueAtTime(f,t0);
+      if(sl) o.frequency.exponentialRampToValueAtTime(Math.max(45,f+sl),t0+d);
+      gn.gain.setValueAtTime(0,t0); gn.gain.linearRampToValueAtTime(v,t0+.012);
+      gn.gain.exponentialRampToValueAtTime(.0001,t0+d);
+      o.connect(gn).connect(a.destination); o.start(t0); o.stop(t0+d+.05);
+    }catch(e){}
+  }
+  function nz(d=.3,v=.12,dl=0,f0=1500){
+    if(!on) return;
+    try{ const a=g(), n=Math.floor(a.sampleRate*d), b=a.createBuffer(1,n,a.sampleRate), ch=b.getChannelData(0);
+      for(let i=0;i<n;i++) ch[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.2);
+      const s=a.createBufferSource(); s.buffer=b;
+      const fl=a.createBiquadFilter(); fl.type="bandpass"; fl.frequency.value=f0; fl.Q.value=.8;
+      const gn=a.createGain(); gn.gain.value=v;
+      s.connect(fl).connect(gn).connect(a.destination); s.start(a.currentTime+dl);
+    }catch(e){}
+  }
+  return {
+    set(v){on=v}, on(){return on},
+    rattle(){ if(!on)return; [0,.09,.17,.25,.33,.42,.52,.64,.78,.95,1.15].forEach((d,i2)=>{
+        nz(.07,.12-i2*.008,d,700+Math.random()*900); tone(120+Math.random()*90,.05,"square",.05,0,d); }); },
+    thud(){ nz(.22,.2,0,320); tone(90,.3,"sine",.22,-30); tone(420,.14,"triangle",.1,-180,.02); },
+    land(){ tone(620,.2,"triangle",.2,-240); nz(.14,.08,0,2800); },
+    step(){ tone(740,.05,"square",.05); },
+    whoosh(){ nz(.45,.16,0,1400); tone(220,.45,"sine",.07,1500); },
+    snap(){ nz(.1,.16,0,4200); tone(1200,.16,"triangle",.14,-700,.03); tone(620,.22,"sine",.1,220,.07); },
+    reveal(){ [660,880,1100].forEach((f,i2)=>tone(f,.5,"triangle",.1,0,i2*.07)); nz(.6,.05,.05,5200); },
+    click(){ tone(660,.05,"square",.06); },
+    tick(hot){ tone(760+hot*420,.045,"square",.05+hot*.05); },
+    lock(){ nz(.2,.16,0,2600); [392,523,659,880].forEach((f,i2)=>tone(f,.5,"triangle",.15,0,i2*.055)); },
+    tok(i2){ tone(540+i2*95,.16,"sine",.15,160,i2*.07); nz(.08,.04,i2*.07,4000); },
+    great(){ [523,659,784,1047,1319,1568].forEach((f,i2)=>tone(f,.5,"triangle",.17,0,i2*.07)); nz(.6,.07,.1,4000); },
+    good(){ [523,659,784].forEach((f,i2)=>tone(f,.34,"triangle",.15,0,i2*.08)); },
+    bad(){ [350,262,180].forEach((f,i2)=>tone(f,.4,"sawtooth",.11,0,i2*.1)); nz(.4,.05,0,400); },
+    lamp(){ tone(900,.4,"sine",.12,620); nz(.35,.06,0,5200); },
+    win(){ [392,523,659,784,1047,1319].forEach((f,i)=>tone(f,.6,"triangle",.17,0,i*.11)); nz(.9,.07,.15,3000); }
+  };
+})();
+/* ================= state ================= */
+const COLORS = ["#45C6F5","#A77BFF","#F0803E","#49D68A"];
+const NAMES = [["إسراء","Esraa"],["آية","Aya"],["رحمة","Rahma"],["أيمن","Ayman"]];
+const el = id => document.getElementById(id);
+const $ = s => document.querySelector(s);
+const rnd = n => Math.floor(Math.random()*n);
+const shuffle = a => {a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+const AR = n => LANG==="ar" ? String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]) : n;
+
+let S;
+function newSession(){
+  return {
+    screen:"home", mode:"split", maxRounds:10,
+    round:1, turn:0, phase:"roll", pane:"team", busy:false, manual:false,
+    decks:{deal:shuffle([...Array(15).keys()]),hesitant:shuffle([...Array(15).keys()]),
+           tough:shuffle([...Array(15).keys()]),competence:shuffle([...Array(15).keys()])},
+    used:new Set(), cur:null, log:[], pending:[], flip:false,
+    hotDeck:null, ripple:null, simLock:false,
+    teams:NAMES.map((n,i)=>{
+      const sk=shuffle(SKILLS.map(s=>s.id)), tok={}, bot={};
+      SKILLS.forEach(s=>{tok[s.id]=0;bot[s.id]=0;}); tok[sk[0]]=6; tok[sk[1]]=3;
+      const fsk={}; FACTORS.forEach(f=>fsk[f.id]=0);
+      return {i,name:n[0],nameEn:n[1],color:COLORS[i],pos:0,
+              promoter:MIX0.promoter,natural:MIX0.natural,angry:MIX0.angry,fsk,
+              tok,bot,done:0,crisisUsed:false,human:i===0,delta:null};
+    })
+  };
+}
+const TM = () => S.teams[S.turn];
+const full = tm => SKILLS.filter(s=>tm.tok[s.id]>=TOKENS_PER_SKILL).length;
+const slots = tm => {const f=full(tm); return f>=4?6:f>=2?4:2;};
+const DECS = () => DEC_SALES;
+
+/* ================= icons ================= */
+function icon(type,x,y,s){
+  const u=s*0.3;
+  if(type==="deal")       return `<path d="M${x-u} ${y-u} h${u*.62} v${u*.62} h${u*.76} v-${u*.62} h${u*.62} v${u*.55} a${u} ${u} 0 0 1 -${u*2} 0 z" fill="currentColor"/>`;
+  if(type==="hesitant")   return `<path d="M${x-u} ${y-u*1.05} h${u*2} l-${u} ${u*1.15} z" fill="currentColor"/><path d="M${x-u*.6} ${y+u*.25} a${u*.6} ${u*.6} 0 0 0 ${u*1.2} 0 z" fill="currentColor"/>`;
+  if(type==="tough")      return `<path d="M${x-u} ${y-u} h${u*2} v${u*.55} a${u*1.15} ${u*1.15} 0 0 0 -${u*2} 0 z" fill="currentColor"/><path d="M${x-u} ${y+u*.78} a${u} ${u} 0 0 1 ${u*2} 0 z" fill="currentColor"/>`;
+  if(type==="competence") return `<path d="M${x-u*.55} ${y-u*.15} v-${u*.38} a${u*.55} ${u*.55} 0 0 1 ${u*1.1} 0 v${u*.38}" fill="none" stroke="currentColor" stroke-width="${u*.33}"/><rect x="${x-u*.92}" y="${y-u*.1}" width="${u*1.84}" height="${u*.5}" rx="${u*.1}" fill="currentColor"/><rect x="${x-u*.92}" y="${y+u*.56}" width="${u*1.84}" height="${u*.44}" rx="${u*.1}" fill="currentColor"/>`;
+  if(type==="start")      return `<path d="M${x-u*.5} ${y-u*.75} l${u*1.35} ${u*.75} l-${u*1.35} ${u*.75} z" fill="currentColor"/>`;
+  // node: the QR squares printed on the original board
+  const m=s*0.62/7, x0=x-s*0.31, y0=y-s*0.31;
+  const grid=[[1,1,1,1,1,1,1],[1,0,0,1,0,0,1],[1,0,1,0,1,1,1],[1,1,0,1,0,0,1],[1,0,1,1,1,0,1],[1,0,0,0,1,1,1],[1,1,1,0,1,0,1]];
+  let g="";
+  const fnd=(cx2,cy2)=>{g+=`<rect x="${cx2}" y="${cy2}" width="${m*3}" height="${m*3}" fill="none" stroke="currentColor" stroke-width="${m*0.75}"/><rect x="${cx2+m*1.1}" y="${cy2+m*1.1}" width="${m*0.8}" height="${m*0.8}" fill="currentColor"/>`;};
+  for(let r=0;r<7;r++) for(let c2=0;c2<7;c2++){
+    if((r<3&&c2<3)||(r<3&&c2>3)||(r>3&&c2<3)) continue;
+    if(grid[r][c2]) g+=`<rect x="${x0+c2*m}" y="${y0+r*m}" width="${m*0.86}" height="${m*0.86}" fill="currentColor"/>`;
+  }
+  fnd(x0,y0); fnd(x0+m*4,y0); fnd(x0,y0+m*4);
+  return g;
+}
+function hex(cx,cy,r){let d="";for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);d+=(i?"L":"M")+(cx+r*Math.cos(a)).toFixed(1)+" "+(cy+r*Math.sin(a)).toFixed(1)+" ";}return d+"Z";}
+function plaqueD(x,y,w,h){
+  const l=x-w/2,r=x+w/2,tp=y-h/2,b=y+h/2,n=12;
+  return `M${l+n} ${tp} H${r-n} L${r} ${tp+n} V${b-n} L${r-n} ${b} H${x+14} l-5 -9 h-18 l-5 9 H${l+n} L${l} ${b-n} V${tp+n} Z`;
+}
+
+/* ================= board ================= */
+function boardSVG(){
+  let s = `<svg viewBox="0 0 ${VB} ${VB}" role="img" aria-label="${L('اللوحة الرئيسية','Main board')}">`;
+  s += `<defs>
+    <radialGradient id="cg"><stop offset="0" stop-color="#45C6F5" stop-opacity=".45"/><stop offset="1" stop-color="#45C6F5" stop-opacity="0"/></radialGradient>
+    <filter id="gl"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+
+  /* HUD frame */
+  const F = 30, fr = "rgba(123,63,228,.65)", fc = "#45C6F5";
+  s += `<path d="M${F+70} ${F} H${VB-F-70} L${VB-F} ${F+70} V${VB-F-70} L${VB-F-70} ${VB-F} H${F+70} L${F} ${VB-F-70} V${F+70} Z"
+         fill="none" stroke="${fr}" stroke-width="1.6"/>`;
+  s += `<path d="M${F+110} ${F+42} H${VB-F-110} M${F+42} ${F+110} V${VB-F-110} M${F+110} ${VB-F-42} H${VB-F-110} M${VB-F-42} ${F+110} V${VB-F-110}"
+         stroke="rgba(123,63,228,.35)" stroke-width="1.2" fill="none"/>`;
+  [[F+70,F],[VB-F-70,F],[F+70,VB-F],[VB-F-70,VB-F]].forEach(([x,y])=>
+    s += `<rect x="${x-14}" y="${y-5}" width="28" height="10" fill="${fc}" opacity=".85" transform="skewX(-28)"/>`);
+  const lbl = (x,y,txt,rot=0) => `<text x="${x}" y="${y}" fill="#45C6F5" font-size="11" font-family="Orbitron" letter-spacing="3" opacity=".65" text-anchor="middle" transform="rotate(${rot} ${x} ${y})">${txt}</text>`;
+
+  /* Antares' own skill flowers: seven per team, on that team's side */
+  S.teams.forEach((tm,k)=>{
+    const cl=CLUSTERS[k];
+    SKILLS.forEach((sk,i)=>{
+      const off=(i-3)*78, fx=cl.axis==="h"?cl.x+off:cl.x, fy=cl.axis==="h"?cl.y:cl.y+off;
+      const n=tm.bot[sk.id]||0, done=n>=TOKENS_PER_SKILL;
+      for(let q=0;q<6;q++){
+        const a=Math.PI/180*(60*q-90), hx=fx+21*Math.cos(a), hy=fy+21*Math.sin(a), on=q<Math.min(n,6);
+        s+=`<path class="lamp" d="${hex(hx,hy,11.6)}" fill="${on?tm.color:"transparent"}"
+             stroke="${on?tm.color:"rgba(123,63,228,.55)"}" stroke-width="1.5" opacity="${on?.95:.75}"/>`;
+      }
+      s+=`<path class="lamp" d="${hex(fx,fy,12.4)}" fill="${done?tm.color:"rgba(123,63,228,.14)"}"
+           stroke="${done?"#fff":"rgba(167,123,255,.8)"}" stroke-width="1.5"/>`;
+      s+=`<text x="${fx}" y="${fy+2.8}" text-anchor="middle" font-size="7.4" font-family="Orbitron"
+           fill="${done?"#06071A":"#9CE2FB"}" font-weight="700">${sk.id}</text>`;
+    });
+  });
+
+  /* the path only shows while a figure is moving */
+  if(S.trail && S.trail.length>1)
+    s += `<polyline points="${S.trail.map(i=>`${BOARD[i].x},${BOARD[i].y}`).join(" ")}" fill="none"
+           stroke="rgba(69,198,245,.5)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  /* stations */
+  BOARD.forEach((c2,i)=>{
+    const h=c2.size/2, used=S.used.has(i), hit=S.ripple===i, land=S.landed===i,
+          trail=S.trail&&S.trail.includes(i), lit=hit||land;
+    const col = lit ? TYPES[c2.type].color : "#7FC9EE";
+    s += `<g class="st ${used&&!lit?'used':''} ${hit?'hit':''} ${land?'land':''}" style="color:${col}">`;
+    if(land) s += `<circle class="haloRing" cx="${c2.x}" cy="${c2.y}" r="${h*1.5}" fill="${TYPES[c2.type].color}" opacity=".16"/>`;
+    s += `<rect class="st-frame" x="${c2.x-h}" y="${c2.y-h}" width="${c2.size}" height="${c2.size}" rx="4"
+            fill="${lit?TYPES[c2.type].color+'1F':trail?'rgba(69,198,245,.05)':'rgba(8,10,34,.5)'}"
+            stroke="${lit?TYPES[c2.type].color:used?'rgba(123,63,228,.26)':'rgba(123,63,228,.62)'}" stroke-width="${lit?3:1.1}"/>`;
+    s += `<g class="ico">${icon(c2.type, c2.x, c2.y+1, c2.size*0.86)}</g>`;
+    if(hit){
+      s += `<circle class="rip" cx="${c2.x}" cy="${c2.y}" r="${h}" fill="none" stroke="${TYPES[c2.type].color}" stroke-width="3"/>`;
+      s += `<circle cx="${c2.x}" cy="${c2.y}" r="${h*2.1}" fill="url(#cg)" opacity=".5"/>`;
+    }
+    s += `</g>`;
+  });
+
+  /* Antares core */
+  s += `<circle cx="${CORE.x}" cy="${CORE.y}" r="86" fill="url(#cg)"/>`;
+  s += `<circle class="breathe" cx="${CORE.x}" cy="${CORE.y}" r="66" fill="none" stroke="#9CE2FB" stroke-width="1.4" stroke-dasharray="5 10"/>`;
+  s += `<rect x="${CORE.x-46}" y="${CORE.y-46}" width="92" height="92" rx="9" fill="rgba(69,198,245,.1)" stroke="#9CE2FB" stroke-width="2.2"/>`;
+  [[-38,-38],[6,-38],[-38,6],[6,6]].forEach(([dx,dy])=>
+    s += `<rect x="${CORE.x+dx}" y="${CORE.y+dy}" width="32" height="32" rx="5" fill="#9CE2FB" opacity=".9"/>`);
+
+  /* the four decks in the middle */
+  Object.entries(DECK_SLOTS).forEach(([ty,p])=>{
+    const hot = S.hotDeck===ty, col = TYPES[ty].color;
+    s += `<g class="deck ${hot?'hot':''}">`;
+    for(let k=2;k>=0;k--)
+      s += `<path d="${plaqueD(p.x-k*2,p.y-k*2,152,100)}" fill="rgba(10,12,38,.9)" stroke="rgba(123,63,228,.5)" stroke-width="1.2"/>`;
+    s += `<path class="deck-edge" d="${plaqueD(p.x,p.y,152,100)}" fill="none" stroke="${col}" stroke-width="${hot?3:1.6}" opacity="${hot?1:.6}"/>`;
+    s += `<g style="color:${col}">${icon(ty,p.x,p.y-6,74)}</g>`;
+    s += `<text x="${p.x}" y="${p.y+40}" text-anchor="middle" font-size="10" font-family="Orbitron" letter-spacing="1.6" fill="${col}" opacity=".9">${TYPES[ty].en}</text></g>`;
+  });
+
+  /* pawns */
+  S.teams.forEach((tm,k)=>{
+    const c2=BOARD[tm.pos], o=[[-15,-15],[15,-15],[-15,15],[15,15]][k];
+    const isT = k===S.turn;
+    s += `<g class="pw ${isT?'hop':''}" transform="translate(${c2.x+o[0]},${c2.y+o[1]})">`;
+    if(isT) s += `<circle r="17" fill="none" stroke="${tm.color}" stroke-width="1.8" opacity=".75"/>`;
+    s += `<circle r="10.5" fill="${tm.color}" stroke="#06071A" stroke-width="2.4"/>`;
+    s += `<text y="4" text-anchor="middle" font-size="10" font-weight="900" font-family="Orbitron" fill="#06071A">${k+1}</text></g>`;
+  });
+  return s+`</svg>`;
+}
+function boardBlock(){
+  return `<div class="bwrap" id="bwrap" role="region" tabindex="0"
+      aria-label="${L("اللوحة الرئيسية، معروضة للجميع","Main board, shown to everyone")}">${boardSVG()}</div>
+    <div class="scrollHint">⇄ ${L("اسحب اللوحة أفقيًا لرؤيتها كاملة","Drag the board sideways to see all of it")}</div>`;
+}
+
+/* ================= pieces ================= */
+function flower(n,color){
+  let s=`<svg viewBox="0 0 44 44" width="42" height="42" aria-hidden="true">`;
+  for(let i=0;i<6;i++){
+    const a=Math.PI/180*(60*i-90), cx=22+9.6*Math.cos(a), cy=22+9.6*Math.sin(a), on=i<Math.min(n,6);
+    s+=`<path class="pt" d="${hex(cx,cy,5.4)}" fill="${on?color:"rgba(255,255,255,.07)"}" stroke="${on?color:"rgba(123,63,228,.4)"}" stroke-width="1"/>`;
+  }
+  const f=n>=6;
+  return s+`<circle cx="22" cy="22" r="4.4" fill="${f?color:"rgba(255,255,255,.08)"}" stroke="${f?"#fff":"rgba(123,63,228,.5)"}" stroke-width="1"/></svg>`;
+}
+function antaresStrip(tm){
+  return `<div class="skills">${SKILLS.map(sk=>{
+    const n=tm.bot[sk.id]||0, f=n>=TOKENS_PER_SKILL;
+    return `<div class="sk bot ${f?'full':''}" title="${L(sk.ar,sk.en)}">
+      ${flower(n,"#A77BFF")}<div class="lb">${sk.id}</div><div class="ti">${AR(Math.min(n,6))}/${AR(6)}</div></div>`;
+  }).join("")}</div>`;
+}
+function playerBoard(tm,pick){
+  return `<div class="skills">${SKILLS.map(sk=>{
+    const n=tm.tok[sk.id], f=n>=TOKENS_PER_SKILL, tag=pick&&!f?"button":"div";
+    return `<${tag} class="sk ${f?'full':''}" ${pick&&!f?`data-skill="${sk.id}" style="cursor:pointer" aria-label="${L(sk.ar,sk.en)}، ${AR(Math.min(n,6))} ${L("من","of")} ${AR(6)}"`:`title="${L(sk.ar,sk.en)}"`}>
+      ${flower(n,tm.color)}<div class="lb">${sk.id}</div><div class="ti">${AR(Math.min(n,6))}/${AR(6)}</div></${tag}>`;
+  }).join("")}</div>`;
+}
+function cardFace(){
+  const c=S.cur, ty=TYPES[c.type];
+  return `<div class="stage"><div class="flip ${S.flip?'on':''}">
+    <div class="face back"><div class="cut"></div>
+      <div class="ctop">SALES</div>
+      <div style="color:${ty.color}">${(()=>{let g='<svg viewBox="0 0 120 120" width="112" height="112" aria-hidden="true">'+icon(c.type,60,60,150)+'</svg>';return g;})()}</div>
+      <div class="cname">${ty.en.split(" ").join("<br>")}</div></div>
+    <div class="face front"><div class="cut"></div>
+      <div class="cbadge" style="background:${ty.color}22;color:${ty.color};border:1px solid ${ty.color}88">${ty.en}</div>
+      <div class="ctxt" dir="rtl">${c.card.ar}</div>
+      <div class="cen">${c.card.en}</div></div>
+  </div></div>`;
+}
+
+/* ================= trainer dashboard ================= */
+function mixBar(tm){
+  return `<div class="mix">
+    <span style="width:${tm.promoter}%;background:linear-gradient(90deg,#2BB9E8,#9CE2FB)"></span>
+    <span style="width:${tm.natural}%;background:#3A4790"></span>
+    <span style="width:${tm.angry}%;background:linear-gradient(90deg,#C2353E,#FF6B74)"></span>
+  </div>
+  <div class="mixleg"><span>👑 <b>${AR(tm.promoter)}٪</b></span><span>🙂 <b>${AR(tm.natural)}٪</b></span><span>😠 <b>${AR(tm.angry)}٪</b></span></div>`;
+}
+function dashboard(){
+  return `<div class="dash">${S.teams.map((tm,k)=>{
+    const o=outcome(tm);
+    return `<div class="tbox ${k===S.turn?'now':''}" style="--tc:${tm.color};position:relative">
+      <div class="tname"><span style="width:9px;height:9px;border-radius:50%;background:${tm.color}"></span>${L(tm.name,tm.nameEn)}
+        ${k===S.turn?`<span class="tag cy" style="padding:1px 8px;font-size:11px">${L("الدور","turn")}</span>`:""}
+        ${o==="win"?`<span class="tag ok" style="padding:1px 8px;font-size:11px">${t("win")}</span>`:""}
+        ${o==="crisis"?`<span class="tag warn" style="padding:1px 8px;font-size:11px">${t("crisis")}</span>`:""}</div>
+      ${mixBar(tm)}
+      <div class="grow"><span>${t("skillsDone")} ${AR(full(tm))}/${AR(7)}</span><span>${t("deck")} ${AR(tm.done)}</span></div>
+      ${tm.delta!=null?`<span class="dlt ${tm.delta>=0?'up':'dn'}">${tm.delta>=0?"+":"−"}${AR(Math.abs(tm.delta))}</span>`:""}
+    </div>`;}).join("")}</div>`;
+}
+function skillTracks(tm){
+  return `<div class="tracks">${FACTORS.map(f=>{
+    const v=tm.fsk[f.id]||0, lvl=Math.floor(v/SKILL_UNLOCK_EVERY);
+    let segs="";
+    for(let i2=0;i2<SKILL_UNLOCK_EVERY;i2++) segs+=`<i class="${i2<(v%SKILL_UNLOCK_EVERY||(lvl&&!(v%SKILL_UNLOCK_EVERY)?SKILL_UNLOCK_EVERY:0))?'on':''}"></i>`;
+    return `<div class="trk"><span class="tl">${L(f.ar,f.en)}</span><div class="tbar">${segs}</div><b>${AR(v)}</b></div>`;
+  }).join("")}</div>`;
+}
+const COACH = {
+  roll:[L("نادِ على الفريق، ثم دعه يشغّل وحدة الإشارة.","Call the team, then let them run the signal module."),1],
+  draw:[L("وقف الفريق على محطة. اسحبوا البطاقة المطابقة لها.","The team landed on a station. Draw the matching card."),2],
+  decide:[L("اقرأوا الموقف بصوت مسموع، ثم اختاروا قرارًا رئيسيًا واحدًا.","Read the situation aloud, then choose one main decision."),3],
+  respond:[L("الفريق يعرض معالجته أمام القاعة. أنصت وراقب، ولا تعطِ الإجابة.","The team presents to the room. Listen and observe; don't give the answer."),4],
+  score:[L("قيّم العوامل الخمسة من ١ إلى ٥. النتيجة تظهر للقاعة كلها.","Score the five factors from 1 to 5. The result is shown to the room."),5]
+};
+function gmPane(){
+  const tm=TM(); let b="";
+  const c=COACH[S.phase];
+  if(c) b+=`<div class="coach"><i>${AR(c[1])}</i><span>${c[0]}</span></div>`;
+  b += dashboard();
+  b += `<div class="k" style="margin-top:4px">${t("skillDev")} — ${L(TM().name,TM().nameEn)}</div>${skillTracks(TM())}`;
+  if(S.phase==="score"){
+    const sc=S.cur.scores, tot=rawTotal(sc,S.cur.decision), br=bracketFor(tot),
+          dec=DECS().find(d=>d.id===S.cur.decision);
+    b+=`<div class="k" style="margin-top:4px">${t("scoreHead")}</div>`;
+    const ro=!tm.human;
+    b+=FACTORS.map(f=>`<div class="crit"><div><div class="cn">${L(f.ar,f.en)}</div><div class="cd">${L(f.dar,f.den)}</div></div>
+      <div class="seg" role="group" aria-label="${L(f.ar,f.en)}">${[1,2,3,4,5].map(n=>`<button ${ro?"disabled":`data-f="${f.id}" data-v="${n}"`} aria-pressed="${sc[f.id]===n}">${AR(n)}</button>`).join("")}</div></div>`).join("");
+    b+=`<div class="nt">${t("decision")}: <b>${dec?L(dec.ar,dec.en):"—"}</b>${dec?" — "+Object.entries(dec.eff).map(([k2,v])=>`<span class="${v>0?'pl':'mi'}">${v>0?"+":"−"}${AR(1)} ${k2}</span>`).join(" "):""}</div>`;
+    b+=`<div class="row" style="justify-content:space-between">
+      <div class="tot">${AR(tot)}<small>&nbsp;${t("outOf25")}</small></div>
+      <div class="tag ${br.csp>=5?'ok':br.csp>0?'cy':'warn'}">${L(br.ar,br.en)} · ${br.csp>0?"+":"−"}${AR(Math.abs(br.csp))} · ${AR(tokensFor(tot))} ${t("tokens")}</div></div>`;
+    b+= ro ? `<div class="nt">${t("simTurn")}</div>`
+          : `<button class="b p go" data-a="save" ${FACTORS.every(f=>sc[f.id])?"":"disabled"}>${t("saveScore")}</button>`;
+  } else if(S.phase==="respond"){
+    b+=`<div class="nt w">${t("teamWriting")}</div>`;
+  }
+  if(outcome(tm)==="crisis" && !tm.crisisUsed)
+    b+=`<div class="nt w"><b>${t("crisis")}</b><br>${t("crisisT")}<div class="row" style="margin-top:9px"><button class="b s v" data-a="rec">${t("recovery")}</button></div></div>`;
+  return `<section class="pane gm ${S.pane!=="gm"?"off":""}">
+    <div class="ph">⬢ ${t("trainer")}<span class="sp"></span><span class="ti">${t("round")} ${AR(S.round)}/${AR(S.maxRounds)}</span></div>
+    <div class="pb">${b}</div></section>`;
+}
+function handbook(){
+  const open=S.manual;
+  const sec=(h,b)=>`<div class="hsec"><h4>${h}</h4>${b}</div>`;
+  const li=a=>`<ul>${a.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  const sub=x=>`<h5>${x}</h5>`;
+  return `<div class="sheet ${open?'open':''}">
+    <button class="sheetBtn" data-a="manual" aria-expanded="${open}">
+      <span class="sIco">${open?"▾":"▸"}</span><b>${t("manual")}</b>
+      <span class="sp"></span><span class="ti">${open?t("manualClose"):t("manualOpen")}</span></button>
+    ${open?`<div class="sheetBody">
+      <div class="hbHead"><div class="hbLogo">ELEVATE LAB<i>HANDBOOK</i></div><div class="hbRule"></div></div>
+      <div class="hbBody">
+      ${sec(L("مرحبًا أيها المغامرون","Welcome, adventurers"),
+        `<p>${L("في قلب مدينة أميستريس الحكيمة، حيث تعانق ناطحات السحاب السماء، وتزدهر الابتكارات التكنولوجية، وسط معركة خفية بين الشركات العملاقة من أجل النفوذ، يقف العالم الدكتور لطيف بإنجازه الفريد: أنتاريس، الروبوت الذي صمّمه ليحدث ثورة في خدمة العملاء.",
+             "In the heart of Amestris, where skyscrapers meet the sky and technology races ahead, Dr. Latif stands with his creation: Antares, the robot built to transform customer service.")}</p>
+         <p>${L("لكن ابتكار هذا الكيان البشري يتطلب أكثر من مجرد براعة ميكانيكية. يجب أن يكون ذكاء أنتاريس وتعاطفه وقدرته على حل المشكلات مشبعة بحكمة أعظم العقول في خدمة العملاء — أي أنتم.",
+             "But building him takes more than mechanics. His intelligence, his empathy and his problem-solving must be filled with the wisdom of the finest service minds — that is, you.")}</p>`)}
+      ${sec(L("أهداف المغامرة","Mission objectives"),li([
+        L("إتقان فن خدمة العملاء عبر تجربة تفاعلية","Master customer service through a live experience"),
+        L("تعزيز روح التعاون والتفكير الاستراتيجي في الفريق","Build collaboration and strategic thinking in the team"),
+        L("<b>تطوير مهارات:</b> الذكاء العاطفي، والتعاطف الفعّال، وحل المشكلات","<b>Develop:</b> emotional intelligence, effective empathy, problem-solving")]))}
+      ${sec(L("نظام اللعب","How the game works"),
+        `<p>${L("خلال اللعبة يجب على فريقك التقدّم على اللوحة من خلال وحدة الإشارة للوصول إلى سيناريوهات محدّدة. كل سيناريو يتطلّب لعب الأدوار ووضع استراتيجية واتخاذ قرارات سريعة. وإكمال السيناريوهات بنجاح يكسب الفريق نقاط رضا العملاء.",
+             "Your team advances across the board by rolling, reaching specific scenarios. Each one needs role-play, strategy and quick decisions. Completing them well earns Customer Satisfaction Points.")}</p>`
+        +sub(L("وحدة الإشارة والتحرّك","The signal module and moving"))
+        +li([L("شغّل وحدة الإشارة وتحرّك بالعدد الذي تستقر عليه","Run the signal module and move the number it locks on"),
+             L("عند الوصول إلى محطة، اسحب بطاقة التحدي المطابقة لها","On landing, draw the matching challenge card"),
+             L("في كل بطاقة قرار رئيسي <b>واحد</b>، والقرارات الفرعية اختيارية","One main decision per card; supporting ones are optional"),
+             L("إذا كانت المحطة مستخدمة، خذ التي قبلها أو التي بعدها","If the station is used, take the one before or after")])
+        +sub(L("توزيع العملاء في البداية","Starting customer mix"))
+        +li([L("٢٠٪ عملاء مروّجون","20% promoters"),L("٥٠٪ عملاء عاديون","50% regular customers"),L("٣٠٪ عملاء غاضبون","30% angry customers")]))}
+      ${sec(L("القرارات الرئيسية","The main decisions"),
+        `<p>${L("كل مغامر يتمتّع بقدرات متخصّصة ومهارات صُقلت عبر سنوات من الخبرة. في كل دور يُتّخذ قرار رئيسي واحد، ولكل قرار تكلفة مختلفة من النقاط التي يمكن كسبها.","Every adventurer has specialised skills. Each turn one main decision is taken, and each carries a different cost in points.")}</p>`
+        +li(DEC_SALES.map(d=>`<b>${L(d.ar,d.en)}</b> // ${L(d.har,d.hen)} <span class="ti">(${Object.entries(d.eff).map(([k,v])=>`${v>0?"+":"−"}${AR(1)} ${k}`).join("، ")})</span>`))
+        +`<div class="hbNote">${L("استخدموا مواهبكم بحكمة.","Use your talents wisely.")}</div>`)}
+      ${sec(L("إجراءات الدعم الإضافية","Supporting decisions"),
+        `<p>${L("يمكن اختيار بعض القرارات الإضافية كأدوات دعم خلال التحديات، وعددها مرتبط بعدد المهارات المكتملة في لوحة الفريق: قراران في بداية اللعبة، وأربعة عند إكمال مهارتين، وستة عند إكمال أربع.","You may take extra supporting decisions; how many depends on completed skills: two at the start, four after two skills, six after four.")}</p>`
+        +li(SUPPORT.map(s2=>L(s2.ar,s2.en))))}
+      ${sec(L("آليات النقاط والتقييم","Points and scoring"),
+        li([L("<b>النقاط الإيجابية</b> // تُكتسب عند اتخاذ قرارات جيدة","<b>Positive points</b> // earned for good decisions"),
+            L("<b>النقاط السلبية</b> // تُخصم عند القرارات السيئة أو إهمال العميل","<b>Negative points</b> // deducted for poor decisions or neglect"),
+            L("<b>الامتيازات</b> // تُستخدم النقاط للحصول على امتيازات أو مهارات","<b>Perks</b> // points buy perks or skills")])
+        +sub(L("نظام المقارنة المتدرّج","The graded comparison system"))
+        +`<p>${L("يُقيَّم كل حل وفق خمسة معايير محدّدة، من ١ إلى ٥ في كل معيار بحسب كفاءة استخدامه.","Each response is rated on five defined criteria, 1 to 5 each.")}</p>`
+        +li(FACTORS.map(f=>`<b>${L(f.ar,f.en)}</b> // ${L(f.dar,f.den)}`))
+        +`<div class="hbBrackets">${BRACKETS.map(b=>`<span>${AR(b.min)}+ → ${b.csp>0?"+":"−"}${AR(Math.abs(b.csp))}</span>`).join("")}</div>`)}
+      ${sec(L("آليات الفوز والخسارة","Winning and losing"),
+        li([L("تبدأون بنسبة ٢٠٪ مروّجين، والقرارات الجيدة ترفعها والسيئة تخفضها","You start at 20% promoters; good decisions raise it, poor ones lower it"),
+            L("<b>شرط الفوز</b> // الوصول إلى ٨٠٪ عملاء مروّجين أو أكثر","<b>Win</b> // reach 80% promoters or more"),
+            L("<b>الخسارة</b> // نزول المروّجين تحت ١٠٪","<b>Lose</b> // promoters fall below 10%")])
+        +sub(L("مسار التصعيد","The escalation path"))
+        +li([L("كل عميل غير راضٍ يزيد مؤشّر التصعيد","Every dissatisfied customer raises the escalation index"),
+             L("عند بلوغ ٥٥٪ عملاء غاضبين تُفعَّل أزمة كبرى تحتاج إلى جهد جماعي لحلّها","At 55% angry a major crisis triggers and needs a team effort")]))}
+      ${sec(L("التحدّي الأخير","The final challenge"),
+        `<p>${L("الرحلة المقبلة محفوفة بالمخاطر، ولكن هناك همسات مريبة عن تخريب وشيك تتردّد صداها في أروقة المختبر. تعطّلت شريحة التعاطف الخاصة بأنتاريس فجأة، ما يشير إلى أن عملاء ميكا كور قد يكونون أقرب ممّا تعتقدون.",
+             "The journey ahead is risky, and there are whispers of sabotage in the lab's corridors. Antares' empathy chip glitched suddenly: Mecha Core's agents may be closer than you think.")}</p>
+         <div class="hbNote">${L("مصير أنتاريس، وحلم غد أفضل، بين أيديكم. فلتبدأ المغامرة.","The fate of Antares, and the dream of a better tomorrow, is in your hands. Let the adventure begin.")}</div>`)}
+      </div>
+    </div>`:""}
+  </div>`;
+}
+function teamPane(){
+  const tm=TM(); let b="";
+  if(!tm.human){
+    b=`<div class="nt">${t("simTurn")} — <b style="color:${tm.color}">${L(tm.name,tm.nameEn)}</b><br>${t("watch")}</div>`;
+    if(S.cur) b+=cardFace();
+  } else if(S.phase==="roll"){
+    b=`<div class="nt">${t("playingNow")} <b style="color:${tm.color}">${L(tm.name,tm.nameEn)}</b> — ${t("station")} ${AR(tm.pos+1)}</div>
+       <button class="b p go" data-a="roll" ${S.busy?"disabled":""}>${S.busy?t("rolling"):t("roll")}</button>`;
+  } else if(S.phase==="draw"){
+    const ty=TYPES[BOARD[tm.pos].type];
+    b=`<div class="nt">${t("station")} ${AR(tm.pos+1)} — <b style="color:${ty.color}">${L(ty.ar,ty.en)}</b></div>
+       ${BOARD[tm.pos].type==="node"?`<div class="nt o">${t("nodeBody")}</div>`:""}
+       <button class="b p go" data-a="draw">${BOARD[tm.pos].type==="node"?t("place"):t("draw")}</button>`;
+  } else if(S.phase==="decide"){
+    b=cardFace()+`<div><div class="k" id="pmL">${t("pickMain")}</div>
+      <div class="opts" style="margin-top:9px" role="radiogroup" aria-labelledby="pmL">${DECS().map(d=>`
+        <label class="opt ${S.cur.decision===d.id?'sel':''}"><input type="radio" name="dec" value="${d.id}" ${S.cur.decision===d.id?"checked":""} aria-label="${L(d.ar,d.en)}">
+        <span><span class="on">${L(d.ar,d.en)}</span><span class="ef">${L(d.har,d.hen)}</span>
+        <span class="ef">${Object.entries(d.eff).map(([k2,v])=>`<span class="${v>0?'pl':'mi'}">${v>0?"+":"−"}${AR(1)} ${k2}</span>`).join(" · ")}</span></span></label>`).join("")}</div></div>
+      <div class="nt"><b>${t("supportOpen")} (${AR(slots(tm))})</b><br>${SUPPORT.slice(0,slots(tm)).map(x=>L(x.ar,x.en)).join(" · ")}</div>
+      <button class="b p ${S.cur.decision?"go":""}" data-a="lock" ${S.cur.decision?"":"disabled"}>${t("lockDec")}</button>`;
+  } else if(S.phase==="respond"){
+    b=cardFace()+`<div class="nt">${t("answerT")}</div>
+      <textarea class="ta" id="ans" placeholder="${L("مثال: أسأله أولًا عن أهم شيء بالنسبة له، ثم…","e.g. First I'd ask what matters most to them, then…")}">${S.cur.note||""}</textarea>
+      <button class="b p go" data-a="send">${t("send")}</button>`;
+  } else {
+    b=`<div class="nt o">✓ ${L("سُجّلت الإجابة","Answer recorded")}</div><div class="nt">${t("waitingScore")}</div>`+cardFace();
+  }
+  return `<section class="pane tm ${tm.human&&S.phase!=="score"?"live":""} ${S.pane!=="team"?"off":""}">
+    <div class="ph"><span style="width:10px;height:10px;border-radius:50%;background:${tm.color}"></span>
+      ${t("teamScreen")} — ${L(tm.name,tm.nameEn)}<span class="sp"></span>
+      <span class="ti">${t("skillsDone")} ${AR(full(tm))}/${AR(7)}</span></div>
+    <div class="pb">${b}
+      ${handbook()}
+      <div><div class="k" style="margin-bottom:7px">${t("playerBoard")}</div>${playerBoard(tm,false)}
+        <div class="k" style="margin:12px 0 7px;color:#A77BFF">${t("robot")}</div>${antaresStrip(tm)}</div>
+    </div></section>`;
+}
+
+/* ================= screens ================= */
+function announce(){
+  const tm=TM();
+  if(S.screen!=="play") return "";
+  const ph={roll:L("دور الرمي","Roll"),draw:L("سحب البطاقة","Draw"),decide:L("اختيار القرار","Decide"),
+            respond:L("عرض الإجابة","Respond"),score:L("التقييم","Score")}[S.phase]||"";
+  return `<div class="sr-live" role="status" aria-live="polite">${t("round")} ${AR(S.round)} — ${L(tm.name,tm.nameEn)} — ${ph}${
+    S.cur&&S.cur.card?` — ${L(TYPES[S.cur.type].ar,TYPES[S.cur.type].en)}`:""}</div>`;
+}
+function bar(extra=""){
+  return `<header class="bar"><div class="mark">ELEVATE <i>LAB</i></div>${extra}<div class="sp"></div>
+    <button class="b s g" data-a="lang" aria-label="${LANG==="ar"?"Switch to English":"التبديل إلى العربية"}">${LANG==="ar"?"EN":"عربي"}</button>
+    <button class="b s g" data-a="snd" aria-pressed="${A.on()}" aria-label="${t("sound")}">${A.on()?"🔊":"🔇"}</button>
+    ${S.screen!=="home"?`<button class="b s g" data-a="home">${t("back")}</button>`:""}</header>`;
+}
+function homeScreen(){
+  return bar()+`<main class="wrap"><div class="hero">
+    <div class="logo">ELEVATE<span>LAB</span></div>
+    <p class="mu" style="max-width:640px;margin:18px auto 0">${t("tagline")}</p></div>
+    <div class="doors">
+      <button class="door m" data-a="go" data-m="split"><div class="k">${t("dEnter")}</div><h3>${t("dPlay")}</h3><div class="mu">${t("dPlayT")}</div></button>
+      <button class="door" data-a="go" data-m="facil"><div class="k">TRAINER</div><h3>${t("dFacil")}</h3><div class="mu">${t("dFacilT")}</div></button>
+      <button class="door" data-a="rules"><div class="k">RULES</div><h3>${t("dRules")}</h3><div class="mu">${t("dRulesT")}</div></button>
+    </div>
+    <details class="qa"><summary>${t("notes")}</summary>
+      <div class="ti" style="margin-top:10px;line-height:1.9">
+        ${L("١ — لوحة اللاعب المطبوعة ما زالت تحمل قرارات خدمة العملاء الستة وأسماء مهاراتها، وهي بقايا نسخة سابقة. اللعبة هنا تعمل بالقرارات البيعية الخمسة من الكتالوج ودليل اللاعب، وتحتاج اللوحة إلى إعادة طباعة.",
+            "1 — The printed player board still carries the six customer-service decisions and their skill codes, left over from an earlier edition. This build runs on the five sales decisions from the catalog and player manual; the board needs reprinting.")}<br>
+        ${L("٢ — أرقام التقييم كلها مأخوذة من أداة التقييم: الشرائح ٢١ و١٧ و١٣ و٩ و٥، والتوزيع يبدأ ٢٠ و٥٠ و٣٠ وينتقل بين الفئات الثلاث، والفوز عند ٨٠٪ مروّجين والخسارة تحت ١٠٪ والأزمة عند ٥٥٪ غاضبين، وبطاقة الاسترداد إشارة رباعية في ثلاثة.",
+            "2 — Every scoring number comes from the trainer's tool: brackets at 21, 17, 13, 9 and 5; the mix starts 20/50/30 and shifts between the three buckets; win at 80% promoters, lose under 10%, crisis at 55% angry; Recovery is a four-cell signal times three.")}<br>
+        ${L("٣ — أثر القرار الرئيسي لا يغيّر التقييم من ٥، بل يضيف أو يخصم من تطوّر المهارة المقابلة، كما في الأداة.",
+            "3 — A main decision does not change the 1–5 rating; it adds to or subtracts from that factor's skill development, as in the tool.")}<br>
+        ${L("٤ — نصوص البطاقات الستين منقولة حرفيًا من ملفات الطباعة بعد مطابقة آلية لكل بطاقة.",
+            "4 — All sixty card texts are taken verbatim from the print files and machine-checked card by card.")}<br>
+        ${L("٥ — اللوحة هنا ٨٨ مربعًا: ٦٠ محطة بطاقة و٢٧ محطة أنتاريس ومربع بداية، بينما يذكر الكتالوج ٦٥ ثم يعدّها ٦٠.",
+            "5 — This board has 88 squares: 60 card stations, 27 Antares nodes and one start. The catalog says 65 then counts 60.")}
+      </div></details>
+  </main>`;
+}
+function rulesScreen(){
+  return bar()+`<main class="wrap">
+    <h1 class="en" style="font-size:26px">${t("dRules")}</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;margin-top:16px">
+      <div class="card"><div class="k">BOARD 1</div><h3>${t("mainBoard")}</h3>
+        <p class="mu">${L("أربعة فرق تتحرك على لوحة واحدة. يشغّل كل فريق وحدة الإشارة ويتقدّم، ثم يسحب البطاقة التي تطابق محطته. وإذا كانت المحطة مشغولة انتقل إلى التي قبلها أو بعدها، فاللعبة ليست سباقًا.","Four teams move on one board. Each runs the signal, advances, then draws the card matching its station. If a station is taken, move to the one before or after: this is not a race.")}</p></div>
+      <div class="card"><div class="k">BOARD 2</div><h3>${t("playerBoard")}</h3>
+        <p class="mu">${L("سبع مهارات، تكتمل كل منها بست قطع فتظهر زهرة كاملة. وكلما اكتملت مهارة أضاءت عند أنتاريس في الدور التالي.","Seven skills; six tokens complete one and it shows as a full flower. Each completed skill lights up on Antares the next turn.")}</p>
+        ${playerBoard(S.teams[0],false)}</div>
+      <div class="card"><div class="k">SCORING</div><h3>${t("factors5")}</h3>
+        <ul class="mu" style="padding-inline-start:18px">${FACTORS.map(f=>`<li><b>${L(f.ar,f.en)}</b> — ${L(f.dar,f.den)}</li>`).join("")}</ul></div>
+      <div class="card"><div class="k">DECISION</div><h3>${L("القرار الرئيسي","The main decision")}</h3>
+        <ul class="mu" style="padding-inline-start:18px">${DEC_SALES.map(d=>`<li><b>${L(d.ar,d.en)}</b> <span class="ti">(${Object.entries(d.eff).map(([k2,v])=>`${v>0?"+":"−"}${AR(1)} ${k2}`).join(", ")})</span></li>`).join("")}</ul></div>
+    </div>
+    <div class="row" style="margin-top:18px"><button class="b p" data-a="go" data-m="split">${t("dPlay")}</button></div></main>`;
+}
+function setupScreen(){
+  return bar()+`<main class="wrap">
+    <h1 style="font-size:26px">${t("setup")}</h1><p class="mu" style="max-width:720px">${t("setupT")}</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:16px">
+      <div class="card"><div class="k">TEAMS</div><h3 style="margin-bottom:12px">${t("names")}</h3>
+        ${S.teams.map((tm,i)=>`<div class="row" style="margin-bottom:9px">
+          <span style="width:12px;height:12px;border-radius:50%;background:${tm.color};flex:none"></span>
+          <input class="in" data-n="${i}" id="tn${i}" value="${LANG==="ar"?tm.name:tm.nameEn}" style="flex:1" aria-label="${t("team")} ${AR(i+1)}">
+          <span class="tag ${tm.human?'cy':''}">${tm.human?t("you"):AR(i+1)}</span></div>`).join("")}</div>
+      <div class="card"><div class="k">OPTIONS</div><h3 style="margin-bottom:12px">${t("options")}</h3>
+        <div class="ti" style="margin:14px 0 7px">${t("rounds")}</div>
+        <div class="seg" role="group" aria-label="${t("rounds")}">${[5,8,10,13].map(n=>`<button data-r="${n}" aria-pressed="${S.maxRounds===n}">${AR(n)}</button>`).join("")}</div>
+        <div class="ti" style="margin-top:8px">${t("roundsT")}</div>
+        <div class="ti" style="margin-top:6px">${t("mix")}</div>
+        <div class="row" style="margin-top:22px"><button class="b p go" data-a="begin">${t("begin")}</button></div></div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="k">${t("mainBoard")}</div>
+      <div style="margin-top:10px">${boardBlock()}</div></div></main>`;
+}
+function playScreen(){
+  const solo = S.mode==="facil";
+  const steps = ["roll","draw","decide","respond","score"], ci = steps.indexOf(S.phase);
+  return bar(`<span class="tag cy">${t("round")} ${AR(S.round)}/${AR(S.maxRounds)}</span>
+      <span class="tag" style="border-color:${TM().color}88;color:${TM().color}">${L(TM().name,TM().nameEn)}</span>`)+
+    `<main class="wrap">
+      <ul class="steps">${steps.map((p,i)=>`<li class="${i===ci?'now':i<ci?'done':''}">${AR(i+1)}. ${
+        {roll:L("الإشارة","Signal"),draw:L("البطاقة","Card"),decide:L("القرار","Decide"),respond:L("العرض","Respond"),score:L("التقييم","Score")}[p]}</li>`).join("")}</ul>
+      <div style="margin-top:12px">${boardBlock()}</div>
+      ${solo?"":`<div class="tabs"><button data-p="gm" aria-pressed="${S.pane==='gm'}">${t("trainer")}</button>
+        <button data-p="team" aria-pressed="${S.pane==='team'}">${t("teamScreen")}</button></div>`}
+      <div class="split" style="${solo?"grid-template-columns:1fr":""}">${gmPane()}${solo?"":teamPane()}</div></main>`;
+}
+function endScreen(){
+  const sorted=S.teams.slice().sort((a,b)=>b.promoter-a.promoter);
+  return bar()+`<main class="wrap"><h1 style="font-size:28px">${t("results")}</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-top:16px">
+      <div class="card"><div class="k">${t("rank")}</div>
+        <table class="t" style="margin-top:8px"><thead><tr><th>#</th><th>${t("team")}</th><th>${t("sat")}</th><th>${t("skillsDone")}</th><th></th></tr></thead>
+        <tbody>${sorted.map((tm,i)=>`<tr class="${tm.human?'me':''}"><td class="en">${AR(i+1)}</td>
+          <td><span style="color:${tm.color}">●</span> ${L(tm.name,tm.nameEn)}</td><td><b class="en">${AR(tm.promoter)}٪</b></td>
+          <td>${AR(full(tm))}/${AR(7)}</td>
+          <td>${outcome(tm)==="win"?`<span class="tag ok">${t("win")}</span>`:outcome(tm)==="lose"?`<span class="tag warn">${t("lose")}</span>`:"—"}</td></tr>`).join("")}</tbody></table>
+        <div class="row" style="margin-top:14px"><button class="b s" data-a="exp">${t("exportLog")}</button>
+          <button class="b s g" data-a="again">${t("again")}</button></div></div>
+      <div class="card"><div class="k">DEBRIEF · 30 MIN</div><h3>${t("debrief")}</h3>
+        <ul class="mu" style="padding-inline-start:18px;line-height:2.1">
+          <li>${L("أي القرارات أدّت إلى نتيجة جيدة، ولماذا؟","Which decisions led to good outcomes, and why?")}</li>
+          <li>${L("كيف تعامل فريقك مع العميل الصعب؟","How did your team handle the tough customer?")}</li>
+          <li>${L("ما الأسلوب البديل الذي كان يمكن أن ينجح؟","What alternative approach could have worked?")}</li>
+          <li>${L("ماذا ستطبّق من هذا في عملك غدًا؟","What will you apply at work tomorrow?")}</li></ul></div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="k">SESSION LOG</div>
+      <table class="t" style="margin-top:8px"><thead><tr><th>${t("round")}</th><th>${t("team")}</th><th>${t("deck")}</th><th>${t("decision")}</th><th>/${AR(25)}</th><th>CSP</th></tr></thead>
+      <tbody>${S.log.map(r=>`<tr><td>${AR(r.round)}</td><td>${r.team}</td><td>${L(TYPES[r.type].ar,TYPES[r.type].en)}</td>
+        <td>${r.decision||"—"}</td><td class="en">${AR(r.total)}</td><td class="en">${r.csp>0?"+":"−"}${AR(Math.abs(r.csp))}</td></tr>`).join("")}</tbody></table></div></main>`;
+}
+function render(){
+  document.documentElement.lang=LANG;
+  document.documentElement.dir=LANG==="ar"?"rtl":"ltr";
+  el("app").innerHTML={home:homeScreen,rules:rulesScreen,setup:setupScreen,play:playScreen,end:endScreen}[S.screen]()+announce();
+  const a=$("#ans"); if(a) a.addEventListener("input",e=>S.cur.note=e.target.value);
+}
+/* ================= scoring ================= */
+function rawTotal(sc,decId){
+  const d=DECS().find(x=>x.id===decId);
+  return FACTORS.reduce((a,f)=>{
+    const base=sc[f.id]||0, mod=d&&d.eff&&d.eff[f.id]?d.eff[f.id]:0;
+    return a+(base?clamp(base+mod,1,5):0);
+  },0);
+}
+function overlay(o){
+  el("ovz").innerHTML=`<div class="ov"><div class="ovin card" style="padding:30px">
+    <div class="ovk">${o.k||""}</div><div class="ovt">${o.title}</div>${o.body?`<p>${o.body}</p>`:""}${o.extra||""}
+    <div class="row" style="justify-content:center;margin-top:20px">${o.buttons!==undefined?o.buttons:`<button class="b p" data-a="ovx">${L("تابع","Continue")}</button>`}</div>
+  </div></div>`;
+}
+const closeOv = () => el("ovz").innerHTML="";
+function flash(){ const d=document.createElement("div"); d.className="flash"; document.body.appendChild(d); setTimeout(()=>d.remove(),520); }
+
+/* ================= turn flow ================= */
+function begin(){
+  S.screen="play"; S.round=1; S.turn=0; S.phase="roll"; S.cur=null; S.pane="team";
+  render(); queue();
+}
+async function moveTo(tm,n){
+  S.trail=[tm.pos];
+  for(let i=0;i<n && tm.pos<LAST;i++){ tm.pos++; S.trail.push(tm.pos); A.step(); render(); await wait(165); }
+  A.land(); S.ripple=tm.pos; S.landed=tm.pos; render(); await wait(900);
+  if(S.used.has(tm.pos)) await resolveBusy(tm);
+  S.ripple=tm.pos; S.landed=tm.pos; render(); await wait(650);
+  S.trail=null; S.ripple=null; render();
+}
+/* the manual: a taken station means the team takes the one before it or the one after it */
+function resolveBusy(tm){
+  const freeBelow=()=>{for(let i=tm.pos-1;i>=0;i--) if(!S.used.has(i)) return i; return -1;};
+  const freeAbove=()=>{for(let i=tm.pos+1;i<=LAST;i++) if(!S.used.has(i)) return i; return -1;};
+  const prev=freeBelow(), next=freeAbove();
+  if(prev<0 && next<0) return Promise.resolve();
+  const auto = next>=0 ? next : prev;
+  if(!tm.human||S.mode==="facil"){ tm.pos=auto; A.step(); render(); return wait(500); }
+  if(prev<0 || next<0){ tm.pos=auto; A.step(); render(); return wait(500); }
+  return new Promise(res=>{
+    overlay({k:t("busyStation"), title:AR(tm.pos+1), body:t("busyStationT"),
+      buttons:`<button class="b" data-a="busy" data-i="${prev}">${t("before")} · ${AR(prev+1)}</button>
+               <button class="b p" data-a="busy" data-i="${next}">${t("after")} · ${AR(next+1)}</button>`});
+    S.busyResolve=i2=>{ S.busyResolve=null; closeOv(); tm.pos=i2; A.step(); render(); res(); };
+  });
+}
+
+/* the signal module: Antares scans and locks onto the team's step */
+function fsLayer(html,cls=""){
+  const d=document.createElement("div");
+  d.className="fs "+cls; d.innerHTML=html; document.body.appendChild(d); return d;
+}
+function awaitClick(layer,sel){
+  return new Promise(res=>{
+    const b=layer.querySelector(sel);
+    if(!b) return res();
+    if(b.focus) setTimeout(()=>b.focus(),60);
+    const go=()=>{ b.removeEventListener("click",go); res(); };
+    b.addEventListener("click",go);
+  });
+}
+async function fsClose(layer){ layer.classList.add("out"); await wait(380); layer.remove(); }
+function sparkle(host,count=14){
+  const r=host.getBoundingClientRect();
+  for(let i=0;i<count;i++){
+    const s=document.createElement("div"); s.className="sparkle";
+    const a=Math.random()*Math.PI*2, d=70+Math.random()*120;
+    s.style.cssText=`left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;position:fixed;z-index:94;
+      --dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-delay:${Math.random()*.18}s`;
+    document.body.appendChild(s); setTimeout(()=>s.remove(),1200);
+  }
+}
+function sigMetrics(){
+  const short = window.innerHeight < 520, narrow = window.innerWidth < 420;
+  const size = short ? 54 : narrow ? 62 : 74;
+  const R    = short ? 84 : narrow ? 98 : 118;
+  return {size, R};
+}
+function signalMarkup(faces,color,capText){
+  const {size,R} = sigMetrics(), h = size/2;
+  const cells = Array.from({length:faces},(_,i)=>{
+    const a = Math.PI/180*(-90 + i*(360/faces));
+    return `<div class="cell" data-c="${i}" aria-hidden="true" style="--lock:${color};
+      width:${size}px;height:${size}px;font-size:${Math.round(size*0.41)}px;
+      left:calc(50% + ${(R*Math.cos(a)).toFixed(1)}px - ${h}px);
+      top:calc(50% + ${(R*Math.sin(a)).toFixed(1)}px - ${h}px)">${AR(i+1)}</div>`;
+  }).join("");
+  return `<div class="cap">${capText}</div>
+    <div class="stack" tabindex="-1" id="sigFocus" role="dialog" aria-modal="true" aria-label="${capText}">
+      <div class="sigWrap" aria-hidden="true">
+        <div class="sigRing"></div><div class="sigRing b"></div>
+        <div class="sigCore" id="sigCore" style="--lock:${color}"><div class="q"><i></i><i></i><i></i><i></i></div></div>
+        ${cells}
+      </div>
+      <div class="sigOut" id="sigOut" role="status" aria-live="assertive" style="visibility:hidden">—</div>
+      <div class="sigAct" id="sigAct"></div>
+    </div>`;
+}
+const lessMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* chases the cells, slows down, locks on one; returns the number */
+async function runSignal(faces,color,capText,label,manual){
+  const back=document.activeElement;
+  const layer=fsLayer(signalMarkup(faces,color,capText));
+  const act=layer.querySelector("#sigAct");
+  const focus=layer.querySelector("#sigFocus"); if(focus&&focus.focus) focus.focus();
+  if(manual){
+    act.innerHTML=`<button class="b p go" id="sigGo">${t("startScan")}</button>
+      <div class="ti" style="margin-top:9px">${t("tapCore")}</div>`;
+    const core=layer.querySelector("#sigCore");
+    if(core){ core.setAttribute("role","button"); core.style.cursor="pointer";
+      core.addEventListener("click",()=>{const g=layer.querySelector("#sigGo"); if(g) g.click();}); }
+    await awaitClick(layer,"#sigGo");
+    act.innerHTML="";
+  }
+  const cells=[...layer.querySelectorAll(".cell")];
+  const target=rnd(faces);
+  const calm=lessMotion();
+  const laps = calm ? 1 : faces>=6 ? 3 : 4;
+  const steps = laps*faces + target + 1;
+  let pos=-1;
+  for(let s=0;s<steps;s++){
+    if(pos>=0) cells[pos].classList.remove("hot");
+    pos=(pos+1)%faces;
+    cells[pos].classList.add("hot");
+    const k=s/steps;
+    const d=(calm?18:55) + (calm?60:300)*Math.pow(k,3.1);
+    A.tick(1-k);
+    await wait(d);
+  }
+  cells[pos].classList.remove("hot"); cells[pos].classList.add("lock");
+  layer.querySelector("#sigCore").classList.add("locked");
+  A.lock();
+  sparkle(cells[pos],16);
+  const out=layer.querySelector("#sigOut");
+  out.style.visibility="visible";
+  out.innerHTML=`${AR(target+1)}<small>${label}</small>`;
+  out.setAttribute("aria-label",`${AR(target+1)} ${label}`);
+  if(manual){
+    act.innerHTML=`<button class="b p go" id="sigNext">${t("cont")}</button>`;
+    await awaitClick(layer,"#sigNext");
+  } else await wait(calm?500:850);
+  await fsClose(layer);
+  if(back&&back.isConnected&&back.focus) back.focus();
+  return target+1;
+}
+async function doRoll(){
+  if(S.busy) return;
+  const tm=TM(); S.busy=true; render();
+  let n;
+  if(S.auto){ A.tick(.4); await wait(600); n=1+rnd(6); A.lock(); await wait(400); }
+  else n=await runSignal(6,tm.color,`${L(tm.name,tm.nameEn)} · ${t("roll")}`,
+    L("خطوات التقدّم","steps forward"),true);
+  S.busy=false; render();
+  const bw=el("bwrap"); if(bw&&bw.scrollIntoView) bw.scrollIntoView({behavior:"smooth",block:"center"});
+  await wait(350);
+  await moveTo(tm,n);
+  S.phase="draw"; render();
+}
+async function doDraw(){
+  const tm=TM(), cell=BOARD[tm.pos];
+  if(cell.type==="node"||cell.type==="start"){
+    S.used.add(tm.pos); S.landed=null; A.tok(0);
+    return award(tm,1);
+  }
+  S.hotDeck=cell.type; A.whoosh(); render(); await wait(850);
+  const deck=S.decks[cell.type];
+  if(!deck.length) S.decks[cell.type]=shuffle([...Array(15).keys()]);
+  const idx=S.decks[cell.type].pop();
+  S.used.add(tm.pos); S.hotDeck=null;
+  S.cur={type:cell.type,card:CARDS[cell.type][idx],decision:null,note:"",scores:{}};
+  S.flip=false;
+  const ty=TYPES[cell.type];
+  if(S.auto){ A.snap(); S.flip=true; S.phase="decide"; render(); await wait(700); return; }
+  const layer=fsLayer(`<div class="cap">${L(ty.ar,ty.en)}</div>
+    <div class="stack" tabindex="-1" id="cardFocus" role="dialog" aria-modal="true" aria-label="${L(ty.ar,ty.en)}">
+      <div class="reveal">${cardFace()}</div>
+      <div class="sigAct" id="cardAct"></div></div>`);
+  const cf=layer.querySelector("#cardFocus"); if(cf&&cf.focus) cf.focus();
+  await wait(620);
+  A.snap();
+  const f=layer.querySelector(".flip"); f.classList.add("on");
+  sparkle(f,18);
+  await wait(700); A.reveal();
+  layer.querySelector("#cardAct").innerHTML=
+    `<button class="b p go" id="cardNext">${t("cont")}</button><div class="ti" style="margin-top:9px">${t("readCard")}</div>`;
+  await awaitClick(layer,"#cardNext");
+  S.flip=true; S.phase="decide"; render();
+  await fsClose(layer);
+}
+function lock(){ A.click(); S.phase="respond"; S.flip=true; render(); const f=$(".flip"); if(f) f.classList.add("on"); }
+function send(){ A.click(); S.phase="score"; S.pane="gm"; render(); const f=$(".flip"); if(f) f.classList.add("on"); }
+
+function apply(tm,total){
+  const br=bracketFor(total), tk=tokensFor(total), before=tm.promoter;
+  /* the chosen decision feeds skill development, not the 1-5 rating */
+  const dd=DECS().find(x=>x.id===S.cur.decision);
+  if(dd&&dd.eff) Object.entries(dd.eff).forEach(([k2,v])=>tm.fsk[k2]=Math.max(0,(tm.fsk[k2]||0)+v));
+  applyShift(tm,br.csp);
+  tm.delta=br.csp; tm.done++;
+  const d=DECS().find(x=>x.id===S.cur.decision);
+  S.log.push({round:S.round,team:L(tm.name,tm.nameEn),type:S.cur.type,
+    decision:d?L(d.ar,d.en):null,total,csp:br.csp,tokens:tk,promoter:tm.promoter});
+  if(br.csp>=10){ flash(); A.great(); } else if(br.csp>0) A.good(); else A.bad();
+  return {br,tk,before};
+}
+async function save(){
+  const tm=TM();
+  if(!tm.human||S.simLock||!S.cur||S.cur.scored) return;
+  if(FACTORS.some(f=>!S.cur.scores[f.id])) return;
+  S.cur.scored=true;
+  const total=rawTotal(S.cur.scores,S.cur.decision), r=apply(tm,total);
+  render();
+  overlay({k:L(tm.name,tm.nameEn), title:`${AR(total)} / ${AR(25)} · ${L(r.br.ar,r.br.en)}`,
+    body:`${t("sat")}: ${AR(r.before)}٪ ← <b>${AR(tm.promoter)}٪</b> &nbsp;·&nbsp; ${AR(r.tk)} ${t("tokens")}`,
+    extra:`<div style="margin-top:14px">${mixBar(tm)}</div>`,
+    buttons:`<button class="b p" data-a="pick" data-n="${r.tk}">${t("place")}</button>`});
+}
+function pickUI(n){
+  const tm=TM();
+  if(!tm.human) return award(tm,n);
+  overlay({k:`${AR(n)} ${t("tokens")}`, title:t("whichSkill"), body:t("whichSkillT"),
+    extra:`<div style="margin-top:16px">${playerBoard(tm,true)}</div>`, buttons:""});
+  el("ovz").dataset.n=n;
+}
+async function award(tm,n){
+  const open=SKILLS.filter(s=>tm.tok[s.id]<TOKENS_PER_SKILL);
+  await place(tm,(open.length?open[rnd(open.length)]:SKILLS[0]).id,n);
+}
+async function place(tm,id,n){
+  closeOv();
+  let left=n;
+  for(let i=0;i<n;i++){
+    let target=id;
+    if(tm.tok[target]>=TOKENS_PER_SKILL){
+      const o=SKILLS.find(s=>tm.tok[s.id]<TOKENS_PER_SKILL);
+      if(!o) break;
+      target=o.id;
+    }
+    tm.tok[target]++; left--; A.tok(i); render(); await wait(140);
+  }
+  if(tm.tok[id]>=TOKENS_PER_SKILL && !S.pending.some(x=>x.t===tm.i&&x.s===id)){
+    S.pending.push({t:tm.i,s:id});
+    const sk=SKILLS.find(s=>s.id===id); A.lamp();
+    overlay({k:t("skillDone"), title:L(sk.ar,sk.en), body:t("skillDoneT")});
+    await wait(1700); closeOv();
+  }
+  teachStep(tm,n);
+}
+/* the manual: tokens may instead raise Antares' matching skill, but never above the team's */
+function teachStep(tm,n){
+  const cands=SKILLS.filter(s=>tm.bot[s.id]<tm.tok[s.id] && tm.bot[s.id]<TOKENS_PER_SKILL);
+  if(!cands.length) return endTurn();
+  const cap=Math.min(n, cands.reduce((a,s)=>a+Math.min(tm.tok[s.id],TOKENS_PER_SKILL)-tm.bot[s.id],0));
+  if(!tm.human||S.mode==="facil"||n<3||cap<1) return teach(tm,Math.min(cap, n<3?0:2));
+  overlay({k:t("teaching"), title:t("howManyBot"), body:t("botCap"),
+    extra:`<div style="margin-top:14px">${antaresStrip(tm)}</div>`,
+    buttons:Array.from({length:cap+1},(_,i)=>
+      `<button class="b ${i===0?'g':'v'}" data-a="teach" data-n="${i}">${AR(i)}</button>`).join("")});
+}
+async function teach(tm,n){
+  closeOv();
+  for(let i=0;i<n;i++){
+    const s=SKILLS.find(x=>tm.bot[x.id]<Math.min(tm.tok[x.id],TOKENS_PER_SKILL));
+    if(!s) break;
+    tm.bot[s.id]++; A.lamp(); render(); await wait(230);
+  }
+  endTurn();
+}
+function endTurn(){
+  S.simLock=false; S.auto=false; S.landed=null; S.cur=null; S.flip=false; S.phase="roll";
+  S.pending=[];
+  setTimeout(()=>{S.teams.forEach(x=>x.delta=null);},1900);
+  S.turn++;
+  if(S.turn>3){ S.turn=0; S.round++; }
+  if(S.round>S.maxRounds){ S.screen="end"; A.win(); render(); return; }
+  S.pane = TM().human ? "team" : "gm";
+  render(); setTimeout(queue,400);
+}
+function queue(){ if(!TM().human && !S.simLock) simTurn(); }
+
+async function simTurn(){
+  if(S.simLock) return;
+  S.simLock=true; S.auto=true;
+  const tm=TM();
+  await wait(500);
+  await doRoll(); await wait(300);
+  await doDraw();
+  if(S.phase!=="decide"||!S.cur) return;
+  await wait(600);
+  S.cur.decision=DECS()[rnd(DECS().length)].id; render(); await wait(700);
+  S.phase="respond"; render(); await wait(800);
+  S.phase="score"; S.pane="gm";
+  FACTORS.forEach(f=>S.cur.scores[f.id]=clamp(2+rnd(3)+(Math.random()<.25?1:0),1,5));
+  render(); await wait(1100);
+  const total=rawTotal(S.cur.scores,S.cur.decision), r=apply(tm,total); render();
+  overlay({k:t("otherTurn"), title:`${L(tm.name,tm.nameEn)} · ${AR(total)}/${AR(25)}`,
+    body:`${t("sat")}: ${AR(r.before)}٪ ← <b>${AR(tm.promoter)}٪</b>`, extra:`<div style="margin-top:14px">${mixBar(tm)}</div>`, buttons:""});
+  await wait(1700); closeOv();
+  await award(tm,r.tk);
+}
+async function recovery(){
+  const tm=TM(); tm.crisisUsed=true;
+  const d=await runSignal(4,"#F5C451",t("crisis"),L("نقاط انتعاش × ٣","recovery × 3"),true);
+  applyShift(tm,d*3);
+  A.good(); render();
+  overlay({k:t("crisis"), title:L(`إشارة الطوارئ: ${AR(d)}`,`Emergency signal: ${d}`),
+    body:L(`استعاد الفريق ${AR(d*3)} نقطة انتعاش.`,`The team recovered ${d*3} points.`),
+    extra:`<div style="margin-top:14px">${mixBar(tm)}</div>`});
+}
+function exportLog(){
+  const data={game:"Elevate Lab — Sales Edition",exported:new Date().toISOString(),rounds:S.maxRounds,
+    teams:S.teams.map(x=>({name:x.name,nameEn:x.nameEn,promoter:x.promoter,natural:x.natural,angry:x.angry,skillDev:x.fsk,
+      skillsCompleted:full(x),tokens:x.tok,challenges:x.done})), log:S.log};
+  const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a2=document.createElement("a"); a2.href=URL.createObjectURL(b); a2.download="elevate-lab-session.json"; a2.click();
+}
+
+/* ================= events ================= */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a],[data-p],[data-r],[data-f],[data-skill]");
+  if(!b) return;
+  if(b.dataset.p){ S.pane=b.dataset.p; render(); return; }
+  if(b.dataset.r){ S.maxRounds=+b.dataset.r; A.click(); render(); return; }
+  if(b.dataset.f){ if(!S.cur||S.simLock) return; S.cur.scores[b.dataset.f]=+b.dataset.v; A.click(); render(); return; }
+  if(b.dataset.skill){ place(TM(),b.dataset.skill,+el("ovz").dataset.n||6); return; }
+  if(b.dataset.a==="busy"){ S.busyResolve&&S.busyResolve(+b.dataset.i); return; }
+  if(b.dataset.a==="teach"){ teach(TM(),+b.dataset.n); return; }
+  switch(b.dataset.a){
+    case "lang": LANG=LANG==="ar"?"en":"ar"; render(); break;
+    case "snd": A.set(!A.on()); A.click(); render(); break;
+    case "home": closeOv(); S=newSession(); render(); break;
+    case "rules": S.screen="rules"; render(); break;
+    case "manual": S.manual=!S.manual; A.click(); render(); break;
+    case "go": S.mode=b.dataset.m; S.screen="setup"; S.pane=b.dataset.m==="facil"?"gm":"team"; render(); break;
+    case "begin": A.click(); begin(); break;
+    case "roll": doRoll(); break;
+    case "draw": doDraw(); break;
+    case "lock": lock(); break;
+    case "send": send(); break;
+    case "save": save(); break;
+    case "pick": pickUI(+b.dataset.n); break;
+    case "rec": recovery(); break;
+    case "exp": exportLog(); break;
+    case "again": S=newSession(); S.screen="setup"; render(); break;
+    case "ovx": closeOv(); break;
+  }
+});
+document.addEventListener("change",e=>{
+  const n=e.target.closest("[data-n]");
+  if(n && n.tagName==="INPUT"){ const i=+n.dataset.n; if(LANG==="ar") S.teams[i].name=n.value; else S.teams[i].nameEn=n.value; return; }
+  if(e.target.name==="dec"){ S.cur.decision=e.target.value; render(); const f=$(".flip"); if(f) f.classList.add("on"); }
+});
+document.addEventListener("input",e=>{
+  const n=e.target.closest("input[data-n]");
+  if(n){ const i=+n.dataset.n; if(LANG==="ar") S.teams[i].name=n.value; else S.teams[i].nameEn=n.value; }
+});
+
+S=newSession(); render();
+</script></body></html>
