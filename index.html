@@ -1,0 +1,2537 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06071A">
+<title>ELEVATE LAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@500;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+.ov,.ovin,.fs,.bookWrap,.bookCol,.sheetBody,.bwrap,.allocGrid{scrollbar-width:none;-ms-overflow-style:none}
+.ov::-webkit-scrollbar,.ovin::-webkit-scrollbar,.fs::-webkit-scrollbar,.bookWrap::-webkit-scrollbar,
+.bookCol::-webkit-scrollbar,.sheetBody::-webkit-scrollbar,.bwrap::-webkit-scrollbar{width:0;height:0}
+:root{
+  --bg:#06071A; --bg2:#0A0B24; --ink:#EAF4FF; --ink2:#9FB0D9; --ink3:#66789F;
+  --vio:#7B3FE4; --vio-l:#A77BFF; --vio-d:#4A1F96;
+  --cy:#45C6F5; --cy-l:#9CE2FB; --cy-d:#1A8CC4;
+  --deal:#2BC457; --hes:#F0803E; --tough:#F0434F; --comp:#46B6D6;
+  --ok:#49D68A; --warn:#F5C451; --err:#FF6B74;
+  --panel:rgba(14,16,48,.82);
+  --ease:cubic-bezier(.22,.85,.25,1);
+  --fd:'Orbitron',sans-serif; --fb:'Tajawal','Cairo',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--fb);overflow-x:hidden}
+html{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+body{min-height:100vh;background:
+  radial-gradient(ellipse 90% 55% at 50% 0%,rgba(123,63,228,.3),transparent 62%),
+  radial-gradient(ellipse 70% 45% at 50% 100%,rgba(69,198,245,.14),transparent 60%),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0 1px,transparent 1px 3px),var(--bg)}
+html[lang=en]{direction:ltr}
+h1,h2,h3{margin:0;line-height:1.25}
+button{font-family:inherit}
+.en{font-family:var(--fd);letter-spacing:.08em}
+
+/* ===== chrome ===== */
+.bar{position:sticky;top:0;z-index:70;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:9px 16px;
+  background:linear-gradient(180deg,rgba(10,11,36,.97),rgba(6,7,26,.88));
+  border-bottom:1px solid rgba(123,63,228,.5);backdrop-filter:blur(10px)}
+.mark{font-family:var(--fd);font-weight:900;font-size:15px;letter-spacing:.16em;color:#fff}
+.mark i{color:var(--cy);font-style:normal}
+.sp{flex:1}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;font-size:12.5px;font-weight:700;
+  border:1px solid rgba(123,63,228,.6);background:rgba(123,63,228,.16);color:var(--cy-l)}
+.tag.cy{border-color:rgba(69,198,245,.6);background:rgba(69,198,245,.14)}
+.tag.ok{border-color:rgba(73,214,138,.55);background:rgba(73,214,138,.14);color:#A5F2C8}
+.tag.warn{border-color:rgba(245,196,81,.55);background:rgba(245,196,81,.13);color:#FFE3A4}
+
+.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:12px;
+  border:1px solid rgba(123,63,228,.65);background:rgba(18,20,58,.75);color:var(--ink);font-weight:700;font-size:15.5px;
+  cursor:pointer;transition:transform .15s var(--ease),box-shadow .25s,border-color .2s}
+.b:hover:not(:disabled){transform:translateY(-2px);border-color:var(--cy);box-shadow:0 0 26px -6px rgba(69,198,245,.8)}
+.b:disabled{opacity:.35;cursor:not-allowed}
+.b:focus-visible,.door:focus-visible,.sheetBtn:focus-visible,.sk:focus-visible,.tabs button:focus-visible,
+.seg button:focus-visible,.opt:focus-within,input.in:focus-visible,textarea.ta:focus-visible,details.qa summary:focus-visible
+  {outline:3px solid var(--cy);outline-offset:3px;border-radius:12px}
+.b.p{border-color:var(--cy);color:#04121C;background:linear-gradient(180deg,#A8E9FD,#45C6F5 52%,#1690C7);
+  box-shadow:0 0 30px -8px rgba(69,198,245,.95)}
+.b.p:hover:not(:disabled){background:linear-gradient(180deg,#C8F2FF,#5FD3F9 52%,#1C9FD8)}
+.b.v{border-color:var(--vio-l);color:#fff;background:linear-gradient(180deg,#9B64FF,#6A2FD4)}
+.b.s{min-height:38px;padding:0 13px;font-size:13.5px;border-radius:10px}
+.b.g{background:transparent;border-color:rgba(159,176,217,.32);color:var(--ink2)}
+@keyframes cta{0%,100%{box-shadow:0 0 30px -8px rgba(69,198,245,.95)}50%{box-shadow:0 0 0 8px rgba(69,198,245,.14),0 0 40px -4px rgba(69,198,245,1)}}
+.b.p.go{animation:cta 2s ease-in-out infinite}
+
+.wrap{max-width:1680px;margin:0 auto;padding:16px 16px 80px}
+.card{position:relative;border-radius:14px;padding:16px;background:linear-gradient(170deg,rgba(20,23,64,.78),rgba(9,10,32,.9));
+  border:1px solid rgba(123,63,228,.42);box-shadow:inset 0 0 0 1px rgba(69,198,245,.06),0 26px 54px -34px #000}
+.card::before,.card::after{content:"";position:absolute;width:15px;height:15px;border:2px solid var(--cy);opacity:.7}
+.card::before{inset-inline-start:-1px;top:-1px;border-inline-end:0;border-bottom:0}
+.card::after{inset-inline-end:-1px;bottom:-1px;border-inline-start:0;border-top:0}
+.k{font-family:var(--fd);font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--vio-l)}
+.mu{color:var(--ink2);font-size:15px;line-height:1.8}
+.ti{font-size:12.5px;color:var(--ink3);line-height:1.6}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* ===== home ===== */
+.hero{text-align:center;padding:34px 10px 6px}
+.logo{font-family:var(--fd);font-weight:900;font-size:clamp(36px,9vw,78px);letter-spacing:.16em;line-height:1;color:#fff;
+  text-shadow:0 0 40px rgba(69,198,245,.7),0 0 90px rgba(123,63,228,.5)}
+.logo span{display:block;font-size:.4em;letter-spacing:.5em;color:var(--cy);margin-top:10px}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.door{display:flex;flex-direction:column;gap:7px;text-align:start;padding:20px;min-height:140px;cursor:pointer;border-radius:16px;
+  color:var(--ink);border:1px solid rgba(123,63,228,.45);background:linear-gradient(165deg,rgba(21,24,68,.85),rgba(8,9,30,.92));
+  transition:transform .18s var(--ease),border-color .2s,box-shadow .3s}
+.door:hover{transform:translateY(-4px);border-color:var(--cy);box-shadow:0 0 48px -16px rgba(69,198,245,.9)}
+.door.m{grid-column:1/-1;min-height:160px;border-color:var(--cy);
+  background:linear-gradient(118deg,rgba(69,198,245,.2),rgba(123,63,228,.26) 55%,rgba(8,9,30,.95));
+  box-shadow:0 0 60px -22px rgba(69,198,245,.9)}
+.door h3{font-size:22px}
+@media(max-width:760px){.doors{grid-template-columns:1fr}}
+
+/* ===== board ===== */
+.bwrap{border-radius:16px;padding:8px;overflow:auto;position:relative;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 4px),
+    radial-gradient(ellipse at 50% 50%,rgba(123,63,228,.22),transparent 62%),linear-gradient(160deg,#0A0B26,#06071A);
+  border:1px solid rgba(123,63,228,.5);box-shadow:inset 0 0 0 4px #06071A,inset 0 0 0 5px rgba(69,198,245,.16),0 30px 60px -40px #000}
+.bwrap svg{display:block;width:100%;height:auto;max-width:980px;margin:0 auto}
+.st-frame{transition:stroke .3s,opacity .3s}
+.st.used{opacity:.4}
+.st.hit .st-frame{stroke-width:3.4;filter:drop-shadow(0 0 10px rgba(69,198,245,1))}
+@keyframes halo{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.9;transform:scale(1.12)}}
+.haloRing{transform-box:fill-box;transform-origin:center;animation:halo 1.6s ease-in-out infinite}
+.st.land .st-frame{stroke-width:4}
+.st.land .ico{transform-box:fill-box;transform-origin:center;transform:scale(1.18)}
+@keyframes ripple{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(2.4)}}
+.rip{transform-box:fill-box;transform-origin:center;animation:ripple .9s ease-out both}
+@keyframes hop{0%{transform:translateY(-20px) scale(.88)}58%{transform:translateY(0) scale(1.1,.9)}100%{transform:translateY(0) scale(1)}}
+.pw.hop{animation:hop .46s var(--ease)}
+@keyframes bre{0%,100%{opacity:.3}50%{opacity:.95}}
+.breathe{animation:bre 2.8s ease-in-out infinite}
+@keyframes deckGlow{0%,100%{opacity:.25}50%{opacity:1}}
+.deck.hot .deck-edge{animation:deckGlow .7s ease-in-out 3;stroke-width:3}
+.lamp{transition:fill .5s,stroke .5s,filter .5s}
+
+/* full-screen signal module — Antares computes the team's step */
+.fs{position:fixed;inset:0;z-index:92;display:grid;place-items:center;padding:20px;overflow:auto;
+  background:radial-gradient(circle at 50% 50%,rgba(12,15,52,.84),rgba(3,4,14,.96));backdrop-filter:blur(5px);
+  animation:fsIn .3s ease-out both}
+.fs.out{animation:fsOut .38s ease-in both}
+@keyframes fsIn{from{opacity:0}to{opacity:1}}
+@keyframes fsOut{to{opacity:0;transform:scale(1.06)}}
+.fs .cap{position:absolute;top:11%;width:100%;text-align:center;font-family:var(--fd);letter-spacing:.26em;
+  font-size:12px;color:var(--cy-l);opacity:.85}
+.sigWrap{position:relative;width:320px;height:320px;display:grid;place-items:center;max-width:100%}
+.fs .stack{display:flex;flex-direction:column;align-items:center;max-height:100%}
+@media(max-width:420px){.sigWrap{width:272px;height:272px}}
+@media(max-height:520px){.sigWrap{width:236px;height:236px}.fs .cap{top:4px}.sigOut{margin-top:14px;font-size:17px}
+  .sigCore{width:74px;height:74px}.sigCore .q i{width:16px;height:16px}}
+.sigRing{position:absolute;inset:26px;border-radius:50%;border:1px solid rgba(69,198,245,.28);
+  animation:spin 9s linear infinite}
+.sigRing.b{inset:6px;border-style:dashed;border-color:rgba(167,123,255,.3);animation-direction:reverse;animation-duration:14s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sigCore{position:relative;width:96px;height:96px;display:grid;place-items:center;border-radius:14px;
+  background:rgba(69,198,245,.08);border:2px solid rgba(156,226,251,.65);
+  box-shadow:0 0 50px -8px rgba(69,198,245,.6)}
+.sigCore .q{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sigCore .q i{width:21px;height:21px;border-radius:4px;background:#9CE2FB;opacity:.9;
+  animation:qpulse 1.1s ease-in-out infinite}
+.sigCore .q i:nth-child(2){animation-delay:.14s}
+.sigCore .q i:nth-child(3){animation-delay:.28s}
+.sigCore .q i:nth-child(4){animation-delay:.42s}
+@keyframes qpulse{0%,100%{opacity:.35}50%{opacity:1}}
+.sigCore.locked{border-color:#fff;box-shadow:0 0 70px -4px var(--lock,#45C6F5)}
+.cell{position:absolute;width:74px;height:74px;display:grid;place-items:center;border-radius:14px;
+  font-family:var(--fd);font-size:30px;font-weight:900;color:#A8BCE2;
+  background:rgba(10,13,44,.9);border:1.6px solid rgba(123,63,228,.5);
+  transition:transform .18s var(--ease),color .18s,border-color .18s,box-shadow .25s,background .18s}
+@media(max-width:420px){.cell{width:62px;height:62px;font-size:25px}}
+.cell.hot{color:#06121C;background:linear-gradient(145deg,#DFF7FF,#8FDFFB 60%,#45C6F5);
+  border-color:#CFF1FF;transform:scale(1.14);box-shadow:0 0 34px -4px rgba(69,198,245,.95)}
+.cell.lock{color:#06121C;transform:scale(1.26);border-color:#fff;
+  background:linear-gradient(145deg,#FFFFFF,var(--lock,#45C6F5));
+  box-shadow:0 0 60px -2px var(--lock,#45C6F5)}
+.sigOut{margin-top:30px;text-align:center;font-family:var(--fd);font-size:20px;letter-spacing:.2em;color:#fff;
+  animation:rIn .55s var(--ease) both}
+@keyframes rIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sigAct{margin-top:18px;text-align:center}
+.sigOut small{display:block;font-family:var(--fb);font-size:13px;letter-spacing:0;color:var(--ink2);margin-top:7px}
+
+/* full-screen card reveal */
+.fs .reveal{width:min(360px,76vw);aspect-ratio:3/4.1;perspective:1600px}
+.fs .reveal .flip{max-width:none;animation:cardIn .6s var(--ease) both}
+@keyframes cardIn{0%{transform:translateY(90px) scale(.55) rotate(-8deg);opacity:0}
+  100%{transform:none;opacity:1}}
+.sparkle{position:absolute;width:8px;height:8px;border-radius:50%;background:#9CE2FB;pointer-events:none;
+  animation:spk .9s ease-out forwards}
+@keyframes spk{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+@keyframes runLine{to{stroke-dashoffset:-2990}}
+.pulse{animation:runLine 7s linear infinite}
+.pulse.p2{animation-duration:11s;animation-direction:reverse}
+/* dice flying over the board */
+.diceOver{position:absolute;z-index:8;pointer-events:none;inset-inline-start:50%;top:46%;transform:translate(50%,-50%)}
+html[lang=en] .diceOver{transform:translate(-50%,-50%)}
+.dieBox{width:96px;height:96px;border-radius:20px;display:grid;place-items:center;font-family:var(--fd);font-weight:900;
+  font-size:46px;color:#06121C;background:linear-gradient(145deg,#E8FAFF,#8FDFFB 55%,#45C6F5);
+  box-shadow:0 20px 40px -14px #000,inset 0 3px 0 rgba(255,255,255,.85),0 0 60px -6px rgba(69,198,245,.9)}
+@keyframes tumble{0%{transform:rotate(0) scale(.5);opacity:0}
+  12%{opacity:1}
+  25%{transform:rotate(140deg) scale(1.22)}
+  50%{transform:rotate(300deg) scale(.92)}
+  75%{transform:rotate(430deg) scale(1.14)}
+  100%{transform:rotate(540deg) scale(1)}}
+.dieBox.roll{animation:tumble 1.15s var(--ease)}
+@keyframes dieOut{to{transform:scale(.3) translateY(-60px);opacity:0}}
+.dieBox.out{animation:dieOut .5s var(--ease) forwards}
+
+/* ===== split ===== */
+.split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:14px}
+.pane{border-radius:14px;overflow:hidden;border:1px solid rgba(123,63,228,.45);
+  background:linear-gradient(176deg,rgba(17,19,56,.86),rgba(7,8,26,.92))}
+.pane.gm{border-color:rgba(167,123,255,.5);box-shadow:0 0 0 1px rgba(167,123,255,.08)}
+.pane.tm.live{border-color:var(--cy);box-shadow:0 0 50px -24px rgba(69,198,245,1)}
+.ph{display:flex;align-items:center;gap:9px;padding:11px 15px;font-weight:800;font-size:14.5px;
+  border-bottom:1px solid rgba(123,63,228,.4)}
+.pane.gm .ph{background:linear-gradient(180deg,rgba(123,63,228,.26),transparent);color:#D7C3FF}
+.pane.tm .ph{background:linear-gradient(180deg,rgba(69,198,245,.2),transparent);color:var(--cy-l)}
+.pb{padding:15px;display:flex;flex-direction:column;gap:13px}
+.tabs{display:none;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.tabs button{min-height:48px;border-radius:11px;border:1px solid rgba(123,63,228,.5);background:rgba(18,20,58,.7);
+  color:var(--ink2);font-weight:800;cursor:pointer}
+.tabs button[aria-pressed=true]{background:linear-gradient(180deg,#A8E9FD,#45C6F5);color:#04121C;border-color:var(--cy)}
+@media(max-width:1000px){
+  .split{grid-template-columns:1fr}
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);position:sticky;top:54px;z-index:40;
+    padding:8px 0;margin:0 0 10px;background:linear-gradient(180deg,var(--bg) 70%,transparent)}
+  .tabs button{font-size:13.5px;padding:0 4px}
+  .pane.off{display:none}
+  .playCols{display:flex;flex-direction:column}
+  .playCols .boardSec{order:1;margin-top:8px!important}
+  .playCols .tabs{order:2}
+  .playCols .split{order:3}
+}
+
+/* ===== playing card ===== */
+.stage{perspective:1400px;display:flex;justify-content:center}
+.flip{position:relative;width:100%;max-width:400px;aspect-ratio:3/4.1;transform-style:preserve-3d;
+  transition:transform .95s var(--ease)}
+.flip.on{transform:rotateY(180deg)}
+html[dir=rtl] .flip.on{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;overflow:hidden;
+  box-shadow:0 34px 60px -30px #000,0 0 0 1px rgba(156,226,251,.35)}
+.face.back{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  background:radial-gradient(ellipse at 50% 30%,#232A7E,#0D1036 70%)}
+.face.front{transform:rotateY(180deg);display:flex;flex-direction:column;gap:10px;padding:22px 20px;
+  background:linear-gradient(168deg,#1D2378,#0B0E33 72%)}
+html[dir=rtl] .face.front{transform:rotateY(-180deg)}
+.cut{position:absolute;inset:11px;border:1.5px solid rgba(156,226,251,.55);border-radius:12px;pointer-events:none;
+  clip-path:polygon(0 18px,18px 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 18px),calc(100% - 18px) 100%,
+    58% 100%,54% calc(100% - 13px),46% calc(100% - 13px),42% 100%,18px 100%,0 calc(100% - 18px))}
+.ctop{font-family:var(--fd);font-size:11px;letter-spacing:.3em;color:#8FA8DC}
+.cname{font-family:var(--fd);font-size:14px;font-weight:700;letter-spacing:.16em;text-align:center;line-height:1.6;color:#DCE9FF}
+.ctxt{font-size:19px;line-height:2.05;font-weight:600;flex:1;display:flex;align-items:center;text-align:center;
+  justify-content:center;color:#F1F7FF;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+@media(max-width:700px){.ctxt{font-size:16.5px;line-height:1.95}.cName{font-size:9.5px}}
+.cTop{display:flex;align-items:center;justify-content:center;gap:9px;padding-top:4px}
+.cName{font-family:var(--fd);font-size:11px;letter-spacing:.16em;font-weight:700}
+.cMini{display:grid;place-items:center}
+.cFoot{height:14px}
+.cbadge{align-self:center;padding:4px 14px;border-radius:999px;font-family:var(--fd);font-size:10.5px;letter-spacing:.18em;font-weight:700}
+@keyframes zoomIn{0%{transform:scale(.3) translateY(80px);opacity:0}100%{transform:scale(1);opacity:1}}
+.zin{animation:zoomIn .55s var(--ease) both}
+@keyframes dock{0%{transform:scale(1.35);opacity:.001}100%{transform:scale(1);opacity:1}}
+.dock{animation:dock .5s var(--ease) both}
+
+/* ===== trainer dashboard ===== */
+.dash{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tbox{padding:11px 12px;border-radius:12px;border:1px solid rgba(123,63,228,.42);
+  background:linear-gradient(170deg,rgba(21,24,68,.78),rgba(8,9,30,.88));border-inline-start:4px solid var(--tc)}
+.tbox.now{border-color:var(--cy);box-shadow:0 0 30px -14px rgba(69,198,245,1)}
+.tname{font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:7px}
+.gauge{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px;position:relative}
+.gauge>i{display:block;height:100%;border-radius:99px;transition:width 1s var(--ease);
+  background:linear-gradient(90deg,#1A8CC4,#45C6F5 60%,#9CE2FB)}
+.gauge.lo>i{background:linear-gradient(90deg,#A32B33,#FF6B74)}
+.gauge.hi>i{background:linear-gradient(90deg,#249159,#49D68A 60%,#A5F2C8)}
+.grow{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:12.5px;color:var(--ink2)}
+.grow b{font-family:var(--fd);font-size:17px;color:var(--cy-l)}
+@keyframes fly{0%{opacity:0;transform:translateY(12px)}22%{opacity:1}100%{opacity:0;transform:translateY(-30px)}}
+.dlt{position:absolute;inset-inline-end:2px;top:-24px;font-family:var(--fd);font-weight:900;font-size:16px;animation:fly 1.8s var(--ease) both}
+.dlt.up{color:#8CF0B4}.dlt.dn{color:#FFA0A6}
+
+.crit{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:10px 0;
+  border-bottom:1px solid rgba(123,63,228,.22)}
+.crit:last-of-type{border-bottom:0}
+.cn{font-size:14.5px;font-weight:700}
+.cd{font-size:12px;color:var(--ink3);line-height:1.5}
+.seg{display:inline-flex;gap:4px}
+.seg button{width:40px;height:40px;border-radius:10px;border:1px solid rgba(123,63,228,.55);background:rgba(8,9,30,.85);
+  color:var(--ink2);font-weight:800;font-family:var(--fd);font-size:14px;cursor:pointer;transition:transform .12s}
+.seg button:hover{transform:translateY(-2px)}
+.seg button[aria-pressed=true]{background:linear-gradient(180deg,#A8E9FD,#45C6F5);color:#04121C;border-color:var(--cy);
+  box-shadow:0 0 20px -5px rgba(69,198,245,1)}
+.tot{display:flex;align-items:baseline;gap:9px;font-family:var(--fd);font-size:34px;font-weight:900;color:var(--cy-l)}
+.tot small{font-size:13px;color:var(--ink3);font-family:var(--fb)}
+
+/* ===== options ===== */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:12px 13px;border-radius:12px;cursor:pointer;
+  border:1px solid rgba(123,63,228,.42);background:rgba(18,20,58,.5);transition:border-color .2s,background .2s,transform .15s}
+.opt:hover{border-color:var(--vio-l);transform:translateX(-3px)}
+html[lang=en] .opt:hover{transform:translateX(3px)}
+.opt input{margin-top:4px;accent-color:var(--cy);width:18px;height:18px;flex:none}
+.on{font-weight:700;font-size:15.5px}
+.ef{font-size:12.5px;color:var(--ink3);margin-top:3px;display:block}
+.opt.sel{border-color:var(--cy);background:linear-gradient(90deg,rgba(69,198,245,.18),rgba(69,198,245,.03));
+  box-shadow:0 0 26px -12px rgba(69,198,245,1)}
+.pl{color:var(--ok);font-weight:800}.mi{color:var(--err);font-weight:800}
+
+/* ===== player board ===== */
+.skills{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+@media(max-width:620px){.skills{grid-template-columns:repeat(4,1fr)}}
+.sk{text-align:center;padding:8px 2px;border-radius:11px;border:1px solid rgba(123,63,228,.35);background:rgba(8,9,30,.5)}
+.sk.bot{border-color:rgba(167,123,255,.4);background:rgba(167,123,255,.06)}
+.sk.bot.full{border-color:#A77BFF;background:rgba(167,123,255,.14);box-shadow:0 0 24px -12px #A77BFF}
+.sk.full{border-color:var(--cy);background:rgba(69,198,245,.11);box-shadow:0 0 24px -12px rgba(69,198,245,1)}
+.sk .lb{font-family:var(--fd);font-size:9.5px;letter-spacing:.06em;color:var(--ink3);margin-top:4px}
+.sk.full .lb{color:var(--cy-l)}
+@keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+.pt.new{transform-box:fill-box;transform-origin:center;animation:pop .45s var(--ease) both}
+
+/* ===== overlay ===== */
+.ov{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:20px;
+  background:radial-gradient(circle at 50% 45%,rgba(16,18,62,.94),rgba(3,4,14,.97));backdrop-filter:blur(4px)}
+.ovin{text-align:center;max-width:580px;width:100%;max-height:88vh;overflow:auto;animation:zoomIn .45s var(--ease) both}
+.ovk{font-family:var(--fd);letter-spacing:.24em;font-size:11px;color:var(--vio-l)}
+.ovt{font-family:var(--fd);font-size:clamp(26px,6vw,46px);font-weight:900;margin:12px 0;color:#fff;
+  text-shadow:0 0 36px rgba(69,198,245,.8)}
+.ov p{color:var(--ink2);line-height:1.8}
+@keyframes flash{0%{opacity:.8}100%{opacity:0}}
+.flash{position:fixed;inset:0;z-index:99;pointer-events:none;background:#fff;animation:flash .5s ease-out forwards}
+
+/* ===== rules ===== */
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.rules .rHero{text-align:center;padding:26px 0 8px;animation:rise .5s var(--ease) both}
+.rules .rHero h1{font-size:clamp(26px,5vw,40px);margin:8px 0 10px;
+  background:linear-gradient(90deg,#fff,#9CE2FB 55%,#A77BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rules .rHero p{max-width:720px;margin:0 auto}
+.rSec{margin-top:30px;animation:rise .6s var(--ease) both}
+.rSec>.k{margin-bottom:12px;display:block}
+.rGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.rCard h3{font-size:18px;margin-bottom:7px}
+.steps5{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;counter-reset:s}
+.stepCard{display:flex;gap:12px;padding:15px;border-radius:14px;animation:rise .55s var(--ease) var(--d) both;
+  border:1px solid rgba(123,63,228,.42);background:linear-gradient(165deg,rgba(21,24,68,.8),rgba(8,9,30,.9));
+  transition:transform .2s var(--ease),border-color .2s,box-shadow .3s}
+.stepCard:hover{transform:translateY(-4px);border-color:var(--cy);box-shadow:0 0 36px -14px var(--cy)}
+.stepCard .num{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:16px;
+  font-weight:900;color:#06121C;background:linear-gradient(180deg,#9CE2FB,#45C6F5);box-shadow:0 0 18px -5px var(--cy)}
+.stepCard h4{font-size:15.5px;margin-bottom:4px}
+.stepCard p{margin:0;font-size:13.5px;line-height:1.75;color:var(--ink2)}
+.facList{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.facList li{display:flex;gap:10px;align-items:flex-start;animation:rise .5s var(--ease) var(--d) both}
+.facList li>b{flex:none;min-width:44px;text-align:center;font-family:var(--fd);font-size:11px;padding:5px 6px;border-radius:7px;
+  color:var(--cy-l);border:1px solid rgba(69,198,245,.45);background:rgba(69,198,245,.08)}
+.facList li span{display:flex;flex-direction:column}
+.facList li em{font-style:normal;font-size:12.5px;color:var(--ink3);line-height:1.6;margin-top:2px}
+table.brk{margin-top:10px}
+table.brk td,table.brk th{padding:7px 8px;font-size:13px}
+table.brk tbody tr:hover{background:rgba(69,198,245,.06)}
+.mixDemo{margin:14px 0 4px}
+.winRow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.winBox{text-align:center;padding:13px 6px;border-radius:12px;border:1px solid rgba(123,63,228,.4);background:rgba(8,10,34,.55)}
+.winBox b{display:block;font-family:var(--fd);font-size:22px}
+.winBox span{font-size:12.5px;color:var(--ink2)}
+.winBox.ok{border-color:rgba(73,214,138,.5)}.winBox.ok b{color:#8CF0B4}
+.winBox.bad{border-color:rgba(255,107,116,.5)}.winBox.bad b{color:#FFA0A6}
+.winBox.warn{border-color:rgba(245,196,81,.5)}.winBox.warn b{color:#FFE3A4}
+.decGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}
+.decCard{padding:14px;border-radius:13px;animation:rise .55s var(--ease) var(--d) both;
+  border:1px solid rgba(123,63,228,.42);background:linear-gradient(165deg,rgba(21,24,68,.78),rgba(8,9,30,.9));
+  transition:transform .2s var(--ease),border-color .2s}
+.decCard:hover{transform:translateY(-4px);border-color:var(--vio-l)}
+.decCard h4{font-size:15px;margin-bottom:5px}
+.decCard p{margin:0;font-size:13px;line-height:1.7;color:var(--ink2)}
+.effRow{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;font-family:var(--fd);font-size:11.5px}
+.effRow span{padding:4px 9px;border-radius:7px;border:1px solid rgba(123,63,228,.4);background:rgba(8,10,34,.6)}
+
+/* ===== logo ===== */
+.mark{font-family:var(--fd);font-weight:900;font-size:15px;letter-spacing:.16em;color:#fff}
+.mark i{color:var(--cy);font-style:normal}
+.byBank{display:inline-flex;align-items:center;color:var(--ink3);opacity:.75;transition:opacity .2s,color .2s}
+.byBank:hover{opacity:1;color:var(--ink2)}
+.byLine{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:16px;color:var(--ink2)}
+.bkWord{font-family:var(--fd);font-weight:900;font-size:21px;letter-spacing:.14em;color:#fff;display:block;text-align:center}
+.bkWord span{display:block;font-size:.5em;letter-spacing:.44em;color:var(--cy);margin-top:5px}
+.bkBank{display:grid;place-items:center;color:var(--ink3);margin-top:18px;opacity:.7}
+.logo{animation:logoIn 1s var(--ease) both}
+@keyframes logoIn{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+.hbLogo{display:flex;align-items:center;gap:10px;color:#fff}
+
+/* ===== standings ===== */
+.stand{border:1px solid rgba(123,63,228,.4);border-radius:12px;padding:11px 13px;background:rgba(8,10,34,.55)}
+.standH{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.stRow{display:grid;grid-template-columns:18px 10px 1fr 64px 46px;gap:8px;align-items:center;padding:5px 0;font-size:13.5px}
+.stRow .dot{width:9px;height:9px;border-radius:50%}
+.stRow .nm{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stRow .pb{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.stRow .pb i{display:block;height:100%;border-radius:99px;transition:width .8s var(--ease)}
+.stRow .pc{text-align:end;font-size:12.5px;color:var(--cy-l)}
+.stRow.me{background:rgba(69,198,245,.08);border-radius:8px}
+.stRow.me .nm{color:#fff;font-weight:700}
+
+/* ===== token allocation ===== */
+.ovin.alloc{max-width:760px}
+.pool{display:flex;align-items:center;justify-content:center;gap:9px;margin:16px 0 6px;flex-wrap:wrap}
+.pool b{font-family:var(--fd);font-size:28px;color:var(--cy-l)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.chip{width:18px;height:20px;background:var(--cy);display:inline-block;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  box-shadow:0 0 10px rgba(69,198,245,.55);cursor:grab}
+.chips{touch-action:none}
+.dragHint{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:8px;font-size:12px;color:var(--ink3)}
+.dragHint .hArrow{animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(4px);opacity:1}}
+
+.chip.flying{position:fixed;z-index:120;transform:translate(-50%,-50%) scale(1.5);pointer-events:none;cursor:grabbing}
+.allocSide{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:14px 0 6px}
+.allocSide .k{color:var(--cy)}
+.allocSide.bot .k{color:var(--vio-l)}
+.allocGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.allocGrid.bot .allocCell{border-color:rgba(167,123,255,.4)}
+.allocGrid.bot .allocCell.got{border-color:var(--vio-l)}
+@media(max-width:700px){.allocGrid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.allocGrid{grid-template-columns:repeat(4,1fr);gap:5px}.ovin.alloc{padding:14px!important}.aBtns button{width:30px;height:30px;font-size:15px}.allocCell{padding:6px 2px}.allocCell .aFlower svg{width:34px;height:34px}}
+.allocCell{padding:9px 4px;border-radius:12px;border:1px solid rgba(123,63,228,.4);background:rgba(8,10,34,.6);
+  transition:border-color .2s,transform .18s var(--ease),box-shadow .25s}
+.allocCell.over{border-color:var(--cy);transform:translateY(-3px);box-shadow:0 0 26px -10px var(--cy)}
+.allocCell.got{border-color:var(--cy)}
+.allocCell.full{opacity:.55}
+.allocCell .lb{font-family:var(--fd);font-size:10px;color:var(--ink3);margin-top:3px}
+.aFlower{display:grid;place-items:center}
+.aBtns{display:flex;gap:5px;justify-content:center;margin-top:7px}
+.aBtns button{width:34px;height:34px;border-radius:9px;font-size:17px;font-weight:800;cursor:pointer;
+  border:1px solid rgba(123,63,228,.55);background:rgba(18,20,58,.8);color:var(--ink)}
+.aBtns button:disabled{opacity:.3;cursor:not-allowed}
+.aPlus:not(:disabled){border-color:var(--cy);color:var(--cy-l)}
+@media(pointer:coarse){.aBtns button{width:40px;height:40px}}
+
+/* flying tokens */
+.chip.flyer{position:fixed;z-index:130;pointer-events:none;transform:translate(-50%,-50%) scale(1.25);
+  transition:transform .5s cubic-bezier(.3,.9,.3,1),opacity .5s ease-in;will-change:transform,opacity}
+/* hand-off */
+.handoff{display:grid;place-items:center;margin-top:14px}
+.hDot{width:54px;height:54px;border-radius:50%;background:var(--tc);box-shadow:0 0 44px -6px var(--tc);
+  animation:bre 1.8s ease-in-out infinite}
+/* toolbox */
+.sheet.tool{border-color:rgba(167,123,255,.5)}
+.sheet.tool .sheetBtn{background:linear-gradient(90deg,rgba(167,123,255,.2),transparent)}
+.toolBody{background:linear-gradient(165deg,#15123B,#0A0A24 70%)}
+.fTag{display:inline-block;min-width:38px;text-align:center;font-size:10px;padding:2px 6px;border-radius:6px;margin-inline-end:7px;
+  color:var(--cy-l);border:1px solid rgba(69,198,245,.45);background:rgba(69,198,245,.08)}
+
+/* ===== customer mix + skill tracks ===== */
+.mix{display:flex;height:11px;border-radius:99px;overflow:hidden;margin-top:9px;background:rgba(255,255,255,.07)}
+.mix>span{display:block;transition:width .9s var(--ease)}
+.mixleg{display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--ink2)}
+.mixleg b{font-family:var(--fd);color:var(--ink)}
+.tracks{display:flex;flex-direction:column;gap:7px}
+.trk{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center;font-size:13px}
+.trk .tl{color:var(--ink2)}
+.trk .tbar{display:flex;gap:3px}
+.trk .tbar i{width:16px;height:7px;border-radius:2px;background:rgba(255,255,255,.1)}
+.trk .tbar i.on{background:linear-gradient(90deg,#6A2FD4,#A77BFF)}
+.trk b{font-family:var(--fd);font-size:13px;color:var(--vio-l);min-width:16px;text-align:center}
+
+/* ===== the handbook, as the printed two-page book ===== */
+.hbCta{display:flex;align-items:center;gap:11px;width:100%;min-height:58px;padding:0 14px;cursor:pointer;
+  border-radius:13px;color:var(--ink);text-align:start;
+  border:1px solid rgba(69,198,245,.45);background:linear-gradient(100deg,rgba(69,198,245,.16),rgba(123,63,228,.14) 60%,transparent);
+  transition:transform .16s var(--ease),border-color .2s,box-shadow .25s}
+.hbCta:hover{transform:translateY(-2px);border-color:var(--cy);box-shadow:0 0 34px -12px var(--cy)}
+.hbCtaIco{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;color:#fff;
+  background:rgba(5,7,26,.75);border:1px solid rgba(156,226,251,.4)}
+.hbCtaTxt{display:flex;flex-direction:column;line-height:1.35}
+.hbCtaTxt b{font-size:15px}
+.hbCtaTxt em{font-style:normal;font-size:12.5px;color:var(--ink3)}
+.hbCtaArrow{margin-inline-start:auto;font-size:22px;color:var(--cy)}
+html[dir=rtl] .hbCtaArrow{transform:scaleX(-1)}
+
+.fs.bookFs{padding:14px;align-items:center}
+.bookWrap{width:min(1200px,100%);margin:auto;display:flex;flex-direction:column;gap:12px}
+@keyframes bookIn{from{opacity:0;transform:perspective(1600px) rotateX(16deg) translateY(30px) scale(.95)}to{opacity:1;transform:none}}
+.book{display:grid;grid-template-columns:1fr 2px 1fr;border-radius:16px;overflow:hidden;animation:bookIn .6s var(--ease) both;
+  box-shadow:0 44px 90px -44px #000,0 0 0 1px rgba(123,63,228,.5);
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0 1px,transparent 1px 3px),
+    radial-gradient(ellipse 60% 45% at 50% 0%,rgba(123,63,228,.28),transparent 62%),
+    linear-gradient(165deg,#120F33,#0A0A24 72%)}
+.bookPage{position:relative;max-height:72vh;overflow:auto;animation:pageIn .45s var(--ease) both}
+@keyframes pageIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+.bookPage.empty{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+.spine{background:linear-gradient(180deg,transparent,rgba(69,198,245,.45),transparent);
+  box-shadow:0 0 18px rgba(69,198,245,.35)}
+.book::before,.book::after{content:"";position:absolute}
+.bookCol{padding:16px 20px}
+.bookCover{display:grid;place-items:center;align-content:center;padding:28px;min-height:360px;
+  background:radial-gradient(ellipse at 50% 40%,rgba(69,198,245,.14),transparent 70%)}
+.bookCover .hbLogo{flex-direction:column;gap:12px;color:#fff;text-align:center;display:flex;align-items:center}
+.bookCover .hbLogo i{font-family:var(--fd);font-style:normal;font-size:12px;letter-spacing:.42em;color:var(--cy)}
+.bookNav{display:flex;align-items:center;justify-content:center;gap:12px}
+.bookNav .nav{min-width:46px;font-size:20px;line-height:1}
+html[dir=rtl] .bookNav .nav{transform:scaleX(-1)}
+.dots{display:flex;gap:6px}
+.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+.dots i.on{background:var(--cy);box-shadow:0 0 10px var(--cy)}
+@media(max-width:860px){
+  .book{grid-template-columns:1fr}
+  .bookPage{max-height:70vh}
+  .bookCover{padding:18px;min-height:220px}
+  .bookCol{padding:14px 16px}
+  .fs.bookFs{padding:10px}
+  .hsec h4{font-size:15px}
+  .bookNav .nav{min-width:54px;min-height:46px}
+}
+/* ===== overlay ===== */
+.ov{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:20px;
+  background:radial-gradient(circle at 50% 45%,rgba(16,18,62,.94),rgba(3,4,14,.97));backdrop-filter:blur(4px)}
+.ovin{text-align:center;max-width:580px;width:100%;max-height:88vh;overflow:auto;animation:zoomIn .45s var(--ease) both}
+.ovk{font-family:var(--fd);letter-spacing:.24em;font-size:11px;color:var(--vio-l)}
+.ovt{font-family:var(--fd);font-size:clamp(26px,6vw,46px);font-weight:900;margin:12px 0;color:#fff;
+  text-shadow:0 0 36px rgba(69,198,245,.8)}
+.ov p{color:var(--ink2);line-height:1.8}
+@keyframes flash{0%{opacity:.8}100%{opacity:0}}
+.flash{position:fixed;inset:0;z-index:99;pointer-events:none;background:#fff;animation:flash .5s ease-out forwards}
+
+/* ===== rules ===== */
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.rules .rHero{text-align:center;padding:26px 0 8px;animation:rise .5s var(--ease) both}
+.rules .rHero h1{font-size:clamp(26px,5vw,40px);margin:8px 0 10px;
+  background:linear-gradient(90deg,#fff,#9CE2FB 55%,#A77BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rules .rHero p{max-width:720px;margin:0 auto}
+.rSec{margin-top:30px;animation:rise .6s var(--ease) both}
+.rSec>.k{margin-bottom:12px;display:block}
+.rGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.rCard h3{font-size:18px;margin-bottom:7px}
+.steps5{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;counter-reset:s}
+.stepCard{display:flex;gap:12px;padding:15px;border-radius:14px;animation:rise .55s var(--ease) var(--d) both;
+  border:1px solid rgba(123,63,228,.42);background:linear-gradient(165deg,rgba(21,24,68,.8),rgba(8,9,30,.9));
+  transition:transform .2s var(--ease),border-color .2s,box-shadow .3s}
+.stepCard:hover{transform:translateY(-4px);border-color:var(--cy);box-shadow:0 0 36px -14px var(--cy)}
+.stepCard .num{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:16px;
+  font-weight:900;color:#06121C;background:linear-gradient(180deg,#9CE2FB,#45C6F5);box-shadow:0 0 18px -5px var(--cy)}
+.stepCard h4{font-size:15.5px;margin-bottom:4px}
+.stepCard p{margin:0;font-size:13.5px;line-height:1.75;color:var(--ink2)}
+.facList{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.facList li{display:flex;gap:10px;align-items:flex-start;animation:rise .5s var(--ease) var(--d) both}
+.facList li>b{flex:none;min-width:44px;text-align:center;font-family:var(--fd);font-size:11px;padding:5px 6px;border-radius:7px;
+  color:var(--cy-l);border:1px solid rgba(69,198,245,.45);background:rgba(69,198,245,.08)}
+.facList li span{display:flex;flex-direction:column}
+.facList li em{font-style:normal;font-size:12.5px;color:var(--ink3);line-height:1.6;margin-top:2px}
+table.brk{margin-top:10px}
+table.brk td,table.brk th{padding:7px 8px;font-size:13px}
+table.brk tbody tr:hover{background:rgba(69,198,245,.06)}
+.mixDemo{margin:14px 0 4px}
+.winRow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.winBox{text-align:center;padding:13px 6px;border-radius:12px;border:1px solid rgba(123,63,228,.4);background:rgba(8,10,34,.55)}
+.winBox b{display:block;font-family:var(--fd);font-size:22px}
+.winBox span{font-size:12.5px;color:var(--ink2)}
+.winBox.ok{border-color:rgba(73,214,138,.5)}.winBox.ok b{color:#8CF0B4}
+.winBox.bad{border-color:rgba(255,107,116,.5)}.winBox.bad b{color:#FFA0A6}
+.winBox.warn{border-color:rgba(245,196,81,.5)}.winBox.warn b{color:#FFE3A4}
+.decGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}
+.decCard{padding:14px;border-radius:13px;animation:rise .55s var(--ease) var(--d) both;
+  border:1px solid rgba(123,63,228,.42);background:linear-gradient(165deg,rgba(21,24,68,.78),rgba(8,9,30,.9));
+  transition:transform .2s var(--ease),border-color .2s}
+.decCard:hover{transform:translateY(-4px);border-color:var(--vio-l)}
+.decCard h4{font-size:15px;margin-bottom:5px}
+.decCard p{margin:0;font-size:13px;line-height:1.7;color:var(--ink2)}
+.effRow{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;font-family:var(--fd);font-size:11.5px}
+.effRow span{padding:4px 9px;border-radius:7px;border:1px solid rgba(123,63,228,.4);background:rgba(8,10,34,.6)}
+
+/* ===== logo ===== */
+.mark{font-family:var(--fd);font-weight:900;font-size:15px;letter-spacing:.16em;color:#fff}
+.mark i{color:var(--cy);font-style:normal}
+.byBank{display:inline-flex;align-items:center;color:var(--ink3);opacity:.75;transition:opacity .2s,color .2s}
+.byBank:hover{opacity:1;color:var(--ink2)}
+.byLine{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:16px;color:var(--ink2)}
+.bkWord{font-family:var(--fd);font-weight:900;font-size:21px;letter-spacing:.14em;color:#fff;display:block;text-align:center}
+.bkWord span{display:block;font-size:.5em;letter-spacing:.44em;color:var(--cy);margin-top:5px}
+.bkBank{display:grid;place-items:center;color:var(--ink3);margin-top:18px;opacity:.7}
+.logo{animation:logoIn 1s var(--ease) both}
+@keyframes logoIn{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+.hbLogo{display:flex;align-items:center;gap:10px;color:#fff}
+
+/* ===== standings ===== */
+.stand{border:1px solid rgba(123,63,228,.4);border-radius:12px;padding:11px 13px;background:rgba(8,10,34,.55)}
+.standH{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.stRow{display:grid;grid-template-columns:18px 10px 1fr 64px 46px;gap:8px;align-items:center;padding:5px 0;font-size:13.5px}
+.stRow .dot{width:9px;height:9px;border-radius:50%}
+.stRow .nm{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stRow .pb{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.stRow .pb i{display:block;height:100%;border-radius:99px;transition:width .8s var(--ease)}
+.stRow .pc{text-align:end;font-size:12.5px;color:var(--cy-l)}
+.stRow.me{background:rgba(69,198,245,.08);border-radius:8px}
+.stRow.me .nm{color:#fff;font-weight:700}
+
+/* ===== token allocation ===== */
+.ovin.alloc{max-width:760px}
+.pool{display:flex;align-items:center;justify-content:center;gap:9px;margin:16px 0 6px;flex-wrap:wrap}
+.pool b{font-family:var(--fd);font-size:28px;color:var(--cy-l)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.chip{width:18px;height:20px;background:var(--cy);display:inline-block;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  box-shadow:0 0 10px rgba(69,198,245,.55);cursor:grab}
+.chips{touch-action:none}
+.dragHint{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:8px;font-size:12px;color:var(--ink3)}
+.dragHint .hArrow{animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(4px);opacity:1}}
+
+.chip.flying{position:fixed;z-index:120;transform:translate(-50%,-50%) scale(1.5);pointer-events:none;cursor:grabbing}
+.allocSide{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:14px 0 6px}
+.allocSide .k{color:var(--cy)}
+.allocSide.bot .k{color:var(--vio-l)}
+.allocGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.allocGrid.bot .allocCell{border-color:rgba(167,123,255,.4)}
+.allocGrid.bot .allocCell.got{border-color:var(--vio-l)}
+@media(max-width:700px){.allocGrid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.allocGrid{grid-template-columns:repeat(4,1fr);gap:5px}.ovin.alloc{padding:14px!important}.aBtns button{width:30px;height:30px;font-size:15px}.allocCell{padding:6px 2px}.allocCell .aFlower svg{width:34px;height:34px}}
+.allocCell{padding:9px 4px;border-radius:12px;border:1px solid rgba(123,63,228,.4);background:rgba(8,10,34,.6);
+  transition:border-color .2s,transform .18s var(--ease),box-shadow .25s}
+.allocCell.over{border-color:var(--cy);transform:translateY(-3px);box-shadow:0 0 26px -10px var(--cy)}
+.allocCell.got{border-color:var(--cy)}
+.allocCell.full{opacity:.55}
+.allocCell .lb{font-family:var(--fd);font-size:10px;color:var(--ink3);margin-top:3px}
+.aFlower{display:grid;place-items:center}
+.aBtns{display:flex;gap:5px;justify-content:center;margin-top:7px}
+.aBtns button{width:34px;height:34px;border-radius:9px;font-size:17px;font-weight:800;cursor:pointer;
+  border:1px solid rgba(123,63,228,.55);background:rgba(18,20,58,.8);color:var(--ink)}
+.aBtns button:disabled{opacity:.3;cursor:not-allowed}
+.aPlus:not(:disabled){border-color:var(--cy);color:var(--cy-l)}
+@media(pointer:coarse){.aBtns button{width:40px;height:40px}}
+
+/* flying tokens */
+.chip.flyer{position:fixed;z-index:130;pointer-events:none;transform:translate(-50%,-50%) scale(1.25);
+  transition:transform .5s cubic-bezier(.3,.9,.3,1),opacity .5s ease-in;will-change:transform,opacity}
+/* hand-off */
+.handoff{display:grid;place-items:center;margin-top:14px}
+.hDot{width:54px;height:54px;border-radius:50%;background:var(--tc);box-shadow:0 0 44px -6px var(--tc);
+  animation:bre 1.8s ease-in-out infinite}
+/* toolbox */
+.sheet.tool{border-color:rgba(167,123,255,.5)}
+.sheet.tool .sheetBtn{background:linear-gradient(90deg,rgba(167,123,255,.2),transparent)}
+.toolBody{background:linear-gradient(165deg,#15123B,#0A0A24 70%)}
+.fTag{display:inline-block;min-width:38px;text-align:center;font-size:10px;padding:2px 6px;border-radius:6px;margin-inline-end:7px;
+  color:var(--cy-l);border:1px solid rgba(69,198,245,.45);background:rgba(69,198,245,.08)}
+
+/* ===== customer mix + skill tracks ===== */
+.mix{display:flex;height:11px;border-radius:99px;overflow:hidden;margin-top:9px;background:rgba(255,255,255,.07)}
+.mix>span{display:block;transition:width .9s var(--ease)}
+.mixleg{display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--ink2)}
+.mixleg b{font-family:var(--fd);color:var(--ink)}
+.tracks{display:flex;flex-direction:column;gap:7px}
+.trk{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center;font-size:13px}
+.trk .tl{color:var(--ink2)}
+.trk .tbar{display:flex;gap:3px}
+.trk .tbar i{width:16px;height:7px;border-radius:2px;background:rgba(255,255,255,.1)}
+.trk .tbar i.on{background:linear-gradient(90deg,#6A2FD4,#A77BFF)}
+.trk b{font-family:var(--fd);font-size:13px;color:var(--vio-l);min-width:16px;text-align:center}
+
+/* ===== the handbook, folded — styled after the printed Player Manual ===== */
+.sheet{border:1px solid rgba(69,198,245,.4);border-radius:12px;overflow:hidden;background:rgba(8,10,34,.6)}
+.sheetBtn{width:100%;min-height:48px;display:flex;align-items:center;gap:9px;padding:0 14px;cursor:pointer;
+  background:linear-gradient(90deg,rgba(69,198,245,.16),transparent);border:0;color:var(--ink);font-size:15px}
+.sheetBtn:hover{background:linear-gradient(90deg,rgba(69,198,245,.26),transparent)}
+.sIco{font-family:var(--fd);color:var(--cy)}
+@keyframes unfold{from{opacity:0;transform:translateY(-14px) rotateX(-24deg)}to{opacity:1;transform:none}}
+.sheetBody{transform-origin:top;animation:unfold .5s var(--ease) both;max-height:440px;overflow:auto;
+  position:relative;padding:0;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 1px,transparent 1px 3px),
+    radial-gradient(ellipse 80% 50% at 18% 0%,rgba(123,63,228,.3),transparent 62%),
+    linear-gradient(165deg,#120F33,#0A0A24 70%)}
+.hbHead{display:flex;align-items:center;gap:14px;padding:16px 18px 12px;border-bottom:1px solid rgba(123,63,228,.4);
+  position:sticky;top:0;z-index:2;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(18,15,51,.97),rgba(18,15,51,.8))}
+.hbLogo{font-family:var(--fd);font-weight:900;font-size:17px;letter-spacing:.17em;line-height:1.15;color:#fff;
+  text-shadow:0 0 26px rgba(69,198,245,.6)}
+.hbLogo i{display:block;font-style:normal;font-size:.62em;letter-spacing:.42em;color:var(--cy);margin-top:3px}
+.hbRule{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(69,198,245,.6),transparent)}
+.hbBody{padding:4px 20px 22px}
+.hsec{padding:15px 0;border-bottom:1px solid rgba(123,63,228,.22)}
+.hsec:last-child{border-bottom:0}
+.hsec h4{display:flex;align-items:center;gap:9px;font-size:16.5px;font-weight:900;color:#fff;margin-bottom:9px}
+.hsec h4::before{content:"▣";display:grid;place-items:center;width:22px;height:22px;flex:none;font-size:13px;
+  color:#06071A;background:linear-gradient(180deg,#CFEFFB,#8FC4DE);border-radius:3px}
+.hsec h5{font-size:13.5px;font-weight:700;color:var(--cy);margin:11px 0 5px}
+.hsec ul{margin:0;padding:0;list-style:none}
+.hsec li{position:relative;padding-inline-start:20px;font-size:13.5px;line-height:1.95;color:#C5D6F2}
+.hsec li::before{content:"◉";position:absolute;inset-inline-start:0;top:0;color:var(--cy);font-size:11px;line-height:2.3}
+.hsec li b{color:#fff}
+.hsec p{margin:5px 0;font-size:13px;line-height:1.85;color:#9FB0D9}
+.hbNote{margin-top:14px;padding:11px 13px;border-radius:9px;font-size:13px;line-height:1.8;
+  border:1px solid rgba(167,123,255,.4);background:rgba(123,63,228,.12);color:#D6C4FF}
+.hbBrackets{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.hbBrackets span{font-family:var(--fd);font-size:11.5px;padding:4px 10px;border-radius:7px;
+  border:1px solid rgba(69,198,245,.4);background:rgba(69,198,245,.08);color:var(--cy-l)}
+
+/* ===== bits ===== */
+.steps{display:flex;gap:5px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.steps li{font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:999px;color:var(--ink3);
+  border:1px solid rgba(123,63,228,.35);background:rgba(8,9,30,.6)}
+.steps li.now{color:#04121C;background:linear-gradient(180deg,#A8E9FD,#45C6F5);border-color:var(--cy)}
+.steps li.done{color:#A5F2C8;border-color:rgba(73,214,138,.5)}
+.nt{padding:11px 13px;border-radius:11px;font-size:14px;line-height:1.7;border:1px solid rgba(123,63,228,.35);
+  background:rgba(8,9,30,.55);color:var(--ink2)}
+.nt.w{border-color:rgba(245,196,81,.45);background:rgba(245,196,81,.08);color:#FFE3A4}
+.nt.o{border-color:rgba(73,214,138,.45);background:rgba(73,214,138,.08);color:#A5F2C8}
+.nt b{color:var(--ink)}
+.coach{display:flex;gap:11px;align-items:flex-start;padding:13px 14px;border-radius:12px;
+  border:1px solid rgba(69,198,245,.5);background:linear-gradient(90deg,rgba(69,198,245,.16),transparent)}
+.coach i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--fd);font-style:normal;
+  font-weight:900;font-size:13px;color:#04121C;background:linear-gradient(180deg,#9CE2FB,#45C6F5)}
+.coach span{font-size:15px;line-height:1.7}
+textarea.ta{width:100%;min-height:96px;border-radius:12px;padding:12px;font:inherit;font-size:15.5px;resize:vertical;
+  background:rgba(5,6,22,.85);color:var(--ink);border:1px solid rgba(123,63,228,.55)}
+textarea.ta:focus{outline:none;border-color:var(--cy);box-shadow:0 0 0 3px rgba(69,198,245,.22)}
+input.in{min-height:44px;border-radius:11px;padding:0 13px;font:inherit;font-size:15.5px;width:100%;
+  background:rgba(5,6,22,.85);color:var(--ink);border:1px solid rgba(123,63,228,.55)}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th,table.t td{padding:9px 10px;border-bottom:1px solid rgba(123,63,228,.25);text-align:start}
+table.t th{color:var(--ink3);font-size:12px;letter-spacing:.05em}
+table.t tr.me td{background:rgba(69,198,245,.08)}
+details.qa{margin-top:18px;border:1px solid rgba(123,63,228,.3);border-radius:12px;padding:12px 14px;background:rgba(8,9,30,.5)}
+details.qa summary{cursor:pointer;font-weight:700;color:var(--ink2);min-height:32px;display:flex;align-items:center}
+/* ===== touch and small screens ===== */
+@media(pointer:coarse){
+  .seg button{width:46px;height:46px;font-size:15px}
+  .b.s{min-height:44px}
+  .sheetBtn{min-height:54px}
+  .sk{padding:10px 2px}
+  .opt{padding:14px 13px}
+}
+@media(max-width:700px){
+  .wrap{padding:10px 11px 80px}
+  .bar{padding:7px 11px;gap:7px}
+  .mark svg{height:21px}
+  .bwrap{padding:5px}
+  .bwrap svg{min-width:0;max-width:100%;max-height:none}   /* the whole board fits by default */
+  .bwrap.zoomed{overflow:auto}
+  .bwrap.zoomed svg{min-width:720px;max-width:none}
+  .boardBar{display:flex}
+  .skills{grid-template-columns:repeat(4,1fr);gap:6px}
+  .sk{padding:7px 2px}
+  .sk svg{width:36px;height:36px}
+  .dash{grid-template-columns:1fr;gap:8px}
+  .crit{grid-template-columns:1fr;gap:5px;padding:9px 0}
+  .seg{justify-content:space-between;width:100%}
+  .seg button{flex:1;max-width:none}
+  .tot{font-size:26px}
+  .ctxt{font-size:17px;line-height:1.9}
+  .ovin{padding:18px!important}
+  .ovt{font-size:24px}
+  .pb{padding:12px;gap:11px}
+  .ph{padding:10px 12px;font-size:13.5px}
+  .steps{gap:4px}
+  .steps li{font-size:11.5px;padding:5px 9px}
+  .stRow{grid-template-columns:16px 9px 1fr 48px 42px;font-size:12.5px}
+  .tracks .trk{grid-template-columns:1fr auto auto;font-size:12px}
+  .rSec{margin-top:22px}
+  .steps5,.rGrid,.decGrid{grid-template-columns:1fr}
+}
+.boardBar{display:none;align-items:center;gap:10px;justify-content:space-between;margin-top:8px}
+
+.sr-live{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="ovz"></div>
+<script>
+const CARDS={
+"deal": [
+{
+"ar": "أنا داخل أشتري عربية للعيلة، لكن كل واحد في البيت عاجبه موديل مختلف ازاي الاقي حاجه مناسبة للكل",
+"en": "A family needs one car, but every family member wants a different model."
+},
+{
+"ar": "أنا كنت بدور على شقة صغيرة، لكن بعد ما شوفت المشروع بقيت بفكر في شقة أكبر. المشكلة إن ده هيغير الميزانية و الخطة اللي كنت حاططها",
+"en": "Was looking for a small apartment; after seeing the project wants a bigger one, which changes the budget."
+},
+{
+"ar": "إحنا محتاجين الجهاز الجديد لكن عندنا أكتر من قسم بيطالب بميزانية السنة دي، ولازم أقنع الإدارة إن الجهاز ده أولى من باقي الطلبات",
+"en": "The new equipment is needed, but other departments also want this year's budget."
+},
+{
+"ar": "انا مش ضد التأمين لكن طول عمري بصرف فلوسي في حاجات بشوف نتيجتها فورا، هنا بدفع مقابل حاجه يمكن ما احتاجهاش خالص",
+"en": "Not against insurance, but always spends on things with an immediate result."
+},
+{
+"ar": "الفريق عندي بيشتكي من بطء النظام الحالي لكن اي تغيير هيحتاج تدريب و يمكن الإنتاجيه تقل اول شهر",
+"en": "The team complains the current system is slow, but change needs training and may hurt month-one productivity."
+},
+{
+"ar": "انا داخل اشتري دبلة خطوبة لكن بصراحة الناس حواليا مركزة علي حجم الألماسة وانا يهمني اكتر الجودة والقطعه تعيش سنين",
+"en": "Buying an engagement ring; everyone focuses on diamond size, but the customer cares about quality and lasting value."
+},
+{
+"ar": "أنا جيت أشتري موبايل، لكن كل ما أشوف موديل جديد ألاقي فيه ميزة مختلفة. رشحلي انسب موديل لاستخداماتي.",
+"en": "Wants a new phone, but every model has a different standout feature."
+},
+{
+"ar": "لوغيرت شركة الاتصالات هيوفرولي فلوس لكن اي مشكلة في نقل الخطوط هتعطل شغل الشركة كلها",
+"en": "Switching carriers would save money, but any porting issue would disrupt the whole company."
+},
+{
+"ar": "الفندق عجبني لكن الضيوف جايين من دول مختلفة وكل واحد عنده توقعات مختلفة خايف المكان ميعجبش الكل",
+"en": "Likes the hotel, but guests come from many countries with different expectations."
+},
+{
+"ar": "انا بفكر اشتري دهب لكن مش عارف اعتبره استثمار ولا مجرد زينة كل حد بيديني نصيحة مختلفة ومش عارف اختار القطعه اللي تحققلي افضل قيمة علي المدي الطويل",
+"en": "Thinking about buying gold, unsure if it is an investment or just jewellery."
+},
+{
+"ar": "الاطباء متحمسين للجهاز لكن فريق الصيانة عنده تخوف من تكاليف التشغيل بعد الشراء",
+"en": "Doctors are excited about the new device, but maintenance worries about running costs."
+},
+{
+"ar": "انا مقتنع بالتدريب لكن الموظفين اصلا بيشتكوا ان عندهم وقت قليل خايف اضيف عليهم ضغط بدل ما اساعدهم",
+"en": "Believes in the training, but staff already say they have too little time."
+},
+{
+"ar": "انا بجهز البيت كله ولو صرفت ميزانية كبيرة علي غرفة المعيشة هضطر اقلل في باقي البيت",
+"en": "Furnishing the whole house: a big living-room budget means cutting back elsewhere."
+},
+{
+"ar": "شركة الشحن الحالية أسعارها زادت، لكن علاقتنا معاهم ممتازة من سنين التغيير ممكن يوفر فلوس، لكن ممكن يكلفني ثقة بنيتها",
+"en": "The shipping company raised prices, but the relationship has been excellent for years."
+},
+{
+"ar": "أنا محتاج بدلة لمناسبة مهمة، لكن عندي ميزانية محددة. كل ما ألاقي خامة أحسن، السعر يزيد.",
+"en": "Needs a suit for an important occasion on a fixed budget, but better fabric raises the price."
+}
+],
+"hesitant": [
+{
+"ar": "أنا كل مرة أقول خلاص هشتري العربية دي... و بعدين أرجع أفكر يمكن أكون مستعجل. لسه حاسس إني مش مطمن آخد القرار",
+"en": "Keeps deciding to finally buy the car, then backs off."
+},
+{
+"ar": "أنا زرت المشروع مرتين، وكل مرة أقتنع أكتر لكن لما أرجع البيت بحس إن يمكن الأفضل أستنى شوية.",
+"en": "Has visited the project twice and gets more convinced, but at home thinks maybe it is better to wait."
+},
+{
+"ar": "الخاتم عاجبني جدًا، لكن كل ما أتخيل إني هشتريه دلوقتي بحس يمكن ألاقي اختيار أحسن بعد أسبوع أو اتنين. مش قادره اخد الخطوة",
+"en": "Loves the ring, but keeps imagining a better option might turn up in a week or two."
+},
+{
+"ar": "الجهاز هيضيف للعيادة، لكن الفريق متعود على الأجهزة الحالية. ممكن أشتريه وألاقي محدش استخدمه بالشكل المطلوب",
+"en": "The device would help the clinic, but the team is used to the current equipment."
+},
+{
+"ar": "انا مقتنع بأهمية التأمين، لكن طول عمري معتمد على نفسي و ضد فكرة إني ألتزم بقسط شهري",
+"en": "Believes insurance matters, but has always relied on themselves and resists a monthly payment."
+},
+{
+"ar": "السيستم واضح إنه هيحل مشاكل عندنا، لكني مش قادر آخد خطوة التفعيل. حاسس إني محتاج أتأكد مرة أخيرة...",
+"en": "Knows the system would solve their problems, but can't take the activation step."
+},
+{
+"ar": "المدرسة عجبتني جدًا، لكن بنتي مرتبطة بصحابها في المدرسة الحالية. خايفه أنقلها وتحتاج وقت طويل تتأقلم",
+"en": "Loves the school, but the daughter is attached to her friends at the current one."
+},
+{
+"ar": "الفندق مناسب للمؤتمر، لكن مش حاسس انه اوفر حاجه",
+"en": "The hotel suits the conference, but doesn't feel it's the best value."
+},
+{
+"ar": "أنا مقتنع إن الماكينة هتزود الإنتاج، لكن لو السوق هدي بعد ما أشتريها، هتبقى تكلفة كبيرة على الشركة",
+"en": "Believes the machine will boost production, but worries demand may drop afterwards."
+},
+{
+"ar": "الموبايل عاجبني، لكن كل شوية أسمع إن موديل جديد هينزل قريب. مش عارف أشتري دلوقتي ولا أستنى",
+"en": "Likes the phone, but keeps hearing a new model is coming soon."
+},
+{
+"ar": "الباقة هتوفر علينا، لكن تغيير مزود الخدمة ممكن يسبب تعطيل للشغل كام يوم، وده اللي مخليني متردد",
+"en": "The package would save money, but switching providers might disrupt work for a few days."
+},
+{
+"ar": "أنا عارف إن تغيير شركة الشحن ممكن يفيدنا، لكن متعود على الوضع الحالي.",
+"en": "Knows switching shipping companies could help, but is used to how things work now."
+},
+{
+"ar": "الأثاث مناسب جدًا، لكن لسه بخلص تشطيب البيت. خايف أشتري دلوقتي وبعدها أكتشف إن المقاسات أو الألوان مش مناسبة",
+"en": "The furniture fits, but the home's finishing isn't done; worried sizes or colours won't match."
+},
+{
+"ar": "أنا مقتنع بالطاقة الشمسية بس مش عارف التوفير المتوقع هيعوض فكرة الاستثمار ولا لا",
+"en": "Believes in solar energy, but isn't sure the savings justify the investment."
+},
+{
+"ar": "البرنامج التدريبي شكله قوي، لكن الإدارة هتسألني عن العائد المتوقع. أنا مقتنع، بس خايف مقدرش أثبت قيمة الاستثمار بعد التنفيذ",
+"en": "The training programme looks strong, but management will ask about the expected return."
+}
+],
+"tough": [
+{
+"ar": "بصراحة أنا دخلت 4 معارض قبلكم، و كل مندوب بيقول إن عربيته هي الأفضل. وفر كلام التسويق لو عندك حاجة مختلفة قولها، غير كده متضيعش وقتي",
+"en": "Has already visited 4 showrooms; every salesperson claims theirs is best."
+},
+{
+"ar": "أنا سمعت وعود كتير من شركات عقارات قبل كده، و كلهم كانوا بيتكلموا عن التسليم في معاده. في الآخر استنيت سنة زيادة. متقوليش وعود قولي إيه الضمان",
+"en": "Has heard many on-time delivery promises before and ended up waiting a year extra."
+},
+{
+"ar": "كل محلات الدهب بتقول إن شغلها أعلى جودة. أنا مش بثق في أي كلام بيتقال داخل المعرض. وريني دليل يخليني أصدقك",
+"en": "Every gold shop claims the highest quality; wants proof, not showroom talk."
+},
+{
+"ar": "لو جاي تعرض عليا كتالوج ومواصفات، يبقى وفر وقتك. أنا اشتريت أجهزة قبل كده واتقال عليها نفس الكلام، ولما حصلت مشكلة محدش رد علينا",
+"en": "Bought devices before with the same pitch and got no support when problems came."
+},
+{
+"ar": "أنا عندي قناعة إن شركات التأمين كلها ممتازة وقت البيع ولما تيجي تطالب بحقك تبدأ المشاكل. إيه اللي يخليني أصدق إنكم مختلفين",
+"en": "Insurance companies are great at the sale; the problems start at claim time."
+},
+{
+"ar": "كل شركة Software بتوعد إنها هتزود الإنتاجية 30% أو 40%. محدش بيقول لما المشروع يفشل. أنا مش هقتنع بشعارات",
+"en": "Every software company promises 30-40% more productivity; no one talks about failed projects."
+},
+{
+"ar": "كل المدارس بتتكلم عن القيم و الأنشطة والتطوير. في الآخر كله بيجري ورا الدرجات. متقوليش كلام بروشورات",
+"en": "Every school talks about values and activities; in the end it is all about grades."
+},
+{
+"ar": "قبل كده حجزنا مؤتمر في فندق خمس نجوم، والخدمة كانت سيئة جدًا. التصنيف بالنسبالي بقى ملوش أي قيمة",
+"en": "Booked a five-star hotel for a conference once and the service was terrible."
+},
+{
+"ar": "أنا غيرت مورد السنة اللي فاتت بسبب وعود كتير، وبعد التوريد اكتشفت إن الدعم الفني ضعيف جدًا. مش مستعد أكرر نفس الغلطة",
+"en": "Switched suppliers last year over big promises, then found technical support very weak."
+},
+{
+"ar": "انا بسمع منك دلوقتي، لكن لو حسيت إنك بتحاول تبيعلي أي حاجة و خلاص هقوم أمشي فورا",
+"en": "Willing to listen, but will walk away immediately if it feels like a hard sell."
+},
+{
+"ar": "كل شركات الاتصالات بتقول عندها أفضل تغطية. أول ما أوقع العقد تبدأ المشاكل. بالنسبة لي كلهم نسخة من بعض",
+"en": "Every telecom provider claims the best coverage; problems start right after signing."
+},
+{
+"ar": "أنا عندي شحنة واحدة اتأخرت السنة اللي فاتت وكلفتني عقد كامل. من يومها مبقتش بثق بسهولة في أي شركة شحن",
+"en": "One delayed shipment last year cost an entire contract."
+},
+{
+"ar": "أنا دفعت مبلغ كبير قبل كده في أثاث، وبعد سنة بدأ يبوظ. من ساعتها أي حد يقولي «جودة عالية» بالنسبة لي مجرد كلام",
+"en": "Paid a lot for furniture before and it fell apart within a year."
+},
+{
+"ar": "انا مش مقتنع إن الأرقام اللي بتقولوها عن التوفير بتحصل على أرض الواقع. كل الشركات بتحسب أفضل سيناريو، لكن الحقيقة مختلفة",
+"en": "Doesn't believe the presented savings numbers are realistic."
+},
+{
+"ar": "أنا مهتم أشتري سبائك، لكن أي غلطة في الوزن أو المصنعية هتفرق معايا. متقوليش 'اطمن'... وريني ليه المفروض أثق فيكم",
+"en": "Interested in gold bars; any error in weight or craftsmanship matters a lot."
+}
+],
+"competence": [
+{
+"ar": "بصراحة أنا معنديش وقت. قدامك دقيقتين بس. لو قدرت تخليني أفهم ليه العربية دي تستحق اهتمامي هكمل معاك، غير كده هكمل جولتي",
+"en": "Honestly has no time: you have two minutes."
+},
+{
+"ar": "أنا عندي بين كل مريض و التاني خمس دقايق. قول اللي عندك بسرعة، ولو هتدخل في تفاصيل تقنية كتير يبقى نخليها مرة تانية",
+"en": "Has five minutes between patients: get to the point, skip heavy technical detail."
+},
+{
+"ar": "أنا شوفت المشروع على الإنترنت. مش محتاج حد يعيدلي نفس الكلام. قولي حاجة جديدة أنا مش عارفها",
+"en": "Already researched the project online and doesn't want to hear the same thing again."
+},
+{
+"ar": "أنا داخل أشتري هدية. مش فاهم في أنواع الدهب ولا الأحجار. لو هتكلمني بمصطلحات معقدة مش هفهم حاجة",
+"en": "Buying a gift, doesn't know gold or gemstone types; will be lost with complicated terms."
+},
+{
+"ar": "أنا مش مهتم أعرف السيستم بيشتغل إزاي. أنا عايز أعرف هيحل إيه في شغلي",
+"en": "Doesn't care how the system works technically; wants to know what problem it solves."
+},
+{
+"ar": "أنا سمعت كلام كتير عن التأمين. كل شركة بتقول إنها الأفضل. إيه اللي يخليني أصدقك أنت؟",
+"en": "Has heard a lot about insurance already; what makes you credible?"
+},
+{
+"ar": "بصراحة أنا تايه. كل الأجهزة بقت شبه بعض. لو هتلخصلي في دقيقة واحدة، أختار ده ليه؟",
+"en": "Feels lost, every device looks the same: summarise in one minute why this one."
+},
+{
+"ar": "أنا عندي خمس حاجات أهم من شكل الفندق: التنظيم، سرعة الاستجابة، الأكل، المواقف، وسهولة الدخول. ابدأ باللي يهمني",
+"en": "Has five priorities that matter more than looks: organisation, response speed, food, parking, access."
+},
+{
+"ar": "قبل ما تكمل... العائد هيظهر بعد قد إيه؟ ولو الماكينة عطلت؟ ولو الطلب قل؟ جاوب على دول الأول",
+"en": "Before continuing: how long until the return shows? What if it breaks? What if demand drops?"
+},
+{
+"ar": "أنا مش بدور على المدرسة الأغلى. أنا بدور على المكان اللي ابني هيكون سعيد فيه.",
+"en": "Isn't looking for the most expensive school, but where their child will be happy."
+},
+{
+"ar": "لو هتشرحلي الباقة بالأرقام بس همل. وريني مثال حقيقي هيحصل مع شركتي",
+"en": "Numbers alone will lose their interest; show a real example for their company."
+},
+{
+"ar": "أنا مش باشتري الكنبة بس علشان شكلها. أنا عندي أطفال. عايز أعرف هتعيش قد إيه وهتستحمل الاستخدام",
+"en": "Doesn't buy a sofa just because it looks good; has kids and wants to know how long it lasts."
+},
+{
+"ar": "انا كل يوم بيتعرض عليا شركات شحن جديدة. لو هتقول نفس الكلام اللي بسمعه كل أسبوع، يبقى نوفر وقتنا.",
+"en": "Gets pitched a new shipping company every day."
+},
+{
+"ar": "إحنا جربنا تدريب قبل كده. الموظفين استمتعوا... لكن الأداء متغيرش. إيه المختلف المرة دي",
+"en": "Tried training before: staff enjoyed it, but performance didn't change."
+},
+{
+"ar": "أنا مش محتاج عرض مبيعات. وريني بالأرقام هيوفرلي كام في السنة. ولو الأرقام مقنعة، ساعتها نكمل",
+"en": "Doesn't need a sales pitch: show the real annual savings numbers."
+}
+]
+};
+/* ELEVATE LAB — board, data, audio */
+
+const T = {
+  tagline:{ar:"محاكاة حيّة لمهارات البيع على لوحة واحدة. أربعة فرق، قرار واحد في كل جولة، وتقييم مباشر أمام الجميع.",
+           en:"A live sales-skills simulation on one board. Four teams, one decision per turn, scored live in front of the room."},
+  dEnter:{ar:"ادخل إلى اللوحة",en:"ENTER THE BOARD"},
+  dPlay:{ar:"ابدأ اللعب",en:"Play"},
+  dPlayT:{ar:"شاشة واحدة تجمع لوحة المدرّب وشاشة الفريق. أنت تقود الفريق الأول، وبقية الفرق تلعب أمامك.",
+          en:"One screen with the trainer's console and the team screen. You lead the first team; the others play alongside you."},
+  dFacil:{ar:"لوحة المدرّب",en:"Trainer console"},
+  dFacilT:{ar:"إدارة الجولات، التقييم على العوامل الخمسة، ومتابعة رضا العملاء لكل فريق.",
+           en:"Round control, five-factor scoring, and a live satisfaction read for every team."},
+  dRules:{ar:"القواعد في خمس دقائق",en:"Rules in five minutes"},
+  dRulesT:{ar:"اللوحتان، العوامل الخمسة، القرارات، والنقاط.",en:"Two boards, five factors, decisions and scoring."},
+  back:{ar:"رجوع",en:"Back"},
+  setup:{ar:"تجهيز الجلسة",en:"Session setup"},
+  setupT:{ar:"أربعة فرق تلعب في الوقت نفسه. يبدأ كل فريق بمهارة مكتملة ومهارة نصف مكتملة من تدريب سابق.",
+          en:"Four teams play at once. Each starts with one completed skill and one half-completed skill from earlier training."},
+  names:{ar:"أسماء الفرق",en:"Team names"},
+  options:{ar:"الخيارات",en:"Options"},
+  rounds:{ar:"عدد التحديات لكل فريق",en:"Challenges per team"},
+  roundsT:{ar:"اللعبة الكاملة من عشرة إلى ثلاثة عشر تحديًا لكل فريق.",en:"A full game runs 10–13 challenges per team."},
+  begin:{ar:"ابدأ الجلسة",en:"Begin the session"},
+  round:{ar:"الجولة",en:"Round"},
+  trainer:{ar:"لوحة المدرّب",en:"Trainer console"},
+  teamScreen:{ar:"شاشة الفريق",en:"Team screen"},
+  roll:{ar:"ابدأ دورك",en:"Start your turn"},
+  rolling:{ar:"جارٍ التحديد…",en:"Working it out…"},
+  startScan:{ar:"حدّد خطواتك",en:"Find your steps"},
+  tapCore:{ar:"خذوا وقتكم، واضغطوا حين تكونون جاهزين",en:"Take your time, and press when you are ready"},
+  cont:{ar:"متابعة",en:"Continue"},
+  reread:{ar:"اقرأ البطاقة",en:"Read the card"},
+  readCard:{ar:"اقرأوا الموقف بصوت مسموع ثم تابعوا",en:"Read the situation aloud, then continue"},
+  otherTurn:{ar:"دور فريق آخر",en:"Another team's turn"},
+  draw:{ar:"اسحب البطاقة",en:"Draw the card"},
+  pickMain:{ar:"اختاروا قرارًا رئيسيًا واحدًا",en:"Choose one main decision"},
+  supportOpen:{ar:"قرارات الدعم المتاحة",en:"Supporting decisions unlocked"},
+  lockDec:{ar:"ثبّتوا القرار",en:"Lock the decision"},
+  answerT:{ar:"الفريق يعرض معالجته أمام القاعة. اكتبوا سطرًا أو سطرين للسجل.",
+           en:"The team presents its approach to the room. Write a line or two for the record."},
+  send:{ar:"سلّموا الإجابة",en:"Submit the answer"},
+  waitingScore:{ar:"بانتظار تقييم المدرّب",en:"Waiting for the trainer's score"},
+  scoreHead:{ar:"قيّم الفريق على العوامل الخمسة",en:"Score the team on the five factors"},
+  saveScore:{ar:"احفظ التقييم",en:"Save the score"},
+  results:{ar:"نتيجة الجلسة",en:"Session results"},
+  debrief:{ar:"التغذية الراجعة",en:"Debrief"},
+  exportLog:{ar:"صدّر سجل الجلسة",en:"Export the session record"},
+  again:{ar:"ابدأ من جديد",en:"Start again"},
+  sat:{ar:"العملاء المروّجون",en:"Promoters"},
+  natural:{ar:"عملاء عاديون",en:"Regular"},
+  mixT:{ar:"توزيع العملاء",en:"Customer mix"},
+  skillDev:{ar:"تطوّر مهارات الفريق",en:"Team skill development"},
+  manual:{ar:"دليل الفريق",en:"Team handbook"},
+  dTeam:{ar:"شاشة الفريق",en:"Team screen"},
+  dTeamT:{ar:"شاشة الفريق وحده: دوره، وبطاقته، ولوحة مهاراته، وترتيبه بين الفرق.",en:"The team's own screen: its turn, its card, its skills and where it stands."},
+  standings:{ar:"ترتيب الفرق",en:"Standings"},
+  helper:{ar:"صندوق الأدوات",en:"Toolbox"},
+  helperOpen:{ar:"افتح الأدوات",en:"Open the toolbox"},
+  helperClose:{ar:"أغلق",en:"Close"},
+  hAsk:{ar:"أسئلة تفتح الحوار",en:"Questions that open the conversation"},
+  hDo:{ar:"ماذا يقيس المدرّب الآن",en:"What the trainer is measuring"},
+  hType:{ar:"طبيعة هذا الموقف",en:"What this situation is"},
+  hSupport:{ar:"ما يمكنكم فعله إضافةً إلى قراركم",en:"What you may do besides your decision"},
+  hNote:{ar:"هذه أدوات عامة من دليل اللعبة، لا إجابات جاهزة لهذه البطاقة.",en:"These are general tools from the game's own guide, not ready answers for this card."},
+  left:{ar:"متبقٍ",en:"left"},
+  dragHint:{ar:"اسحبوا القطعة إلى المهارة، أو استعملوا + و −",en:"Drag a token onto a skill, or use + and −"},
+  noRoom:{ar:"لا مكان لبقية القطع، فمهاراتكم مكتملة. تابعوا.",en:"No room for the rest: your skills are already complete. Continue."},
+  done:{ar:"تم",en:"Done"},
+  noTokens:{ar:"لا قطع هذه الجولة. الرد لم يبلغ الحد المقبول.",en:"No tokens this turn: the response did not reach the acceptable band."},
+  undo:{ar:"تراجع",en:"Undo"},
+  close:{ar:"إغلاق",en:"Close"},
+  startTurnOf:{ar:"ابدأ دور",en:"Start the turn of"},
+  waitingTeam:{ar:"بانتظار الفريق",en:"Waiting for the team"},
+  scoringH:{ar:"كيف تُحتسب النقاط",en:"How scoring works"},
+  stepsH:{ar:"الدور خطوة بخطوة",en:"A turn, step by step"},
+  mixH:{ar:"العملاء",en:"The customers"},
+  winH:{ar:"الفوز والخسارة",en:"Winning and losing"},
+  manualOpen:{ar:"افتح الدليل",en:"Open the handbook"},
+  manualClose:{ar:"اطوِ الدليل",en:"Fold it back"},
+  sharedBoard:{ar:"اللوحة معروضة للجميع",en:"The board is shown to everyone"},
+  angry:{ar:"العملاء الغاضبون",en:"Angry customers"},
+  tokens:{ar:"قطع مهارة",en:"skill tokens"},
+  robot:{ar:"أنتاريس",en:"Antares"},
+  teamSkill:{ar:"مهارة الفريق",en:"Team skill"},
+  howManyBot:{ar:"كم قطعة تُعلّمونها لأنتاريس؟",en:"How many tokens go to Antares?"},
+  botCap:{ar:"لا يمكن لمهارة أنتاريس أن تتجاوز مهارة الفريق.",en:"Antares' skill can never pass the team's."},
+  botFull:{ar:"أنتاريس بلغ حدّ هذه المهارة",en:"Antares is already at the cap for this skill"},
+  teaching:{ar:"تعليم أنتاريس",en:"Teaching Antares"},
+  busyStation:{ar:"المحطة مشغولة",en:"Station taken"},
+  busyStationT:{ar:"فريق آخر استخدم هذه المحطة. اختاروا المحطة التي قبلها أو التي بعدها.",en:"Another team used this station. Take the one before it or the one after it."},
+  before:{ar:"المحطة السابقة",en:"The one before"},
+  after:{ar:"المحطة التالية",en:"The one after"},
+  mix:{ar:"توزيع العملاء في البداية: ٢٠٪ مروّجون، ٥٠٪ عاديون، ٣٠٪ غاضبون.",en:"Starting mix: 20% promoters, 50% regular, 30% angry."},
+  skillsDone:{ar:"مهارات مكتملة",en:"Skills completed"},
+  outOf25:{ar:"من ٢٥",en:"of 25"},
+  station:{ar:"المحطة",en:"Station"},
+  decision:{ar:"القرار",en:"Decision"},
+  team:{ar:"الفريق",en:"Team"},
+  deck:{ar:"المجموعة",en:"Deck"},
+  rank:{ar:"الترتيب",en:"Rank"},
+  you:{ar:"أنت",en:"you"},
+  nodeTitle:{ar:"محطة أنتاريس",en:"Antares node"},
+  nodeBody:{ar:"محطة دعم. يحصل الفريق على قطعة مهارة إضافية ويمرّ.",en:"A support station: the team takes one extra skill token and moves on."},
+  playingNow:{ar:"الدور الآن على",en:"Now playing"},
+  teamWriting:{ar:"الفريق يكتب الآن. ترى أنه انتهى، ولا ترى نصّ إجابته.",en:"The team is writing. You see that they finished, not what they wrote."},
+  simTurn:{ar:"دور فريق آخر",en:"Another team's turn"},
+  watch:{ar:"تابع اللوحة",en:"Watch the board"},
+  skip:{ar:"تخطَّ",en:"Skip"},
+  crisis:{ar:"أزمة ثقة",en:"Trust crisis"},
+  crisisT:{ar:"تجاوزت نسبة العملاء الغاضبين خمسًا وخمسين بالمئة. يمكن للمدرّب أن يلعب بطاقة الاسترداد، وإذا أجاب الفريق إجابة سليمة شغّل وحدة الإشارة الرباعية واستعاد نقاطًا.",
+           en:"The angry-customer share passed 55%. The trainer may play the Recovery card; a sound answer lets the team run the four-cell signal and recover points."},
+  recovery:{ar:"العب بطاقة الاسترداد",en:"Play the Recovery card"},
+  skillDone:{ar:"اكتملت مهارة",en:"Skill complete"},
+  skillDoneT:{ar:"سيتعلّمها أنتاريس في الدور التالي. هو دائمًا خطوة خلف البشر.",en:"Antares learns it next turn: always one step behind the humans."},
+  whichSkill:{ar:"وزّعوا القطع على المهارات",en:"Spread the tokens across your skills"},
+  whichSkillT:{ar:"اسحبوا كل قطعة إلى المهارة التي تريدونها. ست قطع تكمل المهارة.",en:"Drag each token onto the skill you want. Six tokens complete a skill."},
+  place:{ar:"وزّعوا القطع",en:"Place the tokens"},
+  sound:{ar:"الصوت",en:"Sound"},
+  factors5:{ar:"العوامل الخمسة",en:"The five factors"},
+  mainBoard:{ar:"اللوحة الرئيسية",en:"Main board"},
+  playerBoard:{ar:"لوحة الفريق",en:"Player board"},
+  antares:{ar:"أنتاريس",en:"Antares"},
+  win:{ar:"فوز",en:"Win"},
+  lose:{ar:"خسارة",en:"Lose"},
+  notes:{ar:"ملاحظات التنفيذ",en:"Implementation notes"}
+};
+let LANG = "en";
+const t = k => (T[k] ? T[k][LANG] : k);
+const L = (ar,en) => LANG === "ar" ? ar : en;
+
+const SKILLS = [
+  {id:"CCM", ar:"العقلية المتمحورة حول العميل", en:"Customer-Centric Mindset"},
+  {id:"EQ",  ar:"الذكاء العاطفي", en:"Emotional Intelligence"},
+  {id:"A&R", ar:"المرونة والتكيّف", en:"Adaptability & Resilience"},
+  {id:"AL&E",ar:"الإنصات الفعّال والتعاطف", en:"Active Listening & Empathy"},
+  {id:"EC",  ar:"التواصل الفعّال", en:"Effective Communication"},
+  {id:"PS&C",ar:"حل المشكلات والتعاون", en:"Problem-Solving & Collaboration"},
+  {id:"HDS", ar:"إدارة المواقف الصعبة", en:"Handling Difficult Situations"}
+];
+const TOKENS_PER_SKILL = 6;
+
+const FACTORS = [
+  {id:"NI", ar:"اكتشاف الاحتياجات", en:"Needs Identification",
+   dar:"هل حدّد الفريق الاحتياج الحقيقي للعميل وفهم دوافعه وأولوياته؟",
+   den:"Did the team uncover the real need and what matters to the customer?"},
+  {id:"ESD",ar:"فاعلية الحوار البيعي", en:"Effective Sales Dialogue",
+   dar:"هل استخدم الفريق أسئلة فعّالة وقاد حوارًا هادفًا نحو الحل الأنسب؟",
+   den:"Did the team ask strong questions and lead toward the right solution?"},
+  {id:"OM", ar:"إدارة الاعتراضات", en:"Objection Management",
+   dar:"هل حوّل الفريق الاعتراض إلى ما يدعم قرار العميل بدل أن يجادله؟",
+   den:"Did the team turn the objection into support for the decision?"},
+  {id:"AV", ar:"القيمة المضافة", en:"Added Value",
+   dar:"هل قدّم الفريق قيمة إضافية عبر البيع المتقاطع أو البيع الأعلى؟",
+   den:"Did the team add real value through cross-selling or up-selling?"},
+  {id:"CE", ar:"كفاءة الإغلاق", en:"Closing Efficiency",
+   dar:"هل انتقل الفريق بالعميل إلى خطوة واضحة دون ضغط؟",
+   den:"Did the team move to a clear next step without pressure?"}
+];
+
+const DEC_SALES = [
+  {id:"reframe",ar:"إعادة تأطير الموقف",en:"Reframe the Situation",
+   har:"تغيير نظرة العميل إلى وضعه الحالي وإبراز منفعة جديدة",hen:"Shift the customer's view toward a new benefit",eff:{OM:1,NI:-1}},
+  {id:"explore",ar:"استكشاف الاحتياجات",en:"Explore Needs",
+   har:"فهم أهداف العميل ومخاوفه وأولوياته الحقيقية",hen:"Dig into real goals, concerns and priorities",eff:{NI:1}},
+  {id:"value",ar:"إضافة قيمة",en:"Add Value",
+   har:"تقديم حل متكامل يمنح العميل أكثر مما طلب",hen:"Offer an integrated solution beyond the request",eff:{AV:1}},
+  {id:"compare",ar:"مقارنة الخيارات",en:"Compare Options",
+   har:"إبراز الفروق المهمة بين البدائل المتاحة",hen:"Lay out the differences between alternatives",eff:{ESD:1,CE:-1}},
+  {id:"commit",ar:"التحرّك نحو الالتزام",en:"Move Toward Commitment",
+   har:"التأكّد من أن الظروف تدعم خطوة أوضح ثم الإغلاق",hen:"Check conditions support a clearer step, then close",eff:{CE:1}}
+];
+const SUPPORT = [
+  {ar:"توضيح احتياج العميل",en:"Clarify customer needs"},
+  {ar:"تبادل الرؤى داخل الفريق",en:"Share ideas"},
+  {ar:"التخطيط للدور التالي",en:"Plan the next turn"},
+  {ar:"تفعيل ميزة الفريق",en:"Use team advantage"},
+  {ar:"استخدام أداة دعم",en:"Use a support tool"},
+  {ar:"تأجيل الرد",en:"Defer the response"}
+];
+const DECK_NOTE = {
+  deal:{ar:"موقف بيعي واسع من يوميات العمل.",en:"A broad, everyday sales situation."},
+  hesitant:{ar:"موقف أبسط مع عميل جديد لم يحسم أمره بعد.",en:"A simpler situation with an undecided, new customer."},
+  tough:{ar:"عميل معقّد ومتحفّظ ومشحون عاطفيًا.",en:"A complex, guarded, more emotionally charged customer."},
+  competence:{ar:"تحدّي حكم على الموقف يضع شروطًا صارمة على عرضكم.",en:"A situational judgment challenge that sets strict ground rules for the pitch."}
+};
+const ASKS_BY_TYPE = {
+  deal:[
+    {f:"NI", ar:"ما الذي يهمّك أكثر في هذا القرار؟", en:"What matters most to you in this decision?"},
+    {f:"NI", ar:"من يشاركك القرار، وما الذي يهمّه هو؟", en:"Who else is part of this decision, and what matters to them?"},
+    {f:"ESD",ar:"لو كان عليك أن تختار شيئًا واحدًا لا تتنازل عنه، فما هو؟", en:"If you had to keep one thing and give up the rest, what would it be?"},
+    {f:"AV", ar:"هل هناك شيء آخر مرتبط بهذا يوفّر عليك لاحقًا؟", en:"Is there something connected to this that would save you later?"},
+    {f:"CE", ar:"ما الخطوة التي تريحك الآن؟", en:"What next step would feel comfortable now?"}],
+  hesitant:[
+    {f:"NI", ar:"ما الذي يجعلك تؤجّل؟", en:"What is making you hold back?"},
+    {f:"NI", ar:"ماذا يحدث لو بقي الوضع كما هو ثلاثة أشهر؟", en:"What happens if nothing changes for three months?"},
+    {f:"OM", ar:"لو حللنا هذه النقطة تحديدًا، هل يتغيّر قرارك؟", en:"If we solved that one point, would your decision change?"},
+    {f:"ESD",ar:"ما الذي تحتاج أن تراه حتى تطمئن؟", en:"What would you need to see to feel sure?"},
+    {f:"CE", ar:"هل نبدأ بخطوة صغيرة بدل القرار الكامل؟", en:"Shall we start with a small step instead of the full decision?"}],
+  tough:[
+    {f:"OM", ar:"ما الذي حدث سابقًا وجعلك تأخذ هذا الموقف؟", en:"What happened before that led you here?"},
+    {f:"OM", ar:"ما الذي يقلقك تحديدًا، لا عمومًا؟", en:"What exactly worries you, not in general?"},
+    {f:"NI", ar:"ما الدليل الذي يُقنعك أنت شخصيًا؟", en:"What kind of proof would convince you personally?"},
+    {f:"ESD",ar:"هل تسمح لي أن أعرض عليك ما لا نستطيع فعله أيضًا؟", en:"May I also tell you what we cannot do?"},
+    {f:"CE", ar:"ما الذي يجعلك تقول: هذه المرة مختلفة؟", en:"What would make you say this time is different?"}],
+  competence:[
+    {f:"ESD",ar:"خلاصة الأمر في جملة واحدة قبل أي تفصيل.", en:"The point in one sentence before any detail."},
+    {f:"NI", ar:"ما السؤال الوحيد الذي تريد جوابه الآن؟", en:"What is the one question you want answered now?"},
+    {f:"AV", ar:"الرقم الذي يهمّك: كم يوفّر أو كم يعود؟", en:"The number that matters: how much does it save or return?"},
+    {f:"OM", ar:"وما الذي قد لا يناسبك فيه؟", en:"And what about it might not suit you?"},
+    {f:"CE", ar:"هل أكمل، أم هذا يكفيك لتقرّر؟", en:"Shall I go on, or is that enough to decide?"}]
+};
+const ASKS = [
+  {f:"NI", ar:"ما الذي يهمّك أكثر في هذا القرار؟", en:"What matters most to you in this decision?"},
+  {f:"NI", ar:"ما الذي يجعلك تؤجّل أو تتردّد؟", en:"What is making you hold back?"},
+  {f:"ESD",ar:"لو حللنا هذه النقطة، هل يتغيّر شيء عندك؟", en:"If we solved that, would anything change for you?"},
+  {f:"OM", ar:"ما الذي يقلقك تحديدًا في هذه النقطة؟", en:"What exactly worries you about that?"},
+  {f:"OM", ar:"هل جرّبت شيئًا مشابهًا من قبل وكيف كانت التجربة؟", en:"Have you tried something like this before, and how did it go?"},
+  {f:"AV", ar:"هل هناك شيء آخر يرتبط بهذا ويفيدك؟", en:"Is there something else connected to this that would help you?"},
+  {f:"CE",ar:"ما الخطوة التي تريحك الآن؟", en:"What next step would feel comfortable for you now?"}
+];
+const TYPES = {
+  deal:      {ar:"تحدّي الصفقة", en:"DEAL CHALLENGE", color:"#2BC457"},
+  hesitant:  {ar:"العميل المتردّد", en:"HESITANT CUSTOMER", color:"#F0803E"},
+  tough:     {ar:"العميل الصعب", en:"TOUGH CUSTOMER", color:"#F0434F"},
+  competence:{ar:"بطاقة الكفاءة", en:"COMPETENCE CARD", color:"#46B6D6"},
+  node:      {ar:"محطة أنتاريس", en:"ANTARES NODE", color:"#A77BFF"},
+  start:     {ar:"البداية", en:"START", color:"#9CE2FB"}
+};
+
+/* Scoring model, taken verbatim from the trainer's scoring tool (index.html). */
+const BRACKETS = [
+  {min:21,csp:10,ar:"ممتاز",en:"Excellent"},
+  {min:17,csp:5, ar:"قوي",en:"Strong"},
+  {min:13,csp:2, ar:"مقبول",en:"Adequate"},
+  {min:9, csp:-2,ar:"ضعيف",en:"Weak"},
+  {min:5, csp:-5,ar:"سيّئ",en:"Poor"},
+  {min:0, csp:-10,ar:"سيّئ جدًا",en:"Very Poor"}
+];
+const bracketFor = n => BRACKETS.find(b => n >= b.min);
+/* Catalog p.11 and the Player Manual: a correct, well-scored response earns 6 tokens.
+   A response that falls below "Adequate" earns none. */
+const tokensFor  = n => n >= 13 ? 6 : 0;
+const MIX0 = {promoter:20, natural:50, angry:30};
+const WIN_P = 80, LOSE_P = 10, CRISIS_ANGRY = 55;
+const SKILL_UNLOCK_EVERY = 5;
+const r1 = v => Math.round(v*10)/10;
+/* CSP points move customers between the three buckets; the total stays 100 */
+function applyShift(tm, pts){
+  let p=tm.promoter, n=tm.natural, a=tm.angry, s=pts;
+  if(s>0){
+    const fa=Math.min(a,s); a-=fa; s-=fa;
+    const fn=Math.min(n,s); n-=fn; s-=fn;
+    p+=fa+fn;
+  } else if(s<0){
+    let need=-s;
+    const fp=Math.min(p,need); p-=fp; need-=fp;
+    const fn=Math.min(n,need); n-=fn; need-=fn;
+    a+=fp+fn;
+  }
+  tm.promoter=r1(p); tm.natural=r1(n); tm.angry=r1(a);
+}
+const outcome = tm => tm.promoter>=WIN_P ? "win" : tm.promoter<LOSE_P ? "lose" : tm.angry>=CRISIS_ANGRY ? "crisis" : null;
+
+/* ================= board geometry ================= */
+const VB = 1120, C = 560;
+function ring(perSide, R, size){
+  const out = [], step = (2*R)/(perSide-1), p = (x,y) => out.push({x,y,size});
+  for(let i=0;i<perSide;i++) p(C-R+i*step, C-R);
+  for(let i=1;i<perSide;i++) p(C+R, C-R+i*step);
+  for(let i=1;i<perSide;i++) p(C+R-i*step, C+R);
+  for(let i=1;i<perSide-1;i++) p(C-R, C+R-i*step);
+  return out;
+}
+function buildBoard(){
+  const cells = [...ring(11,430,68), ...ring(9,330,64), ...ring(5,230,62)];   // 40+32+16 = 88
+  cells[0].type = "start";
+  const nodeSet = new Set();
+  for(let k=0;k<27;k++) nodeSet.add(1 + Math.round(k * 86/26));
+  const cyc = ["deal","hesitant","tough","competence"];
+  let c = 0;
+  for(let i=1;i<cells.length;i++){
+    if(nodeSet.has(i)) cells[i].type = "node";
+    else cells[i].type = cyc[c++ % 4];
+  }
+  return cells;
+}
+const BOARD = buildBoard();
+const LAST = BOARD.length - 1;
+
+/* deck slots in the middle of the board, as on the printed board */
+const DECK_SLOTS = {
+  competence:{x:474,y:560}, deal:{x:646,y:560},
+  tough:{x:474,y:680}, hesitant:{x:646,y:680}
+};
+const CORE = {x:560,y:420};
+/* one Antares cluster per team, on the four outer edges */
+const CLUSTERS = [
+  {axis:"h", x:560, y:1062},   // bottom side
+  {axis:"h", x:560, y:58},     // top side
+  {axis:"v", x:1062,y:560},    // right side
+  {axis:"v", x:58,  y:560}     // left side
+];
+
+/* ================= audio ================= */
+const A = (() => {
+  let ctx = null, on = true;
+  const g = () => (ctx = ctx || new (window.AudioContext||window.webkitAudioContext)());
+  function tone(f,d,ty="sine",v=.18,sl=0,dl=0){
+    if(!on) return;
+    try{ const a=g(), t0=a.currentTime+dl, o=a.createOscillator(), gn=a.createGain();
+      o.type=ty; o.frequency.setValueAtTime(f,t0);
+      if(sl) o.frequency.exponentialRampToValueAtTime(Math.max(45,f+sl),t0+d);
+      gn.gain.setValueAtTime(0,t0); gn.gain.linearRampToValueAtTime(v,t0+.012);
+      gn.gain.exponentialRampToValueAtTime(.0001,t0+d);
+      o.connect(gn).connect(a.destination); o.start(t0); o.stop(t0+d+.05);
+    }catch(e){}
+  }
+  function nz(d=.3,v=.12,dl=0,f0=1500){
+    if(!on) return;
+    try{ const a=g(), n=Math.floor(a.sampleRate*d), b=a.createBuffer(1,n,a.sampleRate), ch=b.getChannelData(0);
+      for(let i=0;i<n;i++) ch[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.2);
+      const s=a.createBufferSource(); s.buffer=b;
+      const fl=a.createBiquadFilter(); fl.type="bandpass"; fl.frequency.value=f0; fl.Q.value=.8;
+      const gn=a.createGain(); gn.gain.value=v;
+      s.connect(fl).connect(gn).connect(a.destination); s.start(a.currentTime+dl);
+    }catch(e){}
+  }
+  return {
+    set(v){on=v}, on(){return on},
+    rattle(){ if(!on)return; [0,.09,.17,.25,.33,.42,.52,.64,.78,.95,1.15].forEach((d,i2)=>{
+        nz(.07,.12-i2*.008,d,700+Math.random()*900); tone(120+Math.random()*90,.05,"square",.05,0,d); }); },
+    thud(){ nz(.22,.2,0,320); tone(90,.3,"sine",.22,-30); tone(420,.14,"triangle",.1,-180,.02); },
+    land(){ tone(620,.2,"triangle",.2,-240); nz(.14,.08,0,2800); },
+    step(){ tone(740,.05,"square",.05); },
+    whoosh(){ nz(.45,.16,0,1400); tone(220,.45,"sine",.07,1500); },
+    snap(){ nz(.1,.16,0,4200); tone(1200,.16,"triangle",.14,-700,.03); tone(620,.22,"sine",.1,220,.07); },
+    reveal(){ [660,880,1100].forEach((f,i2)=>tone(f,.5,"triangle",.1,0,i2*.07)); nz(.6,.05,.05,5200); },
+    click(){ tone(660,.05,"square",.06); },
+    tick(hot){ tone(760+hot*420,.045,"square",.05+hot*.05); },
+    lock(){ nz(.2,.16,0,2600); [392,523,659,880].forEach((f,i2)=>tone(f,.5,"triangle",.15,0,i2*.055)); },
+    tok(i2){ tone(540+i2*95,.16,"sine",.15,160,i2*.07); nz(.08,.04,i2*.07,4000); },
+    great(){ [523,659,784,1047,1319,1568].forEach((f,i2)=>tone(f,.5,"triangle",.17,0,i2*.07)); nz(.6,.07,.1,4000); },
+    good(){ [523,659,784].forEach((f,i2)=>tone(f,.34,"triangle",.15,0,i2*.08)); },
+    bad(){ [350,262,180].forEach((f,i2)=>tone(f,.4,"sawtooth",.11,0,i2*.1)); nz(.4,.05,0,400); },
+    lamp(){ tone(900,.4,"sine",.12,620); nz(.35,.06,0,5200); },
+    win(){ [392,523,659,784,1047,1319].forEach((f,i)=>tone(f,.6,"triangle",.17,0,i*.11)); nz(.9,.07,.15,3000); }
+  };
+})();
+const LOGO = `<svg viewBox="0 0 99 33" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M31.7043 0.694367V8.00083C31.7043 8.10685 31.6167 8.1952 31.5073 8.1952H28.3776C28.2682 8.1952 28.185 8.10685 28.185 8.00083V4.1709C28.185 4.15765 28.1719 4.1444 28.1543 4.1444H24.2805C24.1754 4.1444 24.0879 4.05605 24.0879 3.95003V0.694367C24.0879 0.588349 24.1754 0.5 24.2805 0.5H31.5073C31.6167 0.5 31.7043 0.588349 31.7043 0.694367Z" fill="currentColor"/> <path d="M31.7043 12.648V32.1775C31.7043 32.3542 31.5599 32.5 31.3848 32.5H0.315161C0.140072 32.5 0 32.3542 0 32.1775V0.822473C0 0.645775 0.140072 0.5 0.315161 0.5H19.8333C20.0084 0.5 20.1484 0.645775 20.1484 0.822473V12.3299H31.3848C31.5599 12.3299 31.7043 12.4713 31.7043 12.648Z" fill="currentColor"/> <path d="M40.9531 15.0249C39.173 15.0249 37.7416 14.7952 36.659 14.3358V12.264C37.2718 12.4937 37.9298 12.6807 38.6331 12.825C39.3393 12.9693 40.0411 13.0415 40.7386 13.0415C41.8329 13.0415 42.6543 12.9119 43.2029 12.6527C43.7516 12.3936 44.0259 11.8767 44.0259 11.1022C44.0259 10.6281 43.9121 10.2482 43.6844 9.96252C43.4568 9.67391 43.0789 9.42506 42.5507 9.21597C42.0255 9.00982 41.3003 8.79189 40.3753 8.56219C38.8957 8.17345 37.8569 7.68017 37.2587 7.08234C36.6604 6.48746 36.3613 5.66581 36.3613 4.6174C36.3613 3.39524 36.802 2.4396 37.6833 1.75048C38.5675 1.06136 39.885 0.716797 41.6359 0.716797C42.4326 0.716797 43.1825 0.774223 43.8858 0.889077C44.592 1.00393 45.1435 1.13351 45.5404 1.27781V3.34518C44.4607 2.92994 43.2657 2.72232 41.9554 2.72232C40.9312 2.72232 40.1345 2.85779 39.5655 3.12872C38.9935 3.40261 38.7075 3.89883 38.7075 4.6174C38.7075 5.03264 38.8082 5.36984 39.0096 5.629C39.208 5.88816 39.5523 6.1105 40.0426 6.29603C40.5358 6.48451 41.2157 6.69361 42.0824 6.92331C43.2059 7.20897 44.0784 7.55059 44.7 7.94816C45.3186 8.34279 45.752 8.8022 46 9.3264C46.248 9.85061 46.3721 10.4425 46.3721 11.1022C46.3721 12.3244 45.9241 13.283 45.0283 13.978C44.1324 14.6759 42.774 15.0249 40.9531 15.0249Z" fill="currentColor"/> <path d="M48.6348 14.8088V0.933594H50.9635V7.31239L56.8114 0.933594H59.5034L54.4434 6.53492L59.7179 14.8088H57.2404L52.9901 8.0236L50.9635 10.2191V14.8088H48.6348Z" fill="currentColor"/> <path d="M61.9805 14.8088V0.933594H64.3048V14.8088H61.9805Z" fill="currentColor"/> <path d="M66.998 14.8088V0.933594H69.3267V12.9976H76.3697V14.8088H66.998Z" fill="currentColor"/> <path d="M78.2031 14.8088V0.933594H80.5318V12.9976H87.5792V14.8088H78.2031Z" fill="currentColor"/> <path d="M93.5761 15.0249C91.796 15.0249 90.3661 14.7952 89.2864 14.3358V12.264C89.8963 12.4937 90.5543 12.6807 91.2605 12.825C91.9638 12.9693 92.6642 13.0415 93.3616 13.0415C94.4588 13.0415 95.2818 12.9119 95.8304 12.6527C96.3761 12.3936 96.6489 11.8767 96.6489 11.1022C96.6489 10.6281 96.5351 10.2482 96.3075 9.96252C96.0799 9.67391 95.7034 9.42506 95.1782 9.21597C94.65 9.00982 93.9234 8.79189 92.9983 8.56219C91.5188 8.17345 90.4799 7.68017 89.8817 7.08234C89.2835 6.48746 88.9844 5.66581 88.9844 4.6174C88.9844 3.39524 89.4265 2.4396 90.3107 1.75048C91.192 1.06136 92.5081 0.716797 94.2589 0.716797C95.0556 0.716797 95.807 0.774223 96.5132 0.889077C97.2165 1.00393 97.768 1.13351 98.1678 1.27781V3.34518C97.0852 2.92994 95.8887 2.72232 94.5785 2.72232C93.5542 2.72232 92.7576 2.85779 92.1885 3.12872C91.6195 3.40261 91.3349 3.89883 91.3349 4.6174C91.3349 5.03264 91.4342 5.36984 91.6326 5.629C91.834 5.88816 92.1798 6.1105 92.67 6.29603C93.1603 6.48451 93.8402 6.69361 94.7098 6.92331C95.8333 7.20897 96.7044 7.55059 97.323 7.94816C97.9417 8.34279 98.3765 8.8022 98.6274 9.3264C98.8755 9.85061 98.9995 10.4425 98.9995 11.1022C98.9995 12.3244 98.5516 13.283 97.6557 13.978C96.7569 14.6759 95.397 15.0249 93.5761 15.0249Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M36.791 32.4963V18.6211H43.4488C44.8145 18.6211 45.8256 18.945 46.4822 19.5929C47.1359 20.2379 47.4627 21.1493 47.4627 22.3273C47.4627 23.0754 47.3139 23.7041 47.0162 24.2136C46.7157 24.7231 46.3173 25.1074 45.8213 25.3665C46.4895 25.5521 47.0192 25.8863 47.4102 26.3693C47.8012 26.8493 47.9967 27.5561 47.9967 28.4897C47.9967 29.8414 47.6378 30.8471 46.9199 31.5068C46.1992 32.1665 45.1428 32.4963 43.7508 32.4963H36.791ZM39.1153 24.5493H43.1293C43.9113 24.5493 44.4702 24.3652 44.8057 23.9971C45.1413 23.632 45.3091 23.1401 45.3091 22.5217C45.3091 21.8031 45.1384 21.2686 44.797 20.9182C44.4526 20.5648 43.8121 20.3881 42.8754 20.3881H39.1153V24.5493ZM39.1153 30.7779H43.2562C44.082 30.7779 44.6876 30.6012 45.0728 30.2478C45.4579 29.8974 45.6505 29.2833 45.6505 28.4057C45.6505 27.6901 45.4609 27.1556 45.0815 26.8022C44.7051 26.4518 44.0193 26.2765 43.0242 26.2765H39.1153V30.7779Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M49.1074 32.4963L54.3601 18.6211H56.9646L62.1735 32.4963H59.7791L58.4134 28.9226H52.885L51.5193 32.4963H49.1074ZM53.2483 27.1114H58.0326L55.6383 20.7547L53.2483 27.1114Z" fill="currentColor"/> <path d="M64.4551 32.4963V18.6211H66.508L73.6779 28.8342V18.6211H75.9847V32.4963H73.9362L66.7838 22.3052V32.4963H64.4551Z" fill="currentColor"/> <path d="M78.6992 32.4963V18.6211H81.0235V24.9999L86.8759 18.6211H89.5635L84.5034 24.2224L89.778 32.4963H87.3005L83.0546 25.7111L81.0235 27.9066V32.4963H78.6992Z" fill="currentColor"/> </svg>`;
+const LOGO_SVG = (h,cls="") => LOGO.replace("<svg ",`<svg class="${cls}" height="${h}" aria-hidden="true" `);
+/* ================= state ================= */
+const COLORS = ["#45C6F5","#A77BFF","#F0803E","#49D68A"];
+const NAMES = [["إسراء","Esraa"],["آية","Aya"],["رحمة","Rahma"],["أيمن","Ayman"]];
+const el = id => document.getElementById(id);
+const $ = s => document.querySelector(s);
+const rnd = n => Math.floor(Math.random()*n);
+const shuffle = a => {a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+const AR = n => LANG==="ar" ? String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]) : n;
+
+let S;
+function newSession(){
+  return {
+    screen:"home", mode:"split", maxRounds:10,
+    round:1, turn:0, phase:"roll", pane:"team", busy:false, manual:false,
+    decks:{deal:shuffle([...Array(15).keys()]),hesitant:shuffle([...Array(15).keys()]),
+           tough:shuffle([...Array(15).keys()]),competence:shuffle([...Array(15).keys()])},
+    used:new Set(), cur:null, log:[], pending:[], flip:false,
+    hotDeck:null, ripple:null, simLock:false,
+    teams:NAMES.map((n,i)=>{
+      const sk=shuffle(SKILLS.map(s=>s.id)), tok={}, bot={};
+      SKILLS.forEach(s=>{tok[s.id]=0;bot[s.id]=0;}); tok[sk[0]]=6; tok[sk[1]]=3;
+      const fsk={}; FACTORS.forEach(f=>fsk[f.id]=0);
+      return {i,name:n[0],nameEn:n[1],color:COLORS[i],pos:0,
+              promoter:MIX0.promoter,natural:MIX0.natural,angry:MIX0.angry,fsk,
+              tok,bot,done:0,crisisUsed:false,human:true,path:[0],delta:null};
+    })
+  };
+}
+const TM = () => S.teams[S.turn];
+const full = tm => SKILLS.filter(s=>tm.tok[s.id]>=TOKENS_PER_SKILL).length;
+const slots = tm => {const f=full(tm); return f>=4?6:f>=2?4:2;};
+const DECS = () => DEC_SALES;
+
+/* ================= icons ================= */
+function icon(type,x,y,s){
+  const u=s*0.3;
+  if(type==="deal")       return `<path d="M${x-u} ${y-u} h${u*.62} v${u*.62} h${u*.76} v-${u*.62} h${u*.62} v${u*.55} a${u} ${u} 0 0 1 -${u*2} 0 z" fill="currentColor"/>`;
+  if(type==="hesitant")   return `<path d="M${x-u} ${y-u*1.05} h${u*2} l-${u} ${u*1.15} z" fill="currentColor"/><path d="M${x-u*.6} ${y+u*.25} a${u*.6} ${u*.6} 0 0 0 ${u*1.2} 0 z" fill="currentColor"/>`;
+  if(type==="tough")      return `<path d="M${x-u} ${y-u} h${u*2} v${u*.55} a${u*1.15} ${u*1.15} 0 0 0 -${u*2} 0 z" fill="currentColor"/><path d="M${x-u} ${y+u*.78} a${u} ${u} 0 0 1 ${u*2} 0 z" fill="currentColor"/>`;
+  if(type==="competence") return `<path d="M${x-u*.55} ${y-u*.15} v-${u*.38} a${u*.55} ${u*.55} 0 0 1 ${u*1.1} 0 v${u*.38}" fill="none" stroke="currentColor" stroke-width="${u*.33}"/><rect x="${x-u*.92}" y="${y-u*.1}" width="${u*1.84}" height="${u*.5}" rx="${u*.1}" fill="currentColor"/><rect x="${x-u*.92}" y="${y+u*.56}" width="${u*1.84}" height="${u*.44}" rx="${u*.1}" fill="currentColor"/>`;
+  if(type==="start")      return `<path d="M${x-u*.5} ${y-u*.75} l${u*1.35} ${u*.75} l-${u*1.35} ${u*.75} z" fill="currentColor"/>`;
+  // node: the QR squares printed on the original board
+  const m=s*0.62/7, x0=x-s*0.31, y0=y-s*0.31;
+  const grid=[[1,1,1,1,1,1,1],[1,0,0,1,0,0,1],[1,0,1,0,1,1,1],[1,1,0,1,0,0,1],[1,0,1,1,1,0,1],[1,0,0,0,1,1,1],[1,1,1,0,1,0,1]];
+  let g="";
+  const fnd=(cx2,cy2)=>{g+=`<rect x="${cx2}" y="${cy2}" width="${m*3}" height="${m*3}" fill="none" stroke="currentColor" stroke-width="${m*0.75}"/><rect x="${cx2+m*1.1}" y="${cy2+m*1.1}" width="${m*0.8}" height="${m*0.8}" fill="currentColor"/>`;};
+  for(let r=0;r<7;r++) for(let c2=0;c2<7;c2++){
+    if((r<3&&c2<3)||(r<3&&c2>3)||(r>3&&c2<3)) continue;
+    if(grid[r][c2]) g+=`<rect x="${x0+c2*m}" y="${y0+r*m}" width="${m*0.86}" height="${m*0.86}" fill="currentColor"/>`;
+  }
+  fnd(x0,y0); fnd(x0+m*4,y0); fnd(x0,y0+m*4);
+  return g;
+}
+function hex(cx,cy,r){let d="";for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);d+=(i?"L":"M")+(cx+r*Math.cos(a)).toFixed(1)+" "+(cy+r*Math.sin(a)).toFixed(1)+" ";}return d+"Z";}
+function plaqueD(x,y,w,h){
+  const l=x-w/2,r=x+w/2,tp=y-h/2,b=y+h/2,n=12;
+  return `M${l+n} ${tp} H${r-n} L${r} ${tp+n} V${b-n} L${r-n} ${b} H${x+14} l-5 -9 h-18 l-5 9 H${l+n} L${l} ${b-n} V${tp+n} Z`;
+}
+
+/* ================= board ================= */
+const compact = () => typeof window!=="undefined" && window.innerWidth<760 && !S.zoom;
+function boardSVG(){
+  const CP = compact();
+  const VBo = 0, VBs = VB;   // the whole board, always
+  let s = `<svg viewBox="${VBo} ${VBo} ${VBs} ${VBs}" role="img" aria-label="${L('اللوحة الرئيسية','Main board')}">`;
+  s += `<defs>
+    <radialGradient id="cg"><stop offset="0" stop-color="#45C6F5" stop-opacity=".45"/><stop offset="1" stop-color="#45C6F5" stop-opacity="0"/></radialGradient>
+    <filter id="gl"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+
+  /* HUD frame */
+  {
+  const F = 30, fr = "rgba(123,63,228,.65)", fc = "#45C6F5";
+  s += `<path d="M${F+70} ${F} H${VB-F-70} L${VB-F} ${F+70} V${VB-F-70} L${VB-F-70} ${VB-F} H${F+70} L${F} ${VB-F-70} V${F+70} Z"
+         fill="none" stroke="${fr}" stroke-width="1.6"/>`;
+  s += `<path d="M${F+110} ${F+42} H${VB-F-110} M${F+42} ${F+110} V${VB-F-110} M${F+110} ${VB-F-42} H${VB-F-110} M${VB-F-42} ${F+110} V${VB-F-110}"
+         stroke="rgba(123,63,228,.35)" stroke-width="1.2" fill="none"/>`;
+  [[F+70,F],[VB-F-70,F],[F+70,VB-F],[VB-F-70,VB-F]].forEach(([x,y])=>
+    s += `<rect x="${x-14}" y="${y-5}" width="28" height="10" fill="${fc}" opacity=".85" transform="skewX(-28)"/>`);
+  const lbl = (x,y,txt,rot=0) => `<text x="${x}" y="${y}" fill="#45C6F5" font-size="11" font-family="Orbitron" letter-spacing="3" opacity=".65" text-anchor="middle" transform="rotate(${rot} ${x} ${y})">${txt}</text>`;
+
+  /* living circuit: light runs along the frame */
+  const fp=`M${F+70} ${F} H${VB-F-70} L${VB-F} ${F+70} V${VB-F-70} L${VB-F-70} ${VB-F} H${F+70} L${F} ${VB-F-70} V${F+70} Z`;
+  s += `<path class="pulse" d="${fp}" fill="none" stroke="#45C6F5" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="90 2900" opacity=".85"/>`;
+  s += `<path class="pulse p2" d="${fp}" fill="none" stroke="#A77BFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="60 2930" opacity=".7"/>`;
+  }
+
+  /* Antares' own skill flowers: seven per team, on that team's side */
+  S.teams.forEach((tm,k)=>{
+    const cl=CLUSTERS[k], pull = 0;
+    const cx2 = cl.x + (cl.x>C?-pull:cl.x<C?pull:0), cy2 = cl.y + (cl.y>C?-pull:cl.y<C?pull:0);
+    SKILLS.forEach((sk,i)=>{
+      const off=(i-3)*(CP?70:78), fx=cl.axis==="h"?cx2+off:cx2, fy=cl.axis==="h"?cy2:cy2+off;
+      const n=tm.bot[sk.id]||0, done=n>=TOKENS_PER_SKILL;
+      for(let q=0;q<6;q++){
+        const a=Math.PI/180*(60*q-90), hx=fx+21*Math.cos(a), hy=fy+21*Math.sin(a), on=q<Math.min(n,6);
+        s+=`<path class="lamp" d="${hex(hx,hy,11.6)}" fill="${on?tm.color:"transparent"}"
+             stroke="${on?tm.color:"rgba(123,63,228,.55)"}" stroke-width="1.5" opacity="${on?.95:.75}"/>`;
+      }
+      s+=`<path class="lamp" d="${hex(fx,fy,12.4)}" fill="${done?tm.color:"rgba(123,63,228,.14)"}"
+           stroke="${done?"#fff":"rgba(167,123,255,.8)"}" stroke-width="1.5"/>`;
+      s+=`<text x="${fx}" y="${fy+2.8}" text-anchor="middle" font-size="7.4" font-family="Orbitron"
+           fill="${done?"#06071A":"#9CE2FB"}" font-weight="700">${sk.id}</text>`;
+    });
+  });
+
+  /* the path only shows while a figure is moving */
+  if(S.trail && S.trail.length>1)
+    s += `<polyline points="${S.trail.map(i=>`${BOARD[i].x},${BOARD[i].y}`).join(" ")}" fill="none"
+           stroke="rgba(69,198,245,.5)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  /* stations */
+  BOARD.forEach((c2,i)=>{
+    const h=c2.size/2, used=S.used.has(i), hit=S.ripple===i, land=S.landed===i,
+          trail=S.trail&&S.trail.includes(i), lit=hit||land;
+    const walkers=S.teams.filter(x=>x.path.includes(i));
+    const col = lit ? TYPES[c2.type].color : "#7FC9EE";
+    s += `<g class="st ${used&&!lit?'used':''} ${hit?'hit':''} ${land?'land':''}" style="color:${col}">`;
+    if(land) s += `<circle class="haloRing" cx="${c2.x}" cy="${c2.y}" r="${h*1.5}" fill="${TYPES[c2.type].color}" opacity=".16"/>`;
+    s += `<rect class="st-frame" x="${c2.x-h}" y="${c2.y-h}" width="${c2.size}" height="${c2.size}" rx="4"
+            fill="${lit?TYPES[c2.type].color+'1F':trail?'rgba(69,198,245,.05)':walkers.length?walkers[0].color+'14':'rgba(8,10,34,.5)'}"
+            stroke="${lit?TYPES[c2.type].color:walkers.length?walkers[0].color:used?'rgba(123,63,228,.26)':'rgba(123,63,228,.62)'}"
+            stroke-width="${lit?(CP?4:3):walkers.length?(CP?2.6:1.9):(CP?1.8:1.1)}" stroke-opacity="${lit?1:walkers.length?.85:1}"/>`;
+    walkers.forEach((wk,wi)=>{ s += `<circle cx="${c2.x-h+6+wi*7}" cy="${c2.y+h-6}" r="2.6" fill="${wk.color}" opacity=".9"/>`; });
+    s += `<g class="ico">${icon(c2.type, c2.x, c2.y+1, c2.size*(CP?1.04:0.86))}</g>`;
+    if(hit){
+      s += `<circle class="rip" cx="${c2.x}" cy="${c2.y}" r="${h}" fill="none" stroke="${TYPES[c2.type].color}" stroke-width="3"/>`;
+      s += `<circle cx="${c2.x}" cy="${c2.y}" r="${h*2.1}" fill="url(#cg)" opacity=".5"/>`;
+    }
+    s += `</g>`;
+  });
+
+  /* Antares core */
+  s += `<circle cx="${CORE.x}" cy="${CORE.y}" r="86" fill="url(#cg)"/>`;
+  s += `<circle class="breathe" cx="${CORE.x}" cy="${CORE.y}" r="66" fill="none" stroke="#9CE2FB" stroke-width="1.4" stroke-dasharray="5 10"/>`;
+  s += `<rect x="${CORE.x-46}" y="${CORE.y-46}" width="92" height="92" rx="9" fill="rgba(69,198,245,.1)" stroke="#9CE2FB" stroke-width="2.2"/>`;
+  [[-38,-38],[6,-38],[-38,6],[6,6]].forEach(([dx,dy])=>
+    s += `<rect x="${CORE.x+dx}" y="${CORE.y+dy}" width="32" height="32" rx="5" fill="#9CE2FB" opacity=".9"/>`);
+
+  /* the four decks in the middle */
+  Object.entries(DECK_SLOTS).forEach(([ty,p])=>{
+    const live = S.phase==="draw" && BOARD[TM().pos].type===ty;
+    const hot = S.hotDeck===ty || live, col = TYPES[ty].color;
+    s += `<g class="deck ${hot?'hot':''} ${live?'live':''}" ${live?`data-a="draw" style="cursor:pointer"`:""}>`;
+    for(let k=2;k>=0;k--)
+      s += `<path d="${plaqueD(p.x-k*2,p.y-k*2,152,100)}" fill="rgba(10,12,38,.9)" stroke="rgba(123,63,228,.5)" stroke-width="1.2"/>`;
+    s += `<path class="deck-edge" d="${plaqueD(p.x,p.y,152,100)}" fill="none" stroke="${col}" stroke-width="${hot?3:1.6}" opacity="${hot?1:.6}"/>`;
+    s += `<g style="color:${col}">${icon(ty,p.x,p.y-6,74)}</g>`;
+    s += `<text x="${p.x}" y="${p.y+40}" text-anchor="middle" font-size="10" font-family="Orbitron" letter-spacing="1.6" fill="${col}" opacity=".9">${TYPES[ty].en}</text>`;
+    if(live){
+      s += `<circle class="haloRing" cx="${p.x}" cy="${p.y}" r="86" fill="${col}" opacity=".1"/>`;
+      s += `<text x="${p.x}" y="${p.y-56}" text-anchor="middle" font-size="11" font-family="Orbitron" letter-spacing="2" fill="${col}">${L("اضغط","TAP")}</text>`;
+    }
+    s += `</g>`;
+  });
+
+  /* start and finish */
+  const st=BOARD[0];
+  s += `<text x="${st.x}" y="${st.y-st.size/2-11}" text-anchor="middle" font-family="Orbitron" font-size="${CP?15:11}"
+        letter-spacing="2.5" fill="#9CE2FB" opacity=".9">START</text>`;
+  s += `<path d="M${st.x+st.size/2+6} ${st.y} h16 m-6 -5 l6 5 l-6 5" stroke="#9CE2FB" stroke-width="2" fill="none" opacity=".75"/>`;
+  s += `<text x="${CORE.x}" y="${CP?CORE.y-70:CORE.y-62}" text-anchor="middle" font-family="Orbitron" font-size="${CP?15:11}"
+         letter-spacing="2.5" fill="#9CE2FB" opacity=".9">FINISH</text>`;
+
+  /* team figures */
+  S.teams.forEach((tm,k)=>{
+    const c2=BOARD[tm.pos], o=[[-17,-15],[17,-15],[-17,19],[17,19]][k];
+    const isT = k===S.turn, SC = CP ? 1.5 : 1;
+    s += `<g class="pw ${isT?'hop':''}" transform="translate(${c2.x+o[0]*SC},${c2.y+o[1]*SC}) scale(${SC})">`;
+    if(isT){ s += `<ellipse class="breathe" cx="0" cy="14" rx="22" ry="7" fill="${tm.color}" opacity=".35"/>`; }
+    s += `<ellipse cx="0" cy="14" rx="13" ry="4.4" fill="#05061A" opacity=".6"/>`;
+    s += `<rect x="-10.5" y="-4" width="21" height="17" rx="5" fill="${tm.color}" stroke="#06071A" stroke-width="1.6"/>`;
+    s += `<rect x="-14" y="-1.5" width="4" height="10.5" rx="2" fill="${tm.color}" stroke="#06071A" stroke-width="1.2"/>`;
+    s += `<rect x="10" y="-1.5" width="4" height="10.5" rx="2" fill="${tm.color}" stroke="#06071A" stroke-width="1.2"/>`;
+    s += `<rect x="-9.5" y="-18" width="19" height="15.5" rx="6.5" fill="${tm.color}" stroke="#06071A" stroke-width="1.6"/>`;
+    s += `<rect x="-6" y="-13.5" width="12" height="6" rx="3" fill="#06071A" opacity=".85"/>`;
+    s += `<circle cx="-2.8" cy="-10.6" r="1.5" fill="#fff"/><circle cx="2.8" cy="-10.6" r="1.5" fill="#fff"/>`;
+    s += `<path d="M0 -18 v-5" stroke="${tm.color}" stroke-width="1.6"/><circle cx="0" cy="-25" r="2.6" fill="#fff" opacity=".95"/>`;
+    s += `<text y="9.5" text-anchor="middle" font-size="9" font-weight="900" font-family="Orbitron" fill="#06071A">${k+1}</text>`;
+    s += `</g>`;
+  });
+  return s+`</svg>`;
+}
+function boardBlock(){
+  return `<div class="bwrap ${S.zoom?"zoomed":""}" id="bwrap" role="region" tabindex="0"
+      aria-label="${L("اللوحة الرئيسية","Main board")}">${boardSVG()}</div>
+    <div class="boardBar">
+      <button class="b s g" data-a="zoom" aria-pressed="${!!S.zoom}">${S.zoom?"⊖":"⊕"} ${S.zoom?L("ملء الشاشة","Fit"):L("تكبير","Zoom")}</button>
+      <span class="ti">${S.zoom?L("اسحب اللوحة أفقيًا","Drag the board sideways"):L("اللوحة كاملة","Whole board")}</span>
+    </div>`;
+}
+
+/* ================= pieces ================= */
+function flower(n,color){
+  let s=`<svg viewBox="0 0 44 44" width="42" height="42" aria-hidden="true">`;
+  for(let i=0;i<6;i++){
+    const a=Math.PI/180*(60*i-90), cx=22+9.6*Math.cos(a), cy=22+9.6*Math.sin(a), on=i<Math.min(n,6);
+    s+=`<path class="pt" d="${hex(cx,cy,5.4)}" fill="${on?color:"rgba(255,255,255,.07)"}" stroke="${on?color:"rgba(123,63,228,.4)"}" stroke-width="1"/>`;
+  }
+  const f=n>=6;
+  return s+`<circle cx="22" cy="22" r="4.4" fill="${f?color:"rgba(255,255,255,.08)"}" stroke="${f?"#fff":"rgba(123,63,228,.5)"}" stroke-width="1"/></svg>`;
+}
+function antaresStrip(tm){
+  return `<div class="skills">${SKILLS.map(sk=>{
+    const n=tm.bot[sk.id]||0, f=n>=TOKENS_PER_SKILL;
+    return `<div class="sk bot ${f?'full':''}" title="${L(sk.ar,sk.en)}">
+      ${flower(n,"#A77BFF")}<div class="lb">${sk.id}</div><div class="ti">${AR(Math.min(n,6))}/${AR(6)}</div></div>`;
+  }).join("")}</div>`;
+}
+function playerBoard(tm,pick){
+  return `<div class="skills">${SKILLS.map(sk=>{
+    const n=tm.tok[sk.id], f=n>=TOKENS_PER_SKILL, tag=pick&&!f?"button":"div";
+    return `<${tag} class="sk ${f?'full':''}" ${pick&&!f?`data-skill="${sk.id}" style="cursor:pointer" aria-label="${L(sk.ar,sk.en)}، ${AR(Math.min(n,6))} ${L("من","of")} ${AR(6)}"`:`title="${L(sk.ar,sk.en)}"`}>
+      ${flower(n,tm.color)}<div class="lb">${sk.id}</div><div class="ti">${AR(Math.min(n,6))}/${AR(6)}</div></${tag}>`;
+  }).join("")}</div>`;
+}
+function cardFace(){
+  const c=S.cur, ty=TYPES[c.type];
+  return `<div class="stage"><div class="flip ${S.flip?'on':''}">
+    <div class="face back"><div class="cut"></div>
+      <div class="ctop">SALES</div>
+      <div style="color:${ty.color}">${(()=>{let g='<svg viewBox="0 0 120 120" width="112" height="112" aria-hidden="true">'+icon(c.type,60,60,150)+'</svg>';return g;})()}</div>
+      <div class="cname">${ty.en.split(" ").join("<br>")}</div></div>
+    <div class="face front" dir="rtl"><div class="cut"></div>
+      <div class="cTop"><span class="cMini" style="color:${ty.color}">${(()=>'<svg viewBox="0 0 60 60" width="26" height="26" aria-hidden="true">'+icon(c.type,30,30,72)+'</svg>')()}</span>
+        <span class="cName" style="color:${ty.color}">${ty.en}</span></div>
+      <div class="ctxt">${c.card.ar}</div>
+      <div class="cFoot"></div></div>
+  </div></div>`;
+}
+
+/* ================= trainer dashboard ================= */
+function mixBar(tm){
+  return `<div class="mix">
+    <span style="width:${tm.promoter}%;background:linear-gradient(90deg,#2BB9E8,#9CE2FB)"></span>
+    <span style="width:${tm.natural}%;background:#3A4790"></span>
+    <span style="width:${tm.angry}%;background:linear-gradient(90deg,#C2353E,#FF6B74)"></span>
+  </div>
+  <div class="mixleg"><span>👑 <b>${AR(tm.promoter)}٪</b></span><span>🙂 <b>${AR(tm.natural)}٪</b></span><span>😠 <b>${AR(tm.angry)}٪</b></span></div>`;
+}
+function dashboard(){
+  return `<div class="dash">${S.teams.map((tm,k)=>{
+    const o=outcome(tm);
+    return `<div class="tbox ${k===S.turn?'now':''}" style="--tc:${tm.color};position:relative">
+      <div class="tname"><span style="width:9px;height:9px;border-radius:50%;background:${tm.color}"></span>${L(tm.name,tm.nameEn)}
+        ${k===S.turn?`<span class="tag cy" style="padding:1px 8px;font-size:11px">${L("الدور","turn")}</span>`:""}
+        ${o==="win"?`<span class="tag ok" style="padding:1px 8px;font-size:11px">${t("win")}</span>`:""}
+        ${o==="crisis"?`<span class="tag warn" style="padding:1px 8px;font-size:11px">${t("crisis")}</span>`:""}</div>
+      ${mixBar(tm)}
+      <div class="grow"><span>${t("skillsDone")} ${AR(full(tm))}/${AR(7)}</span><span>${t("deck")} ${AR(tm.done)}</span></div>
+      ${tm.delta!=null?`<span class="dlt ${tm.delta>=0?'up':'dn'}">${tm.delta>=0?"+":"−"}${AR(Math.abs(tm.delta))}</span>`:""}
+    </div>`;}).join("")}</div>`;
+}
+function skillTracks(tm){
+  return `<div class="tracks">${FACTORS.map(f=>{
+    const v=tm.fsk[f.id]||0, lvl=Math.floor(v/SKILL_UNLOCK_EVERY);
+    let segs="";
+    for(let i2=0;i2<SKILL_UNLOCK_EVERY;i2++) segs+=`<i class="${i2<(v%SKILL_UNLOCK_EVERY||(lvl&&!(v%SKILL_UNLOCK_EVERY)?SKILL_UNLOCK_EVERY:0))?'on':''}"></i>`;
+    return `<div class="trk"><span class="tl">${L(f.ar,f.en)}</span><div class="tbar">${segs}</div><b>${AR(v)}</b></div>`;
+  }).join("")}</div>`;
+}
+const COACH = {
+  roll:[L("نادِ على الفريق، ثم دعه يشغّل وحدة الإشارة.","Call the team, then let them run the signal module."),1],
+  draw:[L("وقف الفريق على محطة. اسحبوا البطاقة المطابقة لها.","The team landed on a station. Draw the matching card."),2],
+  decide:[L("اقرأوا الموقف بصوت مسموع، ثم اختاروا قرارًا رئيسيًا واحدًا.","Read the situation aloud, then choose one main decision."),3],
+  respond:[L("الفريق يعرض معالجته أمام القاعة. أنصت وراقب، ولا تعطِ الإجابة.","The team presents to the room. Listen and observe; don't give the answer."),4],
+  score:[L("قيّم العوامل الخمسة من ١ إلى ٥. النتيجة تظهر للقاعة كلها.","Score the five factors from 1 to 5. The result is shown to the room."),5]
+};
+function gmPane(){
+  const tm=TM(); let b="";
+  const c=COACH[S.phase];
+  if(c) b+=`<div class="coach"><i>${AR(c[1])}</i><span>${c[0]}</span></div>`;
+  b += dashboard();
+  b += `<div class="k" style="margin-top:4px">${t("skillDev")} — ${L(TM().name,TM().nameEn)}</div>${skillTracks(TM())}`;
+  if(S.phase==="score"){
+    const sc=S.cur.scores, tot=rawTotal(sc,S.cur.decision), br=bracketFor(tot),
+          dec=DECS().find(d=>d.id===S.cur.decision);
+    b+=`<div class="k" style="margin-top:4px">${t("scoreHead")}</div>`;
+    const ro=false;
+    b+=FACTORS.map(f=>`<div class="crit"><div><div class="cn">${L(f.ar,f.en)}</div><div class="cd">${L(f.dar,f.den)}</div></div>
+      <div class="seg" role="group" aria-label="${L(f.ar,f.en)}">${[1,2,3,4,5].map(n=>`<button ${ro?"disabled":`data-f="${f.id}" data-v="${n}"`} aria-pressed="${sc[f.id]===n}">${AR(n)}</button>`).join("")}</div></div>`).join("");
+    b+=`<div class="nt">${t("decision")}: <b>${dec?L(dec.ar,dec.en):"—"}</b>${dec?" — "+Object.entries(dec.eff).map(([k2,v])=>`<span class="${v>0?'pl':'mi'}">${v>0?"+":"−"}${AR(1)} ${k2}</span>`).join(" "):""}</div>`;
+    b+=`<div class="row" style="justify-content:space-between">
+      <div class="tot">${AR(tot)}<small>&nbsp;${t("outOf25")}</small></div>
+      <div class="tag ${br.csp>=5?'ok':br.csp>0?'cy':'warn'}">${L(br.ar,br.en)} · ${br.csp>0?"+":"−"}${AR(Math.abs(br.csp))} · ${tokensFor(tot)?`${AR(tokensFor(tot))} ${t("tokens")}`:L("بلا قطع","no tokens")}</div></div>`;
+    b+= `<div class="row" style="gap:9px">
+      <button class="b p go" data-a="save" ${FACTORS.every(f=>sc[f.id])?"":"disabled"}>${t("saveScore")}</button>
+      <button class="b s g" data-a="backRespond">${t("back")}</button></div>`;
+  } else if(S.phase==="respond"){
+    b+=`<div class="nt w">${t("teamWriting")}</div>`;
+  }
+  if(outcome(tm)==="crisis" && !tm.crisisUsed)
+    b+=`<div class="nt w"><b>${t("crisis")}</b><br>${t("crisisT")}<div class="row" style="margin-top:9px"><button class="b s v" data-a="rec">${t("recovery")}</button></div></div>`;
+  return `<section class="pane gm ${S.pane!=="gm"?"off":""}">
+    <div class="ph">⬢ ${t("trainer")}<span class="sp"></span><span class="ti">${t("round")} ${AR(S.round)}/${AR(S.maxRounds)}</span></div>
+    <div class="pb">${b}</div></section>`;
+}
+function helper(){
+  const c=S.cur; if(!c) return "";
+  const open=S.help, ty=TYPES[c.type];
+  return `<div class="sheet tool ${open?'open':''}">
+    <button class="sheetBtn" data-a="help" aria-expanded="${open}">
+      <span class="sIco">${open?"▾":"◆"}</span><b>${t("helper")}</b>
+      <span class="sp"></span><span class="ti">${open?t("helperClose"):t("helperOpen")}</span></button>
+    ${open?`<div class="sheetBody toolBody">
+      <div class="hsec"><h4>${t("hType")}</h4>
+        <p><b style="color:${ty.color}">${L(ty.ar,ty.en)}</b> — ${L(DECK_NOTE[c.type].ar,DECK_NOTE[c.type].en)}</p></div>
+      <div class="hsec"><h4>${t("hAsk")}</h4>
+        <ul>${(ASKS_BY_TYPE[c.type]||ASKS).map(a=>`<li><span class="fTag en">${a.f}</span> ${L(a.ar,a.en)}</li>`).join("")}</ul></div>
+      <div class="hsec"><h4>${t("hDo")}</h4>
+        <ul>${FACTORS.map(f=>`<li><b>${L(f.ar,f.en)}</b> — ${L(f.dar,f.den)}</li>`).join("")}</ul></div>
+      <div class="hsec"><h4>${t("hSupport")} (${AR(slots(TM()))})</h4>
+        <ul>${SUPPORT.slice(0,slots(TM())).map(s2=>L(s2.ar,s2.en)).join("</li><li>").replace(/^/,"<li>")+"</li>"}</ul></div>
+      <div class="hbNote">${t("hNote")}</div>
+    </div>`:""}
+  </div>`;
+}
+function hbSec(h,b){ return `<div class="hsec"><h4>${h}</h4>${b}</div>`; }
+const hbLi = a => `<ul>${a.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+const hbSub = x => `<h5>${x}</h5>`;
+function bookPages(){
+  return [
+    { cover:true, cols:[
+      hbSec(L("أهداف المغامرة","Mission objectives"),hbLi([
+        L("إتقان فن خدمة العملاء عبر تجربة تفاعلية","Master customer service through a live experience"),
+        L("تعزيز روح التعاون والتفكير الاستراتيجي في الفريق","Build collaboration and strategic thinking"),
+        L("<b>تطوير مهارات:</b> الذكاء العاطفي، والتعاطف الفعّال، وحل المشكلات","<b>Develop:</b> emotional intelligence, empathy, problem-solving")]))
+      + hbSec(L("نظام اللعب","How the game works"),
+        `<p>${L("يتقدّم فريقك على اللوحة ليصل إلى سيناريوهات محدّدة. كل سيناريو يتطلّب لعب الأدوار ووضع استراتيجية واتخاذ قرارات سريعة، وإكمالها بنجاح يكسب نقاط رضا العملاء.","Your team advances to reach specific scenarios. Each needs role-play, strategy and quick decisions; completing them earns Customer Satisfaction Points.")}</p>`
+        +hbSub(L("توزيع العملاء في البداية","Starting customer mix"))
+        +hbLi([L("٢٠٪ عملاء مروّجون","20% promoters"),L("٥٠٪ عملاء عاديون","50% regular"),L("٣٠٪ عملاء غاضبون","30% angry")]))
+      + hbSec(L("آلية اللعب","Taking a turn"),
+        hbSub(L("تحديد الخطوات والتحرّك","Finding your steps and moving"))
+        +hbLi([L("تستقرّ الوحدة على عدد فيتقدّم الفريق به","The module settles on a number and the team advances"),
+               L("عند الوصول إلى محطة تُسحب البطاقة المطابقة لها","On landing, draw the card matching the station"),
+               L("قرار رئيسي واحد، والقرارات الفرعية اختيارية","One main decision; supporting ones are optional"),
+               L("إن كانت المحطة مستخدمة انتقلوا إلى التالية","If the station is used, move to the next one")])),
+      hbSec(L("آليات النقاط","Points"),hbLi([
+        L("<b>النقاط الإيجابية</b> // تُكتسب عند اتخاذ قرارات جيدة","<b>Positive</b> // earned for good decisions"),
+        L("<b>النقاط السلبية</b> // تُخصم عند القرارات السيئة","<b>Negative</b> // deducted for poor decisions"),
+        L("<b>الامتيازات</b> // تُستخدم النقاط للحصول على مهارات","<b>Perks</b> // points buy skills")]))
+      + hbSec(L("نظام المقارنة المتدرّج للحلول","The graded comparison system"),
+        `<p>${L("يُقيَّم كل حل وفق خمسة معايير، من ١ إلى ٥ في كل معيار.","Each response is rated on five criteria, 1 to 5 each.")}</p>`
+        +hbSub(L("معايير التقييم","The criteria"))
+        +hbLi(FACTORS.map(f=>`<b>${L(f.ar,f.en)}</b> // ${L(f.dar,f.den)}`))
+        +`<div class="hbBrackets">${BRACKETS.map(b=>`<span>${AR(b.min)}+ → ${b.csp>0?"+":"−"}${AR(Math.abs(b.csp))}</span>`).join("")}</div>`)
+      + hbSec(L("التحدّي الأخير","The final challenge"),
+        `<p>${L("الرحلة المقبلة محفوفة بالمخاطر، وهناك همسات مريبة عن تخريب وشيك تتردّد في أروقة المختبر. تعطّلت شريحة التعاطف الخاصة بأنتاريس فجأة، ما يشير إلى أن عملاء ميكا كور قد يكونون أقرب ممّا تعتقدون.","The road ahead is risky, and whispers of sabotage echo in the lab. Antares' empathy chip glitched suddenly: Mecha Core's agents may be closer than you think.")}</p>
+         <div class="hbNote">${L("مصير أنتاريس، وحلم غد أفضل، بين أيديكم.","The fate of Antares, and the dream of a better tomorrow, is in your hands.")}</div>`)
+    ]},
+    { cols:[
+      hbSec(L("إجراءات الدعم الإضافية","Supporting decisions"),
+        `<p>${L("عدد القرارات الإضافية مرتبط بعدد المهارات المكتملة:","How many you may take depends on your completed skills:")}</p>`
+        +hbLi([L("قراران في بداية اللعبة","Two at the start"),
+               L("أربعة عند إكمال مهارتين","Four after two completed skills"),
+               L("ستة عند إكمال أربع مهارات","Six after four")])
+        +hbSub(L("القرارات الإضافية تشمل","They include"))
+        +hbLi(SUPPORT.map(s2=>L(s2.ar,s2.en))))
+      + hbSec(L("آليات الفوز والخسارة","Winning and losing"),
+        hbLi([L("لكل فريق مجسّم يمثّل موقعه على اللوحة","Each team has a figure on the board"),
+              L("كل بطاقة تُلعب بنجاح تمنح موارد ونقاط رضا","Each card played well brings resources and satisfaction points"),
+              L("الرد الصحيح يمنح ست قطع لمهارات الفريق أو لمهارات أنتاريس، على ألّا تتجاوز مهارته مهارتكم","A sound answer gives six tokens, for your skills or for Antares', but his may never pass yours")])
+        +hbSub(L("النقاط الأساسية","The basics"))
+        +hbLi([L("تبدأون بنسبة ٢٠٪ مروّجين","You start at 20% promoters"),
+               L("<b>الفوز</b> // ٨٠٪ مروّجين أو أكثر","<b>Win</b> // 80% promoters or more"),
+               L("<b>الخسارة</b> // أقلّ من ١٠٪","<b>Lose</b> // under 10%")])
+        +hbSub(L("مسار التصعيد","The escalation path"))
+        +hbLi([L("كل عميل غير راضٍ يزيد مؤشّر التصعيد","Every dissatisfied customer raises the escalation index"),
+               L("عند ٥٥٪ غاضبين تُفعَّل أزمة كبرى تحتاج جهدًا جماعيًا","At 55% angry, a major crisis needs a team effort")])),
+      hbSec(L("مرحبًا أيها المغامرون!","Welcome, adventurers!"),
+        `<p>${L("في قلب مدينة أميستريس الحكيمة، حيث تعانق ناطحات السحاب السماء وتزدهر الابتكارات، وسط معركة خفية بين الشركات العملاقة من أجل النفوذ، يقف العالم الدكتور لطيف بإنجازه الفريد: أنتاريس، الروبوت الذي صمّمه ليحدث ثورة في خدمة العملاء.","In the heart of Amestris, where skyscrapers meet the sky and a quiet war for influence runs between the giants, Dr. Latif stands with his creation: Antares, the robot built to transform customer service.")}</p>
+         <p>${L("لكن ابتكار هذا الكيان يتطلّب أكثر من براعة ميكانيكية. يجب أن يكون ذكاء أنتاريس وتعاطفه وقدرته على حل المشكلات مشبعة بحكمة أعظم العقول في خدمة العملاء — أي أنتم.","But building him takes more than mechanics. His intelligence, empathy and problem-solving must be filled with the wisdom of the finest service minds: you.")}</p>`)
+      + hbSec(L("المهام الكبرى","The great missions"),hbLi([
+        L("<b>تشكيل نواة أنتاريس</b> // تحديات تطوير ذكائه وتعاطفه وقابليته للتكيّف","<b>Shape the Antares core</b> // challenges that grow his intelligence, empathy and adaptability"),
+        L("<b>حماية المختبر</b> // كشف وإحباط مخططات التخريب التي يديرها عملاء ميكا كور","<b>Protect the lab</b> // uncover and stop Mecha Core's sabotage")]))
+      + hbSec(L("إجراءات الدعم الرئيسية","The main decisions"),
+        hbLi(DEC_SALES.map(d=>`<b>${L(d.ar,d.en)}</b> // ${L(d.har,d.hen)} <span class="ti">(${Object.entries(d.eff).map(([k,v])=>`${v>0?"+":"−"}${AR(1)} ${k}`).join("، ")})</span>`))
+        +`<div class="hbNote">${L("استخدموا مواهبكم بحكمة.","Use your talents wisely.")}</div>`)
+    ]}
+  ];
+}
+function bookPanes(){
+  const pg=bookPages();
+  const cover=`<div class="bookCover"><div class="hbLogo"><b class="bkWord">ELEVATE<span>LAB</span></b><i>HANDBOOK</i></div>
+      <div class="bkBank">${LOGO_SVG(26)}</div></div>`;
+  return [cover, ...pg[0].cols, ...pg[1].cols];
+}
+function bookPer(){ return (typeof window!=="undefined" && window.innerWidth<860) ? 1 : 2; }
+function bookLayer(){
+  const panes=bookPanes(), per=bookPer();
+  const spreads=Math.ceil(panes.length/per);
+  const sp=Math.max(0,Math.min(S.bookSpread||0,spreads-1));
+  const a=panes[sp*per], b=per===2?panes[sp*per+1]:null;
+  const page=x=>x?`<div class="bookPage">${/bookCover/.test(x)?x:`<div class="bookCol">${x}</div>`}</div>`:`<div class="bookPage empty"></div>`;
+  return `<div class="cap">${t("manual")}</div>
+    <div class="bookWrap" tabindex="-1" id="bookFocus" role="dialog" aria-modal="true" aria-label="${t("manual")}">
+      <div class="book" id="bookBody">
+        ${page(a)}${per===2?`<div class="spine" aria-hidden="true"></div>${page(b)}`:""}
+      </div>
+      <div class="bookNav">
+        <button class="b s nav" data-a="bookSpread" data-n="${sp-1}" ${sp===0?"disabled":""} aria-label="${L("السابق","Previous")}">‹</button>
+        <span class="dots">${Array.from({length:spreads},(_,i2)=>`<i class="${i2===sp?'on':''}"></i>`).join("")}</span>
+        <button class="b s nav" data-a="bookSpread" data-n="${sp+1}" ${sp>=spreads-1?"disabled":""} aria-label="${L("التالي","Next")}">›</button>
+        <button class="b s p" data-a="bookClose">${t("close")}</button>
+      </div>
+    </div>`;
+}
+function handbook(){
+  return `<button class="hbCta" data-a="book">
+    <span class="hbCtaIco" aria-hidden="true">📖</span>
+    <span class="hbCtaTxt"><b>${t("manual")}</b><em>${t("manualOpen")}</em></span>
+    <span class="hbCtaArrow">›</span></button>`;
+}
+function helper(){
+  const c=S.cur; if(!c) return "";
+  const open=S.help, ty=TYPES[c.type];
+  return `<div class="sheet tool ${open?'open':''}">
+    <button class="sheetBtn" data-a="help" aria-expanded="${open}">
+      <span class="sIco">${open?"▾":"◆"}</span><b>${t("helper")}</b>
+      <span class="sp"></span><span class="ti">${open?t("helperClose"):t("helperOpen")}</span></button>
+    ${open?`<div class="sheetBody toolBody">
+      <div class="hsec"><h4>${t("hType")}</h4>
+        <p><b style="color:${ty.color}">${L(ty.ar,ty.en)}</b> — ${L(DECK_NOTE[c.type].ar,DECK_NOTE[c.type].en)}</p></div>
+      <div class="hsec"><h4>${t("hAsk")}</h4>
+        <ul>${(ASKS_BY_TYPE[c.type]||ASKS).map(a=>`<li><span class="fTag en">${a.f}</span> ${L(a.ar,a.en)}</li>`).join("")}</ul></div>
+      <div class="hsec"><h4>${t("hDo")}</h4>
+        <ul>${FACTORS.map(f=>`<li><b>${L(f.ar,f.en)}</b> — ${L(f.dar,f.den)}</li>`).join("")}</ul></div>
+      <div class="hsec"><h4>${t("hSupport")} (${AR(slots(TM()))})</h4>
+        <ul>${SUPPORT.slice(0,slots(TM())).map(s2=>`<li>${L(s2.ar,s2.en)}</li>`).join("")}</ul></div>
+      <div class="hbNote">${t("hNote")}</div>
+    </div>`:""}
+  </div>`;
+}
+function standings(){
+  const sorted=S.teams.map((t2,i)=>({t:t2,i})).sort((a,b2)=>b2.t.promoter-a.t.promoter);
+  const me=sorted.findIndex(x=>x.i===S.turn)+1;
+  return `<div class="stand"><div class="standH"><span class="k">${t("standings")}</span>
+      <span class="ti">${L("مركزكم","Your rank")} ${AR(me)}/${AR(4)}</span></div>
+    ${sorted.map((x,i)=>`<div class="stRow ${x.i===S.turn?'me':''}">
+      <b class="en">${AR(i+1)}</b><span class="dot" style="background:${x.t.color}"></span>
+      <span class="nm">${L(x.t.name,x.t.nameEn)}</span>
+      <span class="pb"><i style="width:${x.t.promoter}%;background:${x.t.color}"></i></span>
+      <b class="en pc">${AR(x.t.promoter)}٪</b></div>`).join("")}</div>`;
+}
+function teamPane(){
+  const tm=TM(); let b="";
+  if(false){
+    b=`<div class="nt">${t("simTurn")} — <b style="color:${tm.color}">${L(tm.name,tm.nameEn)}</b><br>${t("watch")}</div>`;
+    if(S.cur) b+=cardFace();
+  } else if(S.phase==="roll"){
+    b=`<div class="nt">${t("playingNow")} <b style="color:${tm.color}">${L(tm.name,tm.nameEn)}</b> — ${t("station")} ${AR(tm.pos+1)}</div>
+       <button class="b p go" data-a="roll" ${S.busy?"disabled":""}>${S.busy?t("rolling"):t("roll")}</button>`;
+  } else if(S.phase==="draw"){
+    const ty=TYPES[BOARD[tm.pos].type];
+    b=`<div class="nt">${t("station")} ${AR(tm.pos+1)} — <b style="color:${ty.color}">${L(ty.ar,ty.en)}</b></div>
+       ${BOARD[tm.pos].type==="node"?`<div class="nt o">${t("nodeBody")}</div>`:""}
+       <button class="b p go" data-a="draw">${BOARD[tm.pos].type==="node"?t("place"):t("draw")}</button>`;
+  } else if(S.phase==="decide"){
+    b=cardFace()+`<div><div class="k" id="pmL">${t("pickMain")}</div>
+      <div class="opts" style="margin-top:9px" role="radiogroup" aria-labelledby="pmL">${DECS().map(d=>`
+        <label class="opt ${S.cur.decision===d.id?'sel':''}"><input type="radio" name="dec" value="${d.id}" ${S.cur.decision===d.id?"checked":""} aria-label="${L(d.ar,d.en)}">
+        <span><span class="on">${L(d.ar,d.en)}</span><span class="ef">${L(d.har,d.hen)}</span>
+        <span class="ef">${Object.entries(d.eff).map(([k2,v])=>`<span class="${v>0?'pl':'mi'}">${v>0?"+":"−"}${AR(1)} ${k2}</span>`).join(" · ")}</span></span></label>`).join("")}</div></div>
+      <div class="nt"><b>${t("supportOpen")} (${AR(slots(tm))})</b><br>${SUPPORT.slice(0,slots(tm)).map(x=>L(x.ar,x.en)).join(" · ")}</div>
+      <div class="row" style="gap:9px">
+        <button class="b p ${S.cur.decision?"go":""}" data-a="lock" ${S.cur.decision?"":"disabled"}>${t("lockDec")}</button>
+        <button class="b s g" data-a="reread">${t("reread")}</button></div>`;
+  } else if(S.phase==="respond"){
+    b=cardFace()+`<div class="nt">${t("answerT")}</div>
+      <textarea class="ta" id="ans" placeholder="${L("مثال: أسأله أولًا عن أهم شيء بالنسبة له، ثم…","e.g. First I'd ask what matters most to them, then…")}">${S.cur.note||""}</textarea>
+      <div class="row" style="gap:9px">
+        <button class="b p go" data-a="send">${t("send")}</button>
+        <button class="b s g" data-a="backDecide">${t("back")}</button></div>`;
+  } else {
+    b=`<div class="nt o">✓ ${L("سُجّلت الإجابة","Answer recorded")}</div><div class="nt">${t("waitingScore")}</div>`+cardFace();
+  }
+  return `<section class="pane tm ${S.phase!=="score"?"live":""} ${S.pane==="gm"?"off":""}">
+    <div class="ph"><span style="width:10px;height:10px;border-radius:50%;background:${tm.color}"></span>
+      ${t("teamScreen")} — ${L(tm.name,tm.nameEn)}<span class="sp"></span>
+      <span class="ti">${t("skillsDone")} ${AR(full(tm))}/${AR(7)}</span></div>
+    <div class="pb">${b}
+      ${S.cur?helper():""}
+      ${standings()}
+      ${handbook()}
+      <div><div class="k" style="margin-bottom:7px">${t("playerBoard")}</div>${playerBoard(tm,false)}
+        <div class="k" style="margin:12px 0 7px;color:#A77BFF">${t("robot")}</div>${antaresStrip(tm)}</div>
+    </div></section>`;
+}
+
+/* ================= screens ================= */
+function announce(){
+  const tm=TM();
+  if(S.screen!=="play") return "";
+  const ph={roll:L("دور الرمي","Roll"),draw:L("سحب البطاقة","Draw"),decide:L("اختيار القرار","Decide"),
+            respond:L("عرض الإجابة","Respond"),score:L("التقييم","Score")}[S.phase]||"";
+  return `<div class="sr-live" role="status" aria-live="polite">${t("round")} ${AR(S.round)} — ${L(tm.name,tm.nameEn)} — ${ph}${
+    S.cur&&S.cur.card?` — ${L(TYPES[S.cur.type].ar,TYPES[S.cur.type].en)}`:""}</div>`;
+}
+function bar(extra=""){
+  return `<header class="bar"><div class="mark">ELEVATE <i>LAB</i></div>${extra}<div class="sp"></div>
+    <span class="byBank" title="Skills Bank">${LOGO_SVG(18)}</span>
+    <button class="b s g" data-a="lang" aria-label="${LANG==="ar"?"Switch to English":"التبديل إلى العربية"}">${LANG==="ar"?"EN":"عربي"}</button>
+    <button class="b s g" data-a="snd" aria-pressed="${A.on()}" aria-label="${t("sound")}">${A.on()?"🔊":"🔇"}</button>
+    ${S.screen!=="home"?`<button class="b s g" data-a="home">${t("back")}</button>`:""}</header>`;
+}
+function homeScreen(){
+  return bar()+`<main class="wrap"><div class="hero">
+    <div class="logo">ELEVATE<span>LAB</span></div>
+    <div class="byLine"><span class="ti">${L("من","by")}</span>${LOGO_SVG(22)}</div>
+    <p class="mu" style="max-width:640px;margin:18px auto 0">${t("tagline")}</p></div>
+    <div class="doors">
+      <button class="door m" data-a="go" data-m="split"><div class="k">${t("dEnter")}</div><h3>${t("dPlay")}</h3><div class="mu">${t("dPlayT")}</div></button>
+      <button class="door" data-a="go" data-m="facil"><div class="k">TRAINER</div><h3>${t("dFacil")}</h3><div class="mu">${t("dFacilT")}</div></button>
+      <button class="door" data-a="go" data-m="team"><div class="k">TEAM</div><h3>${t("dTeam")}</h3><div class="mu">${t("dTeamT")}</div></button>
+      <button class="door" data-a="rules"><div class="k">RULES</div><h3>${t("dRules")}</h3><div class="mu">${t("dRulesT")}</div></button>
+    </div>
+    <details class="qa" hidden><summary>${t("notes")}</summary>
+      <div class="ti" style="margin-top:10px;line-height:1.9">
+        ${L("١ — لوحة اللاعب المطبوعة ما زالت تحمل قرارات خدمة العملاء الستة وأسماء مهاراتها، وهي بقايا نسخة سابقة. اللعبة هنا تعمل بالقرارات البيعية الخمسة من الكتالوج ودليل اللاعب، وتحتاج اللوحة إلى إعادة طباعة.",
+            "1 — The printed player board still carries the six customer-service decisions and their skill codes, left over from an earlier edition. This build runs on the five sales decisions from the catalog and player manual; the board needs reprinting.")}<br>
+        ${L("٢ — أرقام التقييم كلها مأخوذة من أداة التقييم: الشرائح ٢١ و١٧ و١٣ و٩ و٥، والتوزيع يبدأ ٢٠ و٥٠ و٣٠ وينتقل بين الفئات الثلاث، والفوز عند ٨٠٪ مروّجين والخسارة تحت ١٠٪ والأزمة عند ٥٥٪ غاضبين، وبطاقة الاسترداد إشارة رباعية في ثلاثة.",
+            "2 — Every scoring number comes from the trainer's tool: brackets at 21, 17, 13, 9 and 5; the mix starts 20/50/30 and shifts between the three buckets; win at 80% promoters, lose under 10%, crisis at 55% angry; Recovery is a four-cell signal times three.")}<br>
+        ${L("٣ — أثر القرار الرئيسي لا يغيّر التقييم من ٥، بل يضيف أو يخصم من تطوّر المهارة المقابلة، كما في الأداة.",
+            "3 — A main decision does not change the 1–5 rating; it adds to or subtracts from that factor's skill development, as in the tool.")}<br>
+        ${L("٤ — نصوص البطاقات الستين منقولة حرفيًا من ملفات الطباعة بعد مطابقة آلية لكل بطاقة.",
+            "4 — All sixty card texts are taken verbatim from the print files and machine-checked card by card.")}<br>
+        ${L("٥ — اللوحة هنا ٨٨ مربعًا: ٦٠ محطة بطاقة و٢٧ محطة أنتاريس ومربع بداية، بينما يذكر الكتالوج ٦٥ ثم يعدّها ٦٠.",
+            "5 — This board has 88 squares: 60 card stations, 27 Antares nodes and one start. The catalog says 65 then counts 60.")}
+      </div></details>
+  </main>`;
+}
+function rulesScreen(){
+  const step=(n,h,b)=>`<li class="stepCard" style="--d:${n*0.07}s"><span class="num en">${AR(n)}</span>
+    <div><h4>${h}</h4><p>${b}</p></div></li>`;
+  const brackets=BRACKETS.map(b=>`<tr><td class="en">${AR(b.min)} – ${AR(b.min===21?25:BRACKETS[BRACKETS.indexOf(b)-1].min-1)}</td>
+      <td>${L(b.ar,b.en)}</td><td class="en ${b.csp>0?'pl':'mi'}">${b.csp>0?"+":"−"}${AR(Math.abs(b.csp))}</td>
+      <td class="en">${tokensFor(b.min)?AR(tokensFor(b.min)):"—"}</td></tr>`).join("");
+  return bar()+`<main class="wrap rules">
+    <div class="rHero">
+      <div class="k">RULES</div>
+      <h1>${t("dRules")}</h1>
+      <p class="mu">${L("لوحتان، خمسة عوامل، قرار واحد في كل دور، وثلاث فئات من العملاء تتحرّك بينها النقاط.",
+                        "Two boards, five factors, one decision a turn, and three customer groups that the points move between.")}</p>
+    </div>
+
+    <section class="rSec"><div class="k">${t("stepsH")}</div>
+      <ol class="steps5">
+        ${step(1,L("حدّدوا خطواتكم","Find your steps"),L("تضيء وحدة أنتاريس وتستقر على عدد، فيتقدّم الفريق بهذا العدد على اللوحة.","The Antares module settles on a number and the team advances that many squares."))}
+        ${step(2,L("اسحبوا البطاقة","Draw the card"),L("تُسحب البطاقة التي تطابق لون المحطة: صفقة، أو عميل متردّد، أو عميل صعب، أو بطاقة كفاءة.","Draw the card matching the station: a deal, a hesitant customer, a tough customer, or a competence card."))}
+        ${step(3,L("اختاروا قرارًا واحدًا","Choose one decision"),L("قرار رئيسي واحد لا غير، ومعه قرارات دعم اختيارية يتسع عددها كلما اكتملت مهاراتكم.","Exactly one main decision, plus optional supporting ones that unlock as your skills complete."))}
+        ${step(4,L("اعرضوا أمام القاعة","Present to the room"),L("يتكلّم الفريق بصوت مسموع كأنه أمام العميل. هنا تُكتسب النقاط أو تُفقد.","The team speaks out loud as if facing the customer. This is where points are won or lost."))}
+        ${step(5,L("يقيّم المدرّب","The trainer scores"),L("خمسة عوامل، من واحد إلى خمسة لكل عامل، والنتيجة تظهر للجميع فورًا.","Five factors, one to five each, shown to the whole room at once."))}
+      </ol></section>
+
+    <section class="rSec"><div class="k">${t("scoringH")}</div>
+      <div class="rGrid">
+        <div class="card rCard"><h3>${t("factors5")}</h3>
+          <p class="ti">${L("يقيّم المدرّب كل عامل من ١ إلى ٥، فالمجموع من ٢٥.","The trainer rates each factor 1 to 5, so the total is out of 25.")}</p>
+          <ul class="facList">${FACTORS.map((f,i2)=>`<li style="--d:${i2*0.06}s"><b class="en">${f.id}</b>
+            <span><b>${L(f.ar,f.en)}</b><em>${L(f.dar,f.den)}</em></span></li>`).join("")}</ul></div>
+        <div class="card rCard"><h3>${L("من المجموع إلى الأثر","From the total to the effect")}</h3>
+          <p class="ti">${L("يقع المجموع في إحدى ست شرائح، فتحدّد كم عميلًا يتحوّل وكم قطعة مهارة يكسب الفريق.",
+                            "The total falls in one of six bands, which sets how many customers shift and how many skill tokens the team earns.")}</p>
+          <table class="t brk"><thead><tr><th>${L("المجموع","Total")}</th><th>${L("التقدير","Band")}</th>
+            <th>${L("العملاء","Customers")}</th><th>${t("tokens")}</th></tr></thead><tbody>${brackets}</tbody></table></div>
+      </div></section>
+
+    <section class="rSec"><div class="k">${t("mixH")}</div>
+      <div class="card rCard">
+        <p class="mu">${L("يبدأ كل فريق بمئة عميل موزّعين على ثلاث فئات. والنقاط لا تُضاف من فراغ، بل تنقل العملاء بين الفئات: الموجبة تسحب من الغاضبين أولًا ثم من العاديين إلى المروّجين، والسالبة تفعل العكس.",
+                          "Every team starts with a hundred customers in three groups. Points don't appear from nowhere: they move customers between groups. Positive points pull from the angry first, then the regulars, into the promoters. Negative points do the reverse.")}</p>
+        <div class="mixDemo">
+          <div class="mix"><span style="width:20%;background:linear-gradient(90deg,#2BB9E8,#9CE2FB)"></span>
+            <span style="width:50%;background:#3A4790"></span>
+            <span style="width:30%;background:linear-gradient(90deg,#C2353E,#FF6B74)"></span></div>
+          <div class="mixleg"><span>👑 ${L("مروّجون","Promoters")} <b>${AR(20)}٪</b></span>
+            <span>🙂 ${L("عاديون","Regular")} <b>${AR(50)}٪</b></span>
+            <span>😠 ${L("غاضبون","Angry")} <b>${AR(30)}٪</b></span></div>
+        </div>
+        <div class="winRow">
+          <div class="winBox ok"><b class="en">${AR(80)}٪+</b><span>${L("فوز: مروّجون","Win: promoters")}</span></div>
+          <div class="winBox bad"><b class="en">&lt;${AR(10)}٪</b><span>${L("خسارة: مروّجون","Lose: promoters")}</span></div>
+          <div class="winBox warn"><b class="en">${AR(55)}٪</b><span>${L("أزمة: غاضبون","Crisis: angry")}</span></div>
+        </div></div></section>
+
+    <section class="rSec"><div class="k">DECISIONS</div>
+      <div class="decGrid">${DEC_SALES.map((d,i2)=>`<div class="decCard" style="--d:${i2*0.06}s">
+        <h4>${L(d.ar,d.en)}</h4><p>${L(d.har,d.hen)}</p>
+        <div class="effRow">${Object.entries(d.eff).map(([k2,v])=>
+          `<span class="${v>0?'pl':'mi'}">${v>0?"+":"−"}${AR(1)} ${k2}</span>`).join("")}</div></div>`).join("")}</div>
+      <p class="ti" style="margin-top:10px">${L("هذا الأثر لا يغيّر تقييم المدرّب، بل يُضاف إلى تطوّر مهارة الفريق في العامل نفسه.",
+        "This effect does not change the trainer's rating; it feeds the team's skill development in that same factor.")}</p>
+      <p class="ti">${L("قرارات الدعم: اثنان من البداية، وأربعة بعد إكمال مهارتين، وستة بعد إكمال أربع.",
+        "Supporting decisions: two from the start, four after two completed skills, six after four.")}</p></section>
+
+    <section class="rSec"><div class="k">THE TWO BOARDS</div>
+      <div class="rGrid">
+        <div class="card rCard"><h3>${t("mainBoard")}</h3>
+          <p class="mu">${L("أربعة فرق على لوحة واحدة. المحطات أربعة ألوان، وفي المنتصف المجموعات الأربع ونواة أنتاريس، وعلى كل ضلع من الأضلاع الأربعة سبع زهرات هي مهارات أنتاريس عند ذلك الفريق.",
+            "Four teams on one board. Stations come in four colours; the four decks and the Antares core sit in the middle; and each of the four sides carries seven flowers, the Antares skills for that team.")}</p></div>
+        <div class="card rCard"><h3>${t("playerBoard")}</h3>
+          <p class="mu">${L("سبع مهارات، تكتمل كل منها بست قطع. ويمكن للفريق أن يمنح بعض قطعه لأنتاريس ليتعلّم، على ألّا تتجاوز مهارته مهارة الفريق أبدًا.",
+            "Seven skills, six tokens each. The team may hand some tokens to Antares so he learns too, but his skill may never pass the team's.")}</p>
+          ${playerBoard(S.teams[0],false)}</div>
+      </div></section>
+
+    <div class="row" style="margin-top:22px;justify-content:center">
+      <button class="b p go" data-a="go" data-m="split">${t("dPlay")}</button></div></main>`;
+}
+function setupScreen(){
+  return bar()+`<main class="wrap">
+    <h1 style="font-size:26px">${t("setup")}</h1><p class="mu" style="max-width:720px">${t("setupT")}</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:16px">
+      <div class="card"><div class="k">TEAMS</div><h3 style="margin-bottom:12px">${t("names")}</h3>
+        ${S.teams.map((tm,i)=>`<div class="row" style="margin-bottom:9px">
+          <span style="width:12px;height:12px;border-radius:50%;background:${tm.color};flex:none"></span>
+          <input class="in" data-n="${i}" id="tn${i}" value="${LANG==="ar"?tm.name:tm.nameEn}" style="flex:1" aria-label="${t("team")} ${AR(i+1)}">
+          <span class="tag">${AR(i+1)}</span></div>`).join("")}</div>
+      <div class="card"><div class="k">OPTIONS</div><h3 style="margin-bottom:12px">${t("options")}</h3>
+        <div class="ti" style="margin:14px 0 7px">${t("rounds")}</div>
+        <div class="seg" role="group" aria-label="${t("rounds")}">${[5,8,10,13].map(n=>`<button data-r="${n}" aria-pressed="${S.maxRounds===n}">${AR(n)}</button>`).join("")}</div>
+        <div class="ti" style="margin-top:8px">${t("roundsT")}</div>
+        <div class="ti" style="margin-top:6px">${t("mix")}</div>
+        <div class="row" style="margin-top:22px"><button class="b p go" data-a="begin">${t("begin")}</button></div></div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="k">${t("mainBoard")}</div>
+      <div style="margin-top:10px">${boardBlock()}</div></div></main>`;
+}
+function playScreen(){
+  const solo = S.mode==="facil", teamOnly = S.mode==="team";
+  const steps = ["roll","draw","decide","respond","score"], ci = steps.indexOf(S.phase);
+  return bar(`<span class="tag cy">${t("round")} ${AR(S.round)}/${AR(S.maxRounds)}</span>
+      <span class="tag" style="border-color:${TM().color}88;color:${TM().color}">${L(TM().name,TM().nameEn)}</span>`)+
+    `<main class="wrap">
+      <ul class="steps">${steps.map((p,i)=>`<li class="${i===ci?'now':i<ci?'done':''}">${AR(i+1)}. ${
+        {roll:L("الإشارة","Signal"),draw:L("البطاقة","Card"),decide:L("القرار","Decide"),respond:L("العرض","Respond"),score:L("التقييم","Score")}[p]}</li>`).join("")}</ul>
+      <div class="playCols">
+        <div class="boardSec" style="margin-top:12px">${boardBlock()}</div>
+        ${solo||teamOnly?"":`<div class="tabs"><button data-p="gm" aria-pressed="${S.pane==='gm'}">${t("trainer")}</button>
+          <button data-p="team" aria-pressed="${S.pane==='team'}">${t("teamScreen")}</button></div>`}
+        <div class="split" style="${solo||teamOnly?"grid-template-columns:1fr":""}">${solo?gmPane():""}${teamOnly?teamPane():(solo?"":gmPane()+teamPane())}</div>
+      </div></main>`;
+}
+function endScreen(){
+  const sorted=S.teams.slice().sort((a,b)=>b.promoter-a.promoter);
+  return bar()+`<main class="wrap"><h1 style="font-size:28px">${t("results")}</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-top:16px">
+      <div class="card"><div class="k">${t("rank")}</div>
+        <table class="t" style="margin-top:8px"><thead><tr><th>#</th><th>${t("team")}</th><th>${t("sat")}</th><th>${t("skillsDone")}</th><th></th></tr></thead>
+        <tbody>${sorted.map((tm,i)=>`<tr><td class="en">${AR(i+1)}</td>
+          <td><span style="color:${tm.color}">●</span> ${L(tm.name,tm.nameEn)}</td><td><b class="en">${AR(tm.promoter)}٪</b></td>
+          <td>${AR(full(tm))}/${AR(7)}</td>
+          <td>${outcome(tm)==="win"?`<span class="tag ok">${t("win")}</span>`:outcome(tm)==="lose"?`<span class="tag warn">${t("lose")}</span>`:"—"}</td></tr>`).join("")}</tbody></table>
+        <div class="row" style="margin-top:14px"><button class="b s" data-a="exp">${t("exportLog")}</button>
+          <button class="b s g" data-a="again">${t("again")}</button></div></div>
+      <div class="card"><div class="k">DEBRIEF · 30 MIN</div><h3>${t("debrief")}</h3>
+        <ul class="mu" style="padding-inline-start:18px;line-height:2.1">
+          <li>${L("أي القرارات أدّت إلى نتيجة جيدة، ولماذا؟","Which decisions led to good outcomes, and why?")}</li>
+          <li>${L("كيف تعامل فريقك مع العميل الصعب؟","How did your team handle the tough customer?")}</li>
+          <li>${L("ما الأسلوب البديل الذي كان يمكن أن ينجح؟","What alternative approach could have worked?")}</li>
+          <li>${L("ماذا ستطبّق من هذا في عملك غدًا؟","What will you apply at work tomorrow?")}</li></ul></div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="k">SESSION LOG</div>
+      <table class="t" style="margin-top:8px"><thead><tr><th>${t("round")}</th><th>${t("team")}</th><th>${t("deck")}</th><th>${t("decision")}</th><th>/${AR(25)}</th><th>CSP</th></tr></thead>
+      <tbody>${S.log.map(r=>`<tr><td>${AR(r.round)}</td><td>${r.team}</td><td>${L(TYPES[r.type].ar,TYPES[r.type].en)}</td>
+        <td>${r.decision||"—"}</td><td class="en">${AR(r.total)}</td><td class="en">${r.csp>0?"+":"−"}${AR(Math.abs(r.csp))}</td></tr>`).join("")}</tbody></table></div></main>`;
+}
+function render(){
+  document.documentElement.lang=LANG;
+  document.documentElement.dir=LANG==="ar"?"rtl":"ltr";
+  el("app").innerHTML={home:homeScreen,rules:rulesScreen,setup:setupScreen,play:playScreen,end:endScreen}[S.screen]()+announce();
+  const a=$("#ans"); if(a) a.addEventListener("input",e=>S.cur.note=e.target.value);
+}
+/* ================= scoring ================= */
+function rawTotal(sc,decId){
+  const d=DECS().find(x=>x.id===decId);
+  return FACTORS.reduce((a,f)=>{
+    const base=sc[f.id]||0, mod=d&&d.eff&&d.eff[f.id]?d.eff[f.id]:0;
+    return a+(base?clamp(base+mod,1,5):0);
+  },0);
+}
+function overlay(o){
+  el("ovz").innerHTML=`<div class="ov"><div class="ovin card" style="padding:30px">
+    <div class="ovk">${o.k||""}</div><div class="ovt">${o.title}</div>${o.body?`<p>${o.body}</p>`:""}${o.extra||""}
+    <div class="row" style="justify-content:center;margin-top:20px">${o.buttons!==undefined?o.buttons:`<button class="b p" data-a="ovx">${L("تابع","Continue")}</button>`}</div>
+  </div></div>`;
+}
+const closeOv = () => el("ovz").innerHTML="";
+function flash(){ const d=document.createElement("div"); d.className="flash"; document.body.appendChild(d); setTimeout(()=>d.remove(),520); }
+
+/* ================= turn flow ================= */
+function begin(){
+  S.screen="play"; S.round=1; S.turn=0; S.phase="roll"; S.cur=null; S.pane="team";
+  render(); queue();
+}
+async function moveTo(tm,n){
+  S.trail=[tm.pos];
+  for(let i=0;i<n && tm.pos<LAST;i++){
+    tm.pos++; S.trail.push(tm.pos); tm.path.push(tm.pos);
+    A.step(); render(); await wait(165);
+  }
+  A.land(); S.ripple=tm.pos; S.landed=tm.pos; render(); await wait(900);
+  if(S.used.has(tm.pos)){ await resolveBusy(tm); if(!tm.path.includes(tm.pos)) tm.path.push(tm.pos); }
+  S.ripple=tm.pos; S.landed=tm.pos; render(); await wait(650);
+  S.trail=null; S.ripple=null; render();
+}
+/* the manual: a taken station means the team takes the one before it or the one after it */
+function resolveBusy(tm){
+  for(let k=tm.pos+1;k<=LAST;k++) if(!S.used.has(k)){ tm.pos=k; A.step(); render(); return wait(450); }
+  for(let k=tm.pos-1;k>=0;k--)   if(!S.used.has(k)){ tm.pos=k; A.step(); render(); return wait(450); }
+  return Promise.resolve();
+}
+
+function fsLayer(html,cls=""){
+  const d=document.createElement("div");
+  d.className="fs "+cls; d.innerHTML=html; document.body.appendChild(d); return d;
+}
+function awaitClick(layer,sel){
+  return new Promise(res=>{
+    const b=layer.querySelector(sel);
+    if(!b) return res();
+    if(b.focus) setTimeout(()=>b.focus(),60);
+    const go=()=>{ b.removeEventListener("click",go); res(); };
+    b.addEventListener("click",go);
+  });
+}
+async function fsClose(layer){ layer.classList.add("out"); await wait(380); layer.remove(); }
+function sparkle(host,count=14){
+  const r=host.getBoundingClientRect();
+  for(let i=0;i<count;i++){
+    const s=document.createElement("div"); s.className="sparkle";
+    const a=Math.random()*Math.PI*2, d=70+Math.random()*120;
+    s.style.cssText=`left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;position:fixed;z-index:94;
+      --dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-delay:${Math.random()*.18}s`;
+    document.body.appendChild(s); setTimeout(()=>s.remove(),1200);
+  }
+}
+function sigMetrics(){
+  const short = window.innerHeight < 520, narrow = window.innerWidth < 420;
+  return {size: short?54:narrow?62:74, R: short?84:narrow?98:118};
+}
+function signalMarkup(faces,color,capText){
+  const {size,R} = sigMetrics(), h = size/2;
+  const cells = Array.from({length:faces},(_,i)=>{
+    const a = Math.PI/180*(-90 + i*(360/faces));
+    return `<div class="cell" data-c="${i}" aria-hidden="true" style="--lock:${color};
+      width:${size}px;height:${size}px;font-size:${Math.round(size*0.41)}px;
+      left:calc(50% + ${(R*Math.cos(a)).toFixed(1)}px - ${h}px);
+      top:calc(50% + ${(R*Math.sin(a)).toFixed(1)}px - ${h}px)">${AR(i+1)}</div>`;
+  }).join("");
+  return `<div class="cap">${capText}</div>
+    <div class="stack" tabindex="-1" id="sigFocus" role="dialog" aria-modal="true" aria-label="${capText}">
+      <div class="sigWrap" aria-hidden="true">
+        <div class="sigRing"></div><div class="sigRing b"></div>
+        <div class="sigCore" id="sigCore" style="--lock:${color}"><div class="q"><i></i><i></i><i></i><i></i></div></div>
+        ${cells}
+      </div>
+      <div class="sigOut" id="sigOut" role="status" aria-live="assertive" style="visibility:hidden">—</div>
+      <div class="sigAct" id="sigAct"></div>
+    </div>`;
+}
+const lessMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+async function runSignal(faces,color,capText,label,manual){
+  const back=document.activeElement;
+  const layer=fsLayer(signalMarkup(faces,color,capText));
+  const act=layer.querySelector("#sigAct");
+  const focus=layer.querySelector("#sigFocus"); if(focus&&focus.focus) focus.focus();
+  if(manual){
+    act.innerHTML=`<button class="b p go" id="sigGo">${t("startScan")}</button>
+      <div class="ti" style="margin-top:9px">${t("tapCore")}</div>`;
+    const core=layer.querySelector("#sigCore");
+    if(core){ core.setAttribute("role","button"); core.style.cursor="pointer";
+      core.addEventListener("click",()=>{const g=layer.querySelector("#sigGo"); if(g) g.click();}); }
+    await awaitClick(layer,"#sigGo");
+    act.innerHTML="";
+  }
+  const cells=[...layer.querySelectorAll(".cell")];
+  const target=rnd(faces);
+  const calm=lessMotion();
+  const laps = calm ? 1 : faces>=6 ? 3 : 4;
+  const steps = laps*faces + target + 1;
+  let pos=-1;
+  for(let s=0;s<steps;s++){
+    if(pos>=0) cells[pos].classList.remove("hot");
+    pos=(pos+1)%faces;
+    cells[pos].classList.add("hot");
+    const k=s/steps;
+    A.tick(1-k);
+    await wait((calm?18:55) + (calm?60:300)*Math.pow(k,3.1));
+  }
+  cells[pos].classList.remove("hot"); cells[pos].classList.add("lock");
+  layer.querySelector("#sigCore").classList.add("locked");
+  A.lock(); sparkle(cells[pos],16);
+  const out=layer.querySelector("#sigOut");
+  out.style.visibility="visible";
+  out.innerHTML=`${AR(target+1)}<small>${label}</small>`;
+  out.setAttribute("aria-label",`${AR(target+1)} ${label}`);
+  if(manual){
+    act.innerHTML=`<button class="b p go" id="sigNext">${t("cont")}</button>`;
+    await awaitClick(layer,"#sigNext");
+  } else await wait(calm?500:850);
+  await fsClose(layer);
+  if(back&&back.isConnected&&back.focus) back.focus();
+  return target+1;
+}
+async function doRoll(){
+  if(S.busy||S.phase!=="roll") return;
+  const tm=TM(); S.busy=true; render();
+  let n;
+  n=await runSignal(6,tm.color,`${L(tm.name,tm.nameEn)} · ${t("roll")}`,
+    L("خطوات التقدّم","steps forward"),true);
+  S.busy=false; render();
+  const bw=el("bwrap"); if(bw&&bw.scrollIntoView) bw.scrollIntoView({behavior:"smooth",block:"center"});
+  await wait(350);
+  await moveTo(tm,n);
+  S.phase="draw"; render();
+}
+let BOOK=null;
+function openBook(){
+  S.bookSpread=0; BOOK=fsLayer(bookLayer(),"bookFs"); wireBookSwipe();
+  const f=BOOK.querySelector("#bookFocus"); if(f&&f.focus) setTimeout(()=>f.focus(),60);
+}
+function refreshBook(){ if(BOOK){ BOOK.innerHTML=bookLayer(); wireBookSwipe(); } }
+function wireBookSwipe(){
+  const body=BOOK&&BOOK.querySelector("#bookBody"); if(!body) return;
+  let x0=null;
+  body.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;},{passive:true});
+  body.addEventListener("touchend",e=>{
+    if(x0===null) return;
+    const dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)<48) return;
+    const rtl=document.documentElement.dir==="rtl";
+    const fwd = rtl ? dx>0 : dx<0;
+    const n=(S.bookSpread||0)+(fwd?1:-1);
+    const max=Math.ceil(bookPanes().length/bookPer())-1;
+    if(n<0||n>max) return;
+    S.bookSpread=n; A.snap(); refreshBook();
+  },{passive:true});
+}
+async function closeBook(){ if(!BOOK) return; const b=BOOK; BOOK=null; A.click(); await fsClose(b); }
+async function rereadCard(){
+  if(!S.cur) return;
+  const ty=TYPES[S.cur.type];
+  const layer=fsLayer(`<div class="cap">${L(ty.ar,ty.en)}</div>
+    <div class="stack" tabindex="-1" role="dialog" aria-modal="true" aria-label="${L(ty.ar,ty.en)}">
+      <div class="reveal">${cardFace()}</div>
+      <div class="sigAct"><button class="b p go" id="cardNext">${t("cont")}</button></div></div>`);
+  const f=layer.querySelector(".flip"); if(f) f.classList.add("on");
+  await awaitClick(layer,"#cardNext");
+  await fsClose(layer);
+}
+async function doDraw(){
+  if(S.phase!=="draw"||S.drawing) return;
+  S.drawing=true;
+  const tm=TM(), cell=BOARD[tm.pos];
+  if(cell.type==="node"||cell.type==="start"){
+    S.used.add(tm.pos); S.landed=null; S.drawing=false; A.tok(0);
+    return award(tm,1);
+  }
+  S.hotDeck=cell.type; A.whoosh(); render(); await wait(850);
+  const deck=S.decks[cell.type];
+  if(!deck.length) S.decks[cell.type]=shuffle([...Array(15).keys()]);
+  const idx=S.decks[cell.type].pop();
+  S.used.add(tm.pos); S.hotDeck=null;
+  S.cur={type:cell.type,card:CARDS[cell.type][idx],decision:null,note:"",scores:{}};
+  S.flip=false;
+  const ty=TYPES[cell.type];
+  const layer=fsLayer(`<div class="cap">${L(ty.ar,ty.en)}</div>
+    <div class="stack" tabindex="-1" id="cardFocus" role="dialog" aria-modal="true" aria-label="${L(ty.ar,ty.en)}">
+      <div class="reveal">${cardFace()}</div>
+      <div class="sigAct" id="cardAct"></div></div>`);
+  const cf=layer.querySelector("#cardFocus"); if(cf&&cf.focus) cf.focus();
+  await wait(620);
+  A.snap();
+  const f=layer.querySelector(".flip"); f.classList.add("on");
+  sparkle(f,18);
+  await wait(700); A.reveal();
+  layer.querySelector("#cardAct").innerHTML=
+    `<button class="b p go" id="cardNext">${t("cont")}</button><div class="ti" style="margin-top:9px">${t("readCard")}</div>`;
+  await awaitClick(layer,"#cardNext");
+  S.flip=true; S.phase="decide"; S.drawing=false; render();
+  await fsClose(layer);
+}
+function lock(){ A.click(); S.phase="respond"; S.flip=true; render(); const f=$(".flip"); if(f) f.classList.add("on"); }
+function send(){ A.click(); S.phase="score"; S.pane="gm"; render(); const f=$(".flip"); if(f) f.classList.add("on"); }
+
+function apply(tm,total){
+  const br=bracketFor(total), tk=tokensFor(total), before=tm.promoter;
+  /* the chosen decision feeds skill development, not the 1-5 rating */
+  const dd=DECS().find(x=>x.id===S.cur.decision);
+  if(dd&&dd.eff) Object.entries(dd.eff).forEach(([k2,v])=>tm.fsk[k2]=Math.max(0,(tm.fsk[k2]||0)+v));
+  applyShift(tm,br.csp);
+  tm.delta=br.csp; tm.done++;
+  const d=DECS().find(x=>x.id===S.cur.decision);
+  S.log.push({round:S.round,team:L(tm.name,tm.nameEn),type:S.cur.type,
+    decision:d?L(d.ar,d.en):null,total,csp:br.csp,tokens:tk,promoter:tm.promoter});
+  if(br.csp>=10){ flash(); A.great(); } else if(br.csp>0) A.good(); else A.bad();
+  return {br,tk,before};
+}
+async function save(){
+  const tm=TM();
+  if(!S.cur||S.cur.scored) return;
+  if(FACTORS.some(f=>!S.cur.scores[f.id])) return;
+  S.cur.scored=true;
+  const total=rawTotal(S.cur.scores,S.cur.decision), r=apply(tm,total);
+  render();
+  overlay({k:L(tm.name,tm.nameEn), title:`${AR(total)} / ${AR(25)} · ${L(r.br.ar,r.br.en)}`,
+    body:`${t("sat")}: ${AR(r.before)}٪ ← <b>${AR(tm.promoter)}٪</b>${r.tk?` &nbsp;·&nbsp; ${AR(r.tk)} ${t("tokens")}`:`<br><span class="ti">${t("noTokens")}</span>`}`,
+    extra:`<div style="margin-top:14px">${mixBar(tm)}</div>`,
+    buttons:r.tk?`<button class="b p" data-a="pick" data-n="${r.tk}">${t("place")}</button>`
+               :`<button class="b p" data-a="noTok">${t("cont")}</button>`});
+}
+function pickUI(n){
+  S.alloc={left:n, total:n, add:{}, bot:{}};
+  SKILLS.forEach(s=>{S.alloc.add[s.id]=0; S.alloc.bot[s.id]=0;});
+  renderAlloc();
+}
+function allocCapacity(){
+  const tm=TM(), a=S.alloc;
+  let n=0;
+  SKILLS.forEach(s=>{
+    const team=tm.tok[s.id]+a.add[s.id];
+    n+=Math.max(0,TOKENS_PER_SKILL-team);
+    n+=Math.max(0,Math.min(team,TOKENS_PER_SKILL)-(tm.bot[s.id]+a.bot[s.id]));
+  });
+  return n;
+}
+function allocCell(s,side){
+  const tm=TM(), a=S.alloc;
+  const team=tm.tok[s.id]+a.add[s.id];
+  const base = side==="team" ? tm.tok[s.id] : tm.bot[s.id];
+  const add  = side==="team" ? a.add[s.id] : a.bot[s.id];
+  const cap  = side==="team" ? TOKENS_PER_SKILL : Math.min(team,TOKENS_PER_SKILL);
+  const tot=Math.min(base+add,TOKENS_PER_SKILL), full2=base+add>=cap;
+  const can=a.left>0 && base+add<cap;
+  const col = side==="team" ? tm.color : "#A77BFF";
+  return `<div class="allocCell ${full2?'full':''} ${add?'got':''}" data-drop="${s.id}" data-side="${side}">
+    <div class="aFlower">${flower(base+add,col)}</div>
+    <div class="lb">${s.id}</div>
+    <div class="ti">${AR(tot)}/${AR(side==="team"?6:cap)}${add?` <span class="pl">+${AR(add)}</span>`:""}</div>
+    <div class="aBtns">
+      <button class="aMinus" data-alloc="-" data-s="${s.id}" data-side="${side}" ${add?"":"disabled"}
+        aria-label="${L("أنقص من","Remove from")} ${L(s.ar,s.en)}">−</button>
+      <button class="aPlus" data-alloc="+" data-s="${s.id}" data-side="${side}" ${can?"":"disabled"}
+        aria-label="${L("أضف إلى","Add to")} ${L(s.ar,s.en)}">+</button>
+    </div></div>`;
+}
+function allocMarkup(){
+  const a=S.alloc, cap=allocCapacity();
+  const chips=Array.from({length:a.left},()=>`<span class="chip" aria-hidden="true"></span>`).join("");
+  return `<div class="ovk">${t("place")}</div>
+    <div class="ovt">${t("whichSkill")}</div>
+    <p>${t("whichSkillT")}</p>
+    <div class="pool" role="status" aria-live="polite" aria-label="${AR(a.left)} ${t("left")}">
+      <b class="en">${AR(a.left)}</b><span class="ti">${t("left")}</span><span class="chips">${chips}</span></div>
+    <div class="dragHint"><span class="hArrow">⇣</span>${t("dragHint")}</div>
+    <div class="allocSide"><span class="k">${t("playerBoard")}</span></div>
+    <div class="allocGrid">${SKILLS.map(s=>allocCell(s,"team")).join("")}</div>
+    <div class="allocSide bot"><span class="k">${t("robot")}</span><span class="ti">${t("botCap")}</span></div>
+    <div class="allocGrid bot">${SKILLS.map(s=>allocCell(s,"bot")).join("")}</div>
+    ${a.left&&!cap?`<div class="nt w" style="margin-top:12px">${t("noRoom")}</div>`:""}
+    <div class="row" style="justify-content:center;margin-top:18px;gap:10px">
+      <button class="b p go" data-a="allocDone" ${a.left&&cap?"disabled":""}>${t("done")}</button>
+      <button class="b g" data-a="allocReset" ${a.left===a.total?"disabled":""}>${t("undo")}</button></div>`;
+}
+function renderAlloc(){
+  el("ovz").innerHTML=`<div class="ov"><div class="ovin card alloc" style="padding:24px">${allocMarkup()}</div></div>`;
+  wireDrag();
+}
+function allocChange(id,dir,side){
+  const tm=TM(), a=S.alloc; if(!a) return;
+  const bag = side==="bot" ? a.bot : a.add;
+  if(dir==="+"){
+    const team=tm.tok[id]+a.add[id];
+    const base= side==="bot" ? tm.bot[id] : tm.tok[id];
+    const cap = side==="bot" ? Math.min(team,TOKENS_PER_SKILL) : TOKENS_PER_SKILL;
+    if(a.left<=0 || base+bag[id]>=cap) return;
+    bag[id]++; a.left--; A.tok(a.total-a.left-1);
+  } else {
+    if(!bag[id]) return;
+    if(side==="team"){ // keep Antares within the new team level
+      const team=tm.tok[id]+a.add[id]-1;
+      while(tm.bot[id]+a.bot[id] > Math.min(team,TOKENS_PER_SKILL) && a.bot[id]>0){ a.bot[id]--; a.left++; }
+    }
+    bag[id]--; a.left++; A.click();
+  }
+  renderAlloc();
+}
+function wireDrag(){
+  const pool=document.querySelector(".pool .chips");
+  if(!pool) return;
+  let drag=null;
+  const start=e=>{ if(!S.alloc||!S.alloc.left) return;
+    drag=document.createElement("span"); drag.className="chip flying";
+    document.body.appendChild(drag); move(e); e.preventDefault(); };
+  const move=e=>{ if(!drag) return;
+    const p2=e.touches?e.touches[0]:e;
+    drag.style.left=p2.clientX+"px"; drag.style.top=p2.clientY+"px";
+    document.querySelectorAll(".allocCell").forEach(c=>c.classList.remove("over"));
+    const el2=document.elementFromPoint(p2.clientX,p2.clientY);
+    const cell=el2&&el2.closest(".allocCell");
+    if(cell&&!cell.classList.contains("full")) cell.classList.add("over"); };
+  const end=e=>{ if(!drag) return;
+    const p2=e.changedTouches?e.changedTouches[0]:e;
+    const el2=document.elementFromPoint(p2.clientX,p2.clientY);
+    const cell=el2&&el2.closest(".allocCell");
+    drag.remove(); drag=null;
+    if(cell&&cell.dataset.drop) allocChange(cell.dataset.drop,"+",cell.dataset.side);
+    else document.querySelectorAll(".allocCell").forEach(c=>c.classList.remove("over")); };
+  pool.addEventListener("mousedown",start); pool.addEventListener("touchstart",start,{passive:false});
+  window.addEventListener("mousemove",move); window.addEventListener("touchmove",move,{passive:false});
+  window.addEventListener("mouseup",end);   window.addEventListener("touchend",end);
+}
+/* chips fly to their skills on the GPU, then the state updates once */
+function flyChip(from,to,delay){
+  return new Promise(res=>{
+    const c=document.createElement("span"); c.className="chip flyer";
+    c.style.cssText=`left:${from.x}px;top:${from.y}px;transition-delay:${delay}ms`;
+    document.body.appendChild(c);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      c.style.transform=`translate(-50%,-50%) translate(${to.x-from.x}px,${to.y-from.y}px) scale(.55)`;
+      c.style.opacity=".1";
+    }));
+    setTimeout(()=>{ c.remove(); res(); }, delay+520);
+  });
+}
+async function applyAlloc(){
+  const tm=TM(), a=S.alloc; S.alloc=null;
+  const pool=document.querySelector(".pool .chips");
+  const pr=pool?pool.getBoundingClientRect():{left:innerWidth/2,top:120,width:0,height:0};
+  const from={x:pr.left+pr.width/2,y:pr.top+pr.height/2};
+  const flights=[]; let k=0;
+  for(const side of ["team","bot"]){
+    const bag = side==="bot" ? a.bot : a.add;
+    for(const s of SKILLS){
+      const cell=document.querySelector(`.allocCell[data-drop="${s.id}"][data-side="${side}"] .aFlower`);
+      const cr=cell?cell.getBoundingClientRect():null;
+      for(let i=0;i<bag[s.id];i++){
+        const to=cr?{x:cr.left+cr.width/2,y:cr.top+cr.height/2}:from;
+        flights.push(flyChip(from,to,k*90));
+        setTimeout(()=>A.tok(k),k*90+170);
+        k++;
+      }
+    }
+  }
+  await Promise.all(flights);
+  const done=[];
+  SKILLS.forEach(s=>{
+    if(a.add[s.id]){ tm.tok[s.id]=Math.min(tm.tok[s.id]+a.add[s.id],TOKENS_PER_SKILL);
+      if(tm.tok[s.id]>=TOKENS_PER_SKILL) done.push(s); }
+    if(a.bot[s.id]) tm.bot[s.id]=Math.min(tm.bot[s.id]+a.bot[s.id],tm.tok[s.id],TOKENS_PER_SKILL);
+  });
+  closeOv(); render(); A.good(); await wait(420);
+  for(const s of done){
+    A.lamp();
+    overlay({k:t("skillDone"), title:L(s.ar,s.en), body:t("skillDoneT")});
+    await wait(1500); closeOv();
+  }
+  endTurn();
+}
+async function award(tm,n){
+  const open=SKILLS.filter(s=>tm.tok[s.id]<TOKENS_PER_SKILL);
+  await place(tm,(open.length?open[rnd(open.length)]:SKILLS[0]).id,n);
+}
+async function place(tm,id,n){
+  S.picking=false; closeOv();
+  let left=n;
+  for(let i=0;i<n;i++){
+    let target=id;
+    if(tm.tok[target]>=TOKENS_PER_SKILL){
+      const o=SKILLS.find(s=>tm.tok[s.id]<TOKENS_PER_SKILL);
+      if(!o) break;
+      target=o.id;
+    }
+    tm.tok[target]++; left--; A.tok(i); render(); await wait(140);
+  }
+  if(tm.tok[id]>=TOKENS_PER_SKILL && !S.pending.some(x=>x.t===tm.i&&x.s===id)){
+    S.pending.push({t:tm.i,s:id});
+    const sk=SKILLS.find(s=>s.id===id); A.lamp();
+    overlay({k:t("skillDone"), title:L(sk.ar,sk.en), body:t("skillDoneT")});
+    await wait(1700); closeOv();
+  }
+  endTurn();
+}
+function endTurn(){
+  S.simLock=false; S.auto=false; S.picking=false; S.drawing=false; S.landed=null; S.alloc=null; S.cur=null; S.flip=false; S.phase="roll";
+  S.pending=[];
+  setTimeout(()=>{S.teams.forEach(x=>x.delta=null);},1900);
+  S.turn++;
+  if(S.turn>3){ S.turn=0; S.round++; }
+  if(S.round>S.maxRounds){ S.screen="end"; A.win(); render(); return; }
+  S.pane = "team";
+  render(); setTimeout(queue,400);
+}
+function queue(){
+  const tm=TM();
+  overlay({k:`${t("round")} ${AR(S.round)}/${AR(S.maxRounds)}`, title:L(tm.name,tm.nameEn),
+    body:L("دور هذا الفريق.","This team is up."),
+    extra:`<div class="handoff" style="--tc:${tm.color}"><span class="hDot"></span></div>`,
+    buttons:`<button class="b p go" data-a="startTurn">${t("startTurnOf")} ${L(tm.name,tm.nameEn)}</button>`});
+}
+
+async function recovery(){
+  const tm=TM(); tm.crisisUsed=true;
+  const d=await runSignal(4,"#F5C451",t("crisis"),L("نقاط انتعاش × ٣","recovery × 3"),true);
+  applyShift(tm,d*3);
+  A.good(); render();
+  overlay({k:t("crisis"), title:L(`إشارة الطوارئ: ${AR(d)}`,`Emergency signal: ${d}`),
+    body:L(`استعاد الفريق ${AR(d*3)} نقطة انتعاش.`,`The team recovered ${d*3} points.`),
+    extra:`<div style="margin-top:14px">${mixBar(tm)}</div>`});
+}
+function exportLog(){
+  const data={game:"Elevate Lab — Sales Edition",exported:new Date().toISOString(),rounds:S.maxRounds,
+    teams:S.teams.map(x=>({name:x.name,nameEn:x.nameEn,promoter:x.promoter,natural:x.natural,angry:x.angry,skillDev:x.fsk,
+      skillsCompleted:full(x),tokens:x.tok,challenges:x.done})), log:S.log};
+  const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a2=document.createElement("a"); a2.href=URL.createObjectURL(b); a2.download="elevate-lab-session.json"; a2.click();
+}
+
+/* ================= events ================= */
+const ASYNC=new Set(["roll","draw","save","pick","rec","begin","allocDone"]);
+let BUSY=false;
+async function guard(fn){
+  if(BUSY) return;
+  BUSY=true;
+  try{ await fn(); } catch(err){ console.error(err); } finally{ BUSY=false; }
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a],[data-p],[data-r],[data-f],[data-alloc]");
+  if(!b) return;
+  if(b.disabled) return;
+  if(BUSY && (ASYNC.has(b.dataset.a) || b.dataset.skill)) return;
+  if(b.dataset.p){ S.pane=b.dataset.p; render(); return; }
+  if(b.dataset.r){ S.maxRounds=+b.dataset.r; A.click(); render(); return; }
+  if(b.dataset.f){ if(!S.cur) return; S.cur.scores[b.dataset.f]=+b.dataset.v; A.click(); render(); return; }
+  if(b.dataset.alloc){ allocChange(b.dataset.s,b.dataset.alloc,b.dataset.side); return; }
+  if(b.dataset.a==="busy"){ S.busyResolve&&S.busyResolve(+b.dataset.i); return; }
+
+  switch(b.dataset.a){
+    case "lang": LANG=LANG==="ar"?"en":"ar"; render(); break;
+    case "snd": A.set(!A.on()); A.click(); render(); break;
+    case "home": closeOv(); S=newSession(); render(); break;
+    case "rules": S.screen="rules"; render(); break;
+    case "book": A.snap(); openBook(); break;
+    case "bookSpread": S.bookSpread=+b.dataset.n; A.snap(); refreshBook(); break;
+    case "bookClose": closeBook(); break;
+    case "help": S.help=!S.help; A.click(); render(); break;
+    case "zoom": S.zoom=!S.zoom; A.click(); render(); break;
+    case "go": S.mode=b.dataset.m; S.screen="setup"; S.pane=b.dataset.m==="facil"?"gm":"team"; render(); break;
+    case "begin": A.click(); guard(()=>begin()); break;
+    case "roll": guard(()=>doRoll()); break;
+    case "draw": guard(()=>doDraw()); break;
+    case "lock": if(S.phase==="decide") lock(); break;
+    case "reread": guard(()=>rereadCard()); break;
+    case "backDecide": if(S.phase==="respond"){ S.phase="decide"; A.click(); render(); } break;
+    case "backRespond": if(S.phase==="score"){ S.phase="respond"; A.click(); render(); } break;
+    case "send": if(S.phase==="respond") send(); break;
+    case "save": guard(()=>save()); break;
+    case "pick": if(!S.picking){ S.picking=true; pickUI(+b.dataset.n);} break;
+    case "noTok": closeOv(); endTurn(); break;
+    case "allocDone": guard(()=>applyAlloc()); break;
+    case "allocReset": SKILLS.forEach(s=>{S.alloc.add[s.id]=0;S.alloc.bot[s.id]=0;}); S.alloc.left=S.alloc.total; A.click(); renderAlloc(); break;
+    case "rec": guard(()=>recovery()); break;
+    case "exp": exportLog(); break;
+    case "again": S=newSession(); S.screen="setup"; render(); break;
+    case "startTurn": closeOv(); render(); break;
+    case "ovx": closeOv(); break;
+  }
+});
+document.addEventListener("change",e=>{
+  const n=e.target.closest("[data-n]");
+  if(n && n.tagName==="INPUT"){ const i=+n.dataset.n; if(LANG==="ar") S.teams[i].name=n.value; else S.teams[i].nameEn=n.value; return; }
+  if(e.target.name==="dec"){ S.cur.decision=e.target.value; render(); const f=$(".flip"); if(f) f.classList.add("on"); }
+});
+document.addEventListener("input",e=>{
+  const n=e.target.closest("input[data-n]");
+  if(n){ const i=+n.dataset.n; if(LANG==="ar") S.teams[i].name=n.value; else S.teams[i].nameEn=n.value; }
+});
+
+S=newSession(); render();
+</script></body></html>
